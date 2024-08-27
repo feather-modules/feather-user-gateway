@@ -20,7 +20,7 @@ class TestCase: XCTestCase {
 
     var eventLoopGroup: EventLoopGroup!
     var components: ComponentRegistry!
-    var user: UserModuleInterface!
+    var userModule: UserModuleInterface!
     var module: UserGatewayInterface!
 
     override func setUp() async throws {
@@ -29,12 +29,12 @@ class TestCase: XCTestCase {
 
         let system = SystemModule(components: components)
 
-        user = UserModule(system: system, components: components)
+        userModule = UserModule(system: system, components: components)
 
         module = UserGatewayModule(
             system: system,
             components: components,
-            accountsGatewayInit: .init(userModuleInit: user)
+            accountsGatewayInit: .init(userModuleInit: userModule)
         )
 
         try await components.configure(.singleton, eventLoopGroup)
