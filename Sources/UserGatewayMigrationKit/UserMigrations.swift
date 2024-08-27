@@ -4,7 +4,7 @@ import FeatherScripts
 import UserGatewayDatabaseKit
 import UserGatewayKit
 
-extension User {
+extension UserGateway {
 
     public enum Migrations {
 

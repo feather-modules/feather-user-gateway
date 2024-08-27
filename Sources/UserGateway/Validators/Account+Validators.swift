@@ -11,4 +11,3 @@ import FeatherValidation
 import FeatherValidationFoundation
 import UserGatewayDatabaseKit
 import UserGatewayKit
-

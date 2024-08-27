@@ -7,8 +7,9 @@
 
 import FeatherModuleKit
 import SystemModuleKit
+import UserModuleKit
 
-extension User.Account {
+extension UserGateway.Account {
 
     public struct Reference: Object {
         public let id: ID<User.Account>
@@ -48,7 +49,7 @@ extension User.Account {
 
             public init(
                 search: String? = nil,
-                sort: User.Account.List.Query.Sort,
+                sort: Sort,
                 page: Page
             ) {
                 self.search = search
@@ -74,7 +75,7 @@ extension User.Account {
         public let count: UInt
 
         public init(
-            items: [User.Account.List.Item],
+            items: [Item],
             count: UInt
         ) {
             self.items = items
@@ -86,13 +87,13 @@ extension User.Account {
     public struct Detail: Object {
         public let id: ID<User.Account>
         public let email: String
-        public let roles: [User.Role.Reference]
+        public let roles: [UserGateway.Role.Reference]
         public let permissions: [ID<System.Permission>]
 
         public init(
             id: ID<User.Account>,
             email: String,
-            roles: [User.Role.Reference],
+            roles: [UserGateway.Role.Reference],
             permissions: [ID<System.Permission>]
         ) {
             self.id = id
@@ -100,26 +101,6 @@ extension User.Account {
             self.roles = roles
             self.permissions = permissions
         }
-    }
-
-    public struct Create: Object {
-        public let email: String
-        public let password: String
-        public let roleKeys: [ID<User.Role>]
-        public let permissions: [ID<System.Permission>]
-
-        public init(
-            email: String,
-            password: String,
-            roleKeys: [ID<User.Role>] = [],
-            permissions: [ID<System.Permission>] = []
-        ) {
-            self.email = email
-            self.password = password
-            self.roleKeys = roleKeys
-            self.permissions = permissions
-        }
-
     }
 
     public struct Update: Object {
@@ -151,6 +132,22 @@ extension User.Account {
             self.email = email
             self.password = password
             self.roleKeys = roleKeys
+        }
+    }
+}
+
+extension UserGateway.Role {
+
+    public struct Reference: Object {
+        public let key: ID<User.Role>
+        public let name: String
+
+        public init(
+            key: ID<User.Role>,
+            name: String
+        ) {
+            self.key = key
+            self.name = name
         }
     }
 }

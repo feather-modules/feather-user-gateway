@@ -10,15 +10,14 @@ import FeatherACL
 extension Permission {
 
     static func userAccount(_ action: Action) -> Self {
-        .user("account", action: action)
+        .userGateway("account", action: action)
     }
 }
 
-extension User.Account {
+extension UserGateway.Account {
 
     public enum ACL: ACLSet {
 
-        public static var all: [Permission] = [
-        ]
+        public static var all: [Permission] = []
     }
 }

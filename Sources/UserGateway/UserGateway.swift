@@ -1,11 +1,11 @@
 import FeatherComponent
 import FeatherModuleKit
-import Logging
-import SystemModuleKit
-import UserGatewayKit
-import UserGatewayAccountsKit
-import OpenAPIRuntime
 import Foundation
+import Logging
+import OpenAPIRuntime
+import SystemModuleKit
+import UserGatewayAccountsKit
+import UserGatewayKit
 import UserModuleKit
 
 public struct UserGatewayClientInit {
@@ -13,7 +13,7 @@ public struct UserGatewayClientInit {
     let configuration: Configuration
     let transport: any ClientTransport
     let middlewares: [any ClientMiddleware]
-    
+
     public init(
         serverURL: URL,
         configuration: Configuration = .init(),
@@ -31,11 +31,11 @@ public struct UserGatewayAccountsInit {
     public struct Config {
         public init() {}
     }
-    
+
     let accountsClientInit: UserGatewayClientInit?
     let userModuleInit: UserModuleInterface?
     let config: Config
-    
+
     public init(
         accountsClientInit: UserGatewayClientInit,
         config: Config = .init()
@@ -44,7 +44,7 @@ public struct UserGatewayAccountsInit {
         self.userModuleInit = nil
         self.config = config
     }
-    
+
     public init(
         userModuleInit: UserModuleInterface,
         config: Config = .init()
@@ -58,21 +58,22 @@ public struct UserGatewayAccountsInit {
 struct UserGatewayAccountsProxy: Sendable {
     let accountsClient: UserGatewayAccountsKit.Client?
     let userModule: UserModuleInterface?
-    
+
     public init(
         accountsGatewayInit: UserGatewayAccountsInit
     ) {
         if let accountsClientInit = accountsGatewayInit.accountsClientInit {
-            self.accountsClient = .init(serverURL: accountsClientInit.serverURL,
-                                    configuration: accountsClientInit.configuration, //+ custom configuration
-                                    transport: accountsClientInit.transport,
-                                    middlewares: accountsClientInit.middlewares //+ custom Middlewares
+            self.accountsClient = .init(
+                serverURL: accountsClientInit.serverURL,
+                configuration: accountsClientInit.configuration,  //+ custom configuration
+                transport: accountsClientInit.transport,
+                middlewares: accountsClientInit.middlewares  //+ custom Middlewares
             )
         }
         else {
             self.accountsClient = nil
         }
-        
+
         if let userModule = accountsGatewayInit.userModuleInit {
             self.userModule = userModule
         }
@@ -82,7 +83,7 @@ struct UserGatewayAccountsProxy: Sendable {
     }
 }
 
-public struct UserGateway: UserGatewayInterface {
+public struct UserGatewayModule: UserGatewayInterface {
     public let system: SystemModuleInterface
     let components: ComponentRegistry
     let logger: Logger
@@ -100,7 +101,7 @@ public struct UserGateway: UserGatewayInterface {
         self.accountsProxy = .init(accountsGatewayInit: accountsGatewayInit)
     }
 
-    public var account: UserGatewayKit.UserAccountInterface {
+    public var account: UserGatewayKit.UserGatewayAccountInterface {
         if let userModule = accountsProxy.userModule {
             return AccountControllerLocal(
                 components: components,
@@ -108,7 +109,7 @@ public struct UserGateway: UserGatewayInterface {
                 userModule: userModule
             )
         }
-        
+
         return AccountController(
             components: components,
             user: self,

@@ -7,16 +7,16 @@
 
 import FeatherACL
 import FeatherModuleKit
-import SystemModuleKit 
+import SystemModuleKit
 
 extension Permission {
 
-    static func user(_ context: String, action: Action) -> Self {
+    static func userGateway(_ context: String, action: Action) -> Self {
         .init(namespace: "user-gateway", context: context, action: action)
     }
 }
 
-public enum User {
+public enum UserGateway {
 
     public enum ACL: ACLSet {
 
@@ -24,7 +24,7 @@ public enum User {
             Account.ACL.all
         }
     }
-    
+
     public enum Error: Swift.Error {
         case unknown
         case invalidPassword
@@ -40,5 +40,5 @@ public enum User {
 
 public protocol UserGatewayInterface: ModuleInterface {
 
-    var account: UserAccountInterface { get }
+    var account: UserGatewayAccountInterface { get }
 }

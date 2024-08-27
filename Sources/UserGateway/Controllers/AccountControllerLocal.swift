@@ -14,8 +14,7 @@ import UserGatewayDatabaseKit
 import UserGatewayKit
 import UserModuleKit
 
-struct AccountControllerLocal: UserGatewayKit.UserAccountInterface
-{
+struct AccountControllerLocal: UserGatewayAccountInterface {
     let components: ComponentRegistry
     let user: UserGatewayInterface
     let userModule: UserModuleInterface
@@ -32,48 +31,35 @@ struct AccountControllerLocal: UserGatewayKit.UserAccountInterface
 
     // MARK: -
 
-    func create(
-        _ input: UserGatewayKit.User.Account.Create
-    ) async throws -> UserGatewayKit.User.Account.Detail {
-        let ret = try await userModule.account.create(
-            .init(email: input.email, password: input.password, roleKeys: input.roleKeys.map{ $0.transform(to: User.Role.self) })
-        )
-        
-        return .init(id: ret.id.transform(to: UserGatewayKit.User.Account.self),
-                     email: ret.email,
-                     roles: ret.roles.map{ .init(key: $0.key.transform(to: UserGatewayKit.User.Role.self), name: $0.name) },
-                     permissions: [])
-    }
-
     func require(
-        _ id: FeatherModuleKit.ID<UserGatewayKit.User.Account>
-    ) async throws -> UserGatewayKit.User.Account.Detail {
+        _ id: ID<User.Account>
+    ) async throws -> UserGateway.Account.Detail {
         fatalError()
     }
 
     func update(
-        _ id: ID<UserGatewayKit.User.Account>,
-        _ input: UserGatewayKit.User.Account.Update
-    ) async throws -> UserGatewayKit.User.Account.Detail {
+        _ id: ID<User.Account>,
+        _ input: UserGateway.Account.Update
+    ) async throws -> UserGateway.Account.Detail {
         fatalError()
     }
 
     func patch(
-        _ id: ID<UserGatewayKit.User.Account>,
-        _ input: UserGatewayKit.User.Account.Patch
-    ) async throws -> UserGatewayKit.User.Account.Detail {
+        _ id: ID<User.Account>,
+        _ input: UserGateway.Account.Patch
+    ) async throws -> UserGateway.Account.Detail {
         fatalError()
     }
-    
-    func list(_ input: UserGatewayKit.User.Account.List.Query) async throws -> UserGatewayKit.User.Account.List {
+
+    func list(_ input: UserGateway.Account.List.Query) async throws
+        -> UserGateway.Account.List
+    {
         fatalError()
     }
-    
-    func reference(ids: [FeatherModuleKit.ID<UserGatewayKit.User.Account>]) async throws -> [UserGatewayKit.User.Account.Reference] {
-        fatalError()
-    }
-    
-    func bulkDelete(ids: [FeatherModuleKit.ID<UserGatewayKit.User.Account>]) async throws {
+
+    func reference(ids: [ID<User.Account>])
+        async throws -> [UserGateway.Account.Reference]
+    {
         fatalError()
     }
 }

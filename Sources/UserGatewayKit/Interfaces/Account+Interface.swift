@@ -6,34 +6,29 @@
 //
 
 import FeatherModuleKit
+import UserModuleKit
 
-public protocol UserAccountInterface: Sendable {
+public protocol UserGatewayAccountInterface: Sendable {
 
     func list(
-        _ input: User.Account.List.Query
-    ) async throws -> User.Account.List
+        _ input: UserGateway.Account.List.Query
+    ) async throws -> UserGateway.Account.List
 
     func reference(
         ids: [ID<User.Account>]
-    ) async throws -> [User.Account.Reference]
+    ) async throws -> [UserGateway.Account.Reference]
 
-    func create(
-        _ input: User.Account.Create
-    ) async throws -> User.Account.Detail
-    
     func require(
-        _ id: FeatherModuleKit.ID<User.Account>
-    ) async throws -> User.Account.Detail
+        _ id: ID<User.Account>
+    ) async throws -> UserGateway.Account.Detail
 
     func update(
         _ id: ID<User.Account>,
-        _ input: User.Account.Update
-    ) async throws -> User.Account.Detail
+        _ input: UserGateway.Account.Update
+    ) async throws -> UserGateway.Account.Detail
 
     func patch(
         _ id: ID<User.Account>,
-        _ input: User.Account.Patch
-    ) async throws -> User.Account.Detail
-    
-    func bulkDelete(ids: [FeatherModuleKit.ID<UserGatewayKit.User.Account>]) async throws
+        _ input: UserGateway.Account.Patch
+    ) async throws -> UserGateway.Account.Detail
 }

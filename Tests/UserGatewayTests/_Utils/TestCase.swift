@@ -13,12 +13,14 @@ import UserGateway
 import UserGatewayKit
 import UserGatewayMigrationKit
 import UserModule
+import UserModuleKit
 import XCTest
 
 class TestCase: XCTestCase {
 
     var eventLoopGroup: EventLoopGroup!
     var components: ComponentRegistry!
+    var user: UserModuleInterface!
     var module: UserGatewayInterface!
 
     override func setUp() async throws {
@@ -26,10 +28,14 @@ class TestCase: XCTestCase {
         components = ComponentRegistry()
 
         let system = SystemModule(components: components)
-        let user = UserModule(system: system, components: components)
-        
-        module = UserGateway(system: system, components: components, accountsGatewayInit: .init(userModuleInit: user))
-        //module = UserGateway(system: system, components: components, accountsGatewayInit: .init(accountsClientInit) )
+
+        user = UserModule(system: system, components: components)
+
+        module = UserGatewayModule(
+            system: system,
+            components: components,
+            accountsGatewayInit: .init(userModuleInit: user)
+        )
 
         try await components.configure(.singleton, eventLoopGroup)
         try await components.runMigrations()

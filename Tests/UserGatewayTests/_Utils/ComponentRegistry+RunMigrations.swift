@@ -26,7 +26,7 @@ extension ComponentRegistry {
         try await scripts.execute([
             System.Migrations.V1.self,
             User.Migrations.V1.self,
-            UserModuleKit.User.Migrations.V1.self
+            UserModuleKit.User.Migrations.V1.self,
         ])
     }
 }

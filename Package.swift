@@ -32,7 +32,8 @@ let package = Package(
         .package(url: "https://github.com/jpsim/Yams", from: "5.0.0"),
         .package(url: "https://github.com/apple/swift-openapi-generator", from: "1.0.0"),
         .package(url: "https://github.com/apple/swift-openapi-runtime", from: "1.0.0"),
-        .package(path: "../feather-user-api"),
+        .package(url: "https://github.com/feather-modules/feather-user-api", branch: "feature/oauth2"),
+        .package(url: "git@github.com:feather-modules/feather-user-gateway-accounts-api", branch: "feature/oauth2"),
     ],
     targets: [
         .target(
@@ -103,6 +104,7 @@ let package = Package(
                 .product(name: "FeatherOpenAPIKit", package: "feather-openapi-kit"),
                 .product(name: "FeatherAPIKit", package: "feather-api-kit"),
                 .product(name: "UserAPIKit", package: "feather-user-api"),
+                .product(name: "UserGatewayAccountsAPIKit", package: "feather-user-gateway-accounts-api"),
             ]
         ),
         
