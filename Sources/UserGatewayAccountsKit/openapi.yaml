@@ -1,0 +1,3402 @@
+openapi: 3.1.0
+info:
+  title: UserGateway - Accounts - API
+  description: 'The complete Accounts API definition used by the UserGateway.
+
+    (Generated on: 2024. Aug 27. at 10:59:53)'
+  contact:
+    name: Binary Birds
+    url: https://binarybirds.com
+    email: info@binarybirds.com
+  version: 1.0.0
+tags:
+- name: System - Permission
+  description: ''
+- name: System - Variable
+  description: ''
+- name: User - Account
+  description: ''
+- name: User - Account Invitation
+  description: ''
+- name: User - Auth
+  description: ''
+- name: User - Oauth
+  description: ''
+- name: User - OauthClient
+  description: ''
+- name: User - Password
+  description: ''
+- name: User - Push
+  description: ''
+- name: User - PushToken
+  description: ''
+- name: User - Register
+  description: ''
+- name: User - Role
+  description: ''
+paths:
+  /system/permissions:
+    get:
+      tags:
+      - System - Permission
+      summary: List system permissions
+      description: List available system permissions
+      operationId: listSystemPermission
+      parameters:
+      - $ref: '#/components/parameters/SystemPermissionListSort'
+      - $ref: '#/components/parameters/FeatherCoreListSearch'
+      - $ref: '#/components/parameters/FeatherCoreListPageSize'
+      - $ref: '#/components/parameters/FeatherCoreListPageIndex'
+      - $ref: '#/components/parameters/FeatherCoreListOrder'
+      responses:
+        200:
+          $ref: '#/components/responses/SystemPermissionList'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+      security:
+      - FeatherCoreBearerToken: []
+    post:
+      tags:
+      - System - Permission
+      summary: Create a system permission
+      description: Creates a new system permission
+      operationId: createSystemPermission
+      requestBody:
+        description: Create request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SystemPermissionCreate'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/SystemPermissionDetail'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        415:
+          $ref: '#/components/responses/FeatherCoreUnsupportedMediaType'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+  /system/permissions/{permissionKey}:
+    parameters:
+    - $ref: '#/components/parameters/SystemPermissionKey'
+    get:
+      tags:
+      - System - Permission
+      summary: System permission details
+      description: Get the details of a system permission
+      operationId: detailSystemPermission
+      responses:
+        200:
+          $ref: '#/components/responses/SystemPermissionDetail'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+      security:
+      - FeatherCoreBearerToken: []
+    put:
+      tags:
+      - System - Permission
+      summary: Update a system permission
+      description: Updates a system permission
+      operationId: updateSystemPermission
+      parameters:
+      - $ref: '#/components/parameters/SystemPermissionKey'
+      requestBody:
+        description: Update request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SystemPermissionUpdate'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/SystemPermissionDetail'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+        415:
+          $ref: '#/components/responses/FeatherCoreUnsupportedMediaType'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+    delete:
+      tags:
+      - System - Permission
+      summary: Delete one system permission
+      description: Delete one system permission using identifier
+      operationId: deleteSystemPermission
+      responses:
+        204:
+          $ref: '#/components/responses/FeatherCoreNoContent'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+    patch:
+      tags:
+      - System - Permission
+      summary: Patch a System Permission
+      description: Patch a given System Permission
+      operationId: patchSystemPermission
+      parameters:
+      - $ref: '#/components/parameters/SystemPermissionKey'
+      requestBody:
+        description: Patch request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SystemPermissionPatch'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/SystemPermissionDetail'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+        415:
+          $ref: '#/components/responses/FeatherCoreUnsupportedMediaType'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+  /system/variables:
+    get:
+      tags:
+      - System - Variable
+      summary: List system variables
+      description: List available system variables
+      operationId: listSystemVariable
+      parameters:
+      - $ref: '#/components/parameters/SystemVariableListSort'
+      - $ref: '#/components/parameters/FeatherCoreListSearch'
+      - $ref: '#/components/parameters/FeatherCoreListPageSize'
+      - $ref: '#/components/parameters/FeatherCoreListPageIndex'
+      - $ref: '#/components/parameters/FeatherCoreListOrder'
+      responses:
+        200:
+          $ref: '#/components/responses/SystemVariableList'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        415:
+          $ref: '#/components/responses/FeatherCoreUnsupportedMediaType'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+      security:
+      - FeatherCoreBearerToken: []
+    post:
+      tags:
+      - System - Variable
+      summary: Create a system variable
+      description: Creates a new system variable
+      operationId: createSystemVariable
+      requestBody:
+        description: Create request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SystemVariableCreate'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/SystemVariableDetail'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        415:
+          $ref: '#/components/responses/FeatherCoreUnsupportedMediaType'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+  /system/variables/{key}:
+    parameters:
+    - $ref: '#/components/parameters/SystemVariableKey'
+    get:
+      tags:
+      - System - Variable
+      summary: System variable details
+      description: Get the details of a system variable
+      operationId: getSystemVariable
+      responses:
+        200:
+          $ref: '#/components/responses/SystemVariableDetail'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+      security:
+      - FeatherCoreBearerToken: []
+    put:
+      tags:
+      - System - Variable
+      summary: Update a system variable
+      description: Updates a system variable using an identifier
+      operationId: updateSystemVariable
+      requestBody:
+        description: Update request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SystemVariableUpdate'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/SystemVariableDetail'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+        415:
+          $ref: '#/components/responses/FeatherCoreUnsupportedMediaType'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+    delete:
+      tags:
+      - System - Variable
+      summary: Delete one system variable
+      description: Delete one system variable using identifier
+      operationId: deleteSystemVariable
+      responses:
+        204:
+          $ref: '#/components/responses/FeatherCoreNoContent'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+    patch:
+      tags:
+      - System - Variable
+      summary: Patch a system variable
+      description: Patches a system variable using an identifier
+      operationId: patchSystemVariable
+      requestBody:
+        description: Patch request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SystemVariablePatch'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/SystemVariableDetail'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+        415:
+          $ref: '#/components/responses/FeatherCoreUnsupportedMediaType'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+  /user/account-invitation:
+    get:
+      tags:
+      - User - Account Invitation
+      summary: List user account invitations
+      description: List available user account invitations
+      operationId: listUserAccountInvitation
+      parameters:
+      - $ref: '#/components/parameters/UserAccountInvitationListSort'
+      - $ref: '#/components/parameters/FeatherCoreListSearch'
+      - $ref: '#/components/parameters/FeatherCoreListPageSize'
+      - $ref: '#/components/parameters/FeatherCoreListPageIndex'
+      - $ref: '#/components/parameters/FeatherCoreListOrder'
+      responses:
+        200:
+          $ref: '#/components/responses/UserAccountInvitationList'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+      security:
+      - FeatherCoreBearerToken: []
+    post:
+      tags:
+      - User - Account Invitation
+      summary: Create a user account invitation
+      description: Creates a new user account invitation
+      operationId: createUserAccountInvitation
+      requestBody:
+        description: Create request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserAccountInvitationCreate'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/UserAccountInvitationDetail'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        415:
+          $ref: '#/components/responses/FeatherCoreUnsupportedMediaType'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+  /user/account-invitation/{id}:
+    parameters:
+    - $ref: '#/components/parameters/UserAccountInvitationId'
+    get:
+      tags:
+      - User - Account Invitation
+      summary: User account invitation details
+      description: Get the details of a user account invitation
+      operationId: detailUserAccountInvitation
+      responses:
+        200:
+          $ref: '#/components/responses/UserAccountInvitationDetail'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+      security:
+      - FeatherCoreBearerToken: []
+    delete:
+      tags:
+      - User - Account Invitation
+      summary: Delete one user account invitation
+      description: Delete one user account invitation using identifier
+      operationId: deleteUserAccountInvitation
+      responses:
+        204:
+          $ref: '#/components/responses/FeatherCoreNoContent'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+  /user/accounts:
+    get:
+      tags:
+      - User - Account
+      summary: List User Accounts
+      description: List available User Accounts
+      operationId: listUserAccount
+      parameters:
+      - $ref: '#/components/parameters/UserAccountListSort'
+      - $ref: '#/components/parameters/FeatherCoreListSearch'
+      - $ref: '#/components/parameters/FeatherCoreListPageSize'
+      - $ref: '#/components/parameters/FeatherCoreListPageIndex'
+      - $ref: '#/components/parameters/FeatherCoreListOrder'
+      responses:
+        200:
+          $ref: '#/components/responses/UserAccountList'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+      security:
+      - FeatherCoreBearerToken: []
+    post:
+      tags:
+      - User - Account
+      summary: Create a User Account
+      description: Creates a new User Account
+      operationId: createUserAccount
+      requestBody:
+        description: Create request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserAccountCreate'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/UserAccountDetail'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        415:
+          $ref: '#/components/responses/FeatherCoreUnsupportedMediaType'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+  /user/accounts/me:
+    get:
+      tags:
+      - User - Account
+      summary: Current user account details
+      description: Get the details of the currently logged in user account based on
+        the auth token.
+      operationId: meUserAccount
+      responses:
+        200:
+          $ref: '#/components/responses/UserAccountDetail'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+      security:
+      - FeatherCoreBearerToken: []
+  /user/accounts/{accountId}:
+    parameters:
+    - $ref: '#/components/parameters/UserAccountId'
+    get:
+      tags:
+      - User - Account
+      summary: User Account details
+      description: Get the details of a User Account
+      operationId: detailUserAccount
+      responses:
+        200:
+          $ref: '#/components/responses/UserAccountDetail'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+      security:
+      - FeatherCoreBearerToken: []
+    put:
+      tags:
+      - User - Account
+      summary: Update a User Account
+      description: Updates a User Account
+      operationId: updateUserAccount
+      requestBody:
+        description: Update request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserAccountUpdate'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/UserAccountDetail'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+        415:
+          $ref: '#/components/responses/FeatherCoreUnsupportedMediaType'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+    delete:
+      tags:
+      - User - Account
+      summary: Delete one User Account
+      description: Delete one User Account using identifier
+      operationId: deleteUserAccount
+      responses:
+        204:
+          $ref: '#/components/responses/FeatherCoreNoContent'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+    patch:
+      tags:
+      - User - Account
+      summary: Patch a User Account
+      description: Patch a given User Account
+      operationId: patchUserAccount
+      requestBody:
+        description: Patch request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserAccountPatch'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/UserAccountDetail'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+        415:
+          $ref: '#/components/responses/FeatherCoreUnsupportedMediaType'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+  /user/auth:
+    post:
+      tags:
+      - User - Auth
+      summary: Sign in
+      description: Sign in with an existing user account
+      operationId: postUserAuth
+      requestBody:
+        description: Sign in request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserAuthRequest'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/UserAuthResponse'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        415:
+          $ref: '#/components/responses/FeatherCoreUnsupportedMediaType'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security: []
+    delete:
+      tags:
+      - User - Auth
+      summary: Sign out
+      description: Sign out using an existing token
+      operationId: deleteUserAuth
+      responses:
+        204:
+          $ref: '#/components/responses/FeatherCoreNoContent'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+      security:
+      - FeatherCoreBearerToken: []
+  /user/oauth:
+    get:
+      tags:
+      - User - Oauth
+      summary: start authorize
+      description: start authorize
+      operationId: authorizeGetUserOauth
+      parameters:
+      - $ref: '#/components/parameters/UserOauthClientId'
+      - $ref: '#/components/parameters/UserOauthRedirectUrl'
+      - $ref: '#/components/parameters/UserOauthScope'
+      - $ref: '#/components/parameters/UserOauthState'
+      - $ref: '#/components/parameters/UserOauthResponseType'
+      responses:
+        200:
+          $ref: '#/components/responses/FeatherCoreOk'
+        302:
+          $ref: '#/components/responses/UserOauthRedirectResponse'
+        303:
+          $ref: '#/components/responses/UserOauthRedirectResponse'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+      security: []
+    post:
+      tags:
+      - User - Oauth
+      summary: get authorize code
+      description: get authorize code and return it with redirect
+      operationId: authorizePostUserOauth
+      requestBody:
+        description: get authorization code request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserOauthAuthorizePostRequest'
+        required: true
+      responses:
+        302:
+          $ref: '#/components/responses/UserOauthRedirectResponse'
+        303:
+          $ref: '#/components/responses/UserOauthRedirectResponse'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        409:
+          $ref: '#/components/responses/FeatherCoreConflict'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+      security:
+      - FeatherCoreBearerToken: []
+  /user/oauth-client:
+    get:
+      tags:
+      - User - OauthClient
+      summary: List Oauth Clients
+      description: List available Oauth Clients
+      operationId: listUserOauthClient
+      parameters:
+      - $ref: '#/components/parameters/UserOauthClientListSort'
+      - $ref: '#/components/parameters/FeatherCoreListSearch'
+      - $ref: '#/components/parameters/FeatherCoreListPageSize'
+      - $ref: '#/components/parameters/FeatherCoreListPageIndex'
+      - $ref: '#/components/parameters/FeatherCoreListOrder'
+      responses:
+        200:
+          $ref: '#/components/responses/UserOauthClientList'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+      security:
+      - FeatherCoreBearerToken: []
+    post:
+      tags:
+      - User - OauthClient
+      summary: Create an Oauth Client
+      description: Creates a new Oauth Client
+      operationId: createUserOauthClient
+      requestBody:
+        description: Create request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserOauthClientCreate'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/UserOauthClientDetail'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        415:
+          $ref: '#/components/responses/FeatherCoreUnsupportedMediaType'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+  /user/oauth-client/{clientId}:
+    parameters:
+    - $ref: '#/components/parameters/UserOauthClientClientId'
+    get:
+      tags:
+      - User - OauthClient
+      summary: Oauth Client details
+      description: Get the details of an oauth client
+      operationId: detailUserOauthClient
+      responses:
+        200:
+          $ref: '#/components/responses/UserOauthClientDetail'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+      security:
+      - FeatherCoreBearerToken: []
+    put:
+      tags:
+      - User - OauthClient
+      summary: Update an Oauth Client
+      description: Updates an Oauth Client
+      operationId: updateUserOauthClient
+      requestBody:
+        description: Update request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserOauthClientUpdate'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/UserOauthClientDetail'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+        415:
+          $ref: '#/components/responses/FeatherCoreUnsupportedMediaType'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+    delete:
+      tags:
+      - User - OauthClient
+      summary: Delete one Oauth Client
+      description: Delete one Oauth Client using identifier
+      operationId: deleteUserOauthClient
+      responses:
+        204:
+          $ref: '#/components/responses/FeatherCoreNoContent'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+    patch:
+      tags:
+      - User - OauthClient
+      summary: Patch an Oauth Client
+      description: Patch a given Oauth Client
+      operationId: patchUserOauthClient
+      requestBody:
+        description: Patch request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserOauthClientPatch'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/UserOauthClientDetail'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+        415:
+          $ref: '#/components/responses/FeatherCoreUnsupportedMediaType'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+  /user/oauth/token:
+    post:
+      tags:
+      - User - Oauth
+      summary: returns a JWT
+      description: exchange authorization code for JWT or get server JWT
+      operationId: tokenReturnUserOauth
+      requestBody:
+        description: exchange token request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserOauthTokenPostRequest'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/UserOauthTokenPostResponse'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        409:
+          $ref: '#/components/responses/FeatherCoreConflict'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+      security: []
+  /user/password:
+    post:
+      tags:
+      - User - Password
+      summary: Set new password
+      description: Set a new password for the user account using a password reset
+        token.
+      operationId: setUserPassword
+      parameters:
+      - $ref: '#/components/parameters/UserPasswordToken'
+      requestBody:
+        description: Set new password request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserPasswordSet'
+        required: true
+      responses:
+        204:
+          $ref: '#/components/responses/FeatherCoreNoContent'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        415:
+          $ref: '#/components/responses/FeatherCoreUnsupportedMediaType'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security: []
+  /user/password/reset:
+    post:
+      tags:
+      - User - Password
+      summary: Initiate a reset password flow
+      description: Send out a reset password email with a password reset token if
+        the given email has an associated user account.
+      operationId: resetUserPassword
+      requestBody:
+        description: Reset password request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserPasswordReset'
+        required: true
+      responses:
+        204:
+          $ref: '#/components/responses/FeatherCoreNoContent'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        415:
+          $ref: '#/components/responses/FeatherCoreUnsupportedMediaType'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security: []
+  /user/push:
+    get:
+      tags:
+      - User - Push
+      summary: List push messages
+      description: List available push messages
+      operationId: listUserPush
+      parameters:
+      - $ref: '#/components/parameters/UserPushListSort'
+      - $ref: '#/components/parameters/FeatherCoreListSearch'
+      - $ref: '#/components/parameters/FeatherCoreListPageSize'
+      - $ref: '#/components/parameters/FeatherCoreListPageIndex'
+      - $ref: '#/components/parameters/FeatherCoreListOrder'
+      responses:
+        200:
+          $ref: '#/components/responses/UserPushList'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+      security:
+      - FeatherCoreBearerToken: []
+    post:
+      tags:
+      - User - Push
+      summary: Create a push message
+      description: Creates a new push message
+      operationId: createUserPush
+      requestBody:
+        description: Create request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserPushCreate'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/UserPushDetail'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        415:
+          $ref: '#/components/responses/FeatherCoreUnsupportedMediaType'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+  /user/push/{pushId}:
+    parameters:
+    - $ref: '#/components/parameters/UserPushId'
+    get:
+      tags:
+      - User - Push
+      summary: Push message details
+      description: Get the details of a push message
+      operationId: detailUserPush
+      responses:
+        200:
+          $ref: '#/components/responses/UserPushDetail'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+      security:
+      - FeatherCoreBearerToken: []
+    delete:
+      tags:
+      - User - Push
+      summary: Delete one push message
+      description: Delete one push message using identifier
+      operationId: deleteUserPush
+      responses:
+        204:
+          $ref: '#/components/responses/FeatherCoreNoContent'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+  /user/pushtoken:
+    post:
+      tags:
+      - User - PushToken
+      summary: Create a push token object
+      description: Create a push token object
+      operationId: createUserPushToken
+      requestBody:
+        description: Create push token request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserPushTokenCreate'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/UserPushTokenCreate'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        415:
+          $ref: '#/components/responses/FeatherCoreUnsupportedMediaType'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+  /user/pushtoken/{pushTokenId}:
+    parameters:
+    - $ref: '#/components/parameters/UserPushTokenId'
+    put:
+      tags:
+      - User - PushToken
+      summary: Updates a push token object
+      description: Updates a push token object
+      operationId: updateUserPushToken
+      requestBody:
+        description: Update push token request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserPushTokenUpdate'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/UserPushTokenUpdate'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+        415:
+          $ref: '#/components/responses/FeatherCoreUnsupportedMediaType'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+    delete:
+      tags:
+      - User - PushToken
+      summary: Delete a push token object
+      description: Delete a push token object
+      operationId: deleteUserPushToken
+      responses:
+        204:
+          $ref: '#/components/responses/FeatherCoreNoContent'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+      security:
+      - FeatherCoreBearerToken: []
+  /user/register:
+    post:
+      tags:
+      - User - Register
+      summary: Register account
+      description: Register a new user account
+      operationId: postUserRegister
+      parameters:
+      - $ref: '#/components/parameters/UserRegisterToken'
+      requestBody:
+        description: Register account request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserAccountCreate'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/UserRegisterPost'
+      security: []
+  /user/roles:
+    get:
+      tags:
+      - User - Role
+      summary: List User Roles
+      description: List available User Roles
+      operationId: listUserRole
+      parameters:
+      - $ref: '#/components/parameters/UserRoleListSort'
+      - $ref: '#/components/parameters/FeatherCoreListSearch'
+      - $ref: '#/components/parameters/FeatherCoreListPageSize'
+      - $ref: '#/components/parameters/FeatherCoreListPageIndex'
+      - $ref: '#/components/parameters/FeatherCoreListOrder'
+      responses:
+        200:
+          $ref: '#/components/responses/UserRoleList'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+      security:
+      - FeatherCoreBearerToken: []
+    post:
+      tags:
+      - User - Role
+      summary: Create a User Role
+      description: Creates a new User Role
+      operationId: createUserRole
+      requestBody:
+        description: Create request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRoleCreate'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/UserRoleDetail'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        415:
+          $ref: '#/components/responses/FeatherCoreUnsupportedMediaType'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+  /user/roles/{roleKey}:
+    parameters:
+    - $ref: '#/components/parameters/UserRoleKey'
+    get:
+      tags:
+      - User - Role
+      summary: User Role details
+      description: Get the details of a User Role
+      operationId: detailUserRole
+      responses:
+        200:
+          $ref: '#/components/responses/UserRoleDetail'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+      security:
+      - FeatherCoreBearerToken: []
+    put:
+      tags:
+      - User - Role
+      summary: Update a User Role
+      description: Updates a User Role
+      operationId: updateUserRole
+      requestBody:
+        description: Update request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRoleUpdate'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/UserRoleDetail'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+        415:
+          $ref: '#/components/responses/FeatherCoreUnsupportedMediaType'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+    delete:
+      tags:
+      - User - Role
+      summary: Delete one User Role
+      description: Delete one User Role using identifier
+      operationId: deleteUserRole
+      responses:
+        204:
+          $ref: '#/components/responses/FeatherCoreNoContent'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+    patch:
+      tags:
+      - User - Role
+      summary: Patch a User Role
+      description: Patch a given User Role
+      operationId: patchUserRole
+      requestBody:
+        description: Patch request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRolePatch'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/UserRoleDetail'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+        415:
+          $ref: '#/components/responses/FeatherCoreUnsupportedMediaType'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+components:
+  schemas:
+    FeatherCoreBadRequestError:
+      type: object
+      description: ''
+      properties:
+        key:
+          $ref: '#/components/schemas/FeatherCoreBadRequestErrorKey'
+        message:
+          $ref: '#/components/schemas/FeatherCoreErrorMessage'
+      required:
+      - key
+      - message
+    FeatherCoreBadRequestErrorKey:
+      type: string
+      enum:
+      - missingRequestBody
+      - invalidRequestBody
+      description: You can use this key for translation purposes.
+      examples:
+      - missingRequestBody
+      - invalidRequestBody
+    FeatherCoreConflictError:
+      type: object
+      description: ''
+      properties:
+        key:
+          $ref: '#/components/schemas/FeatherCoreConflictErrorKey'
+        message:
+          $ref: '#/components/schemas/FeatherCoreErrorMessage'
+      required:
+      - key
+      - message
+    FeatherCoreConflictErrorKey:
+      type: string
+      description: The system key of the related object.
+      examples:
+      - module.model
+      - foo.bar
+    FeatherCoreCreatedAt:
+      type: string
+      format: date-time
+      description: Object creation date
+      examples:
+      - '2023-04-04T09:20:15.000Z'
+    FeatherCoreErrorMessage:
+      type: string
+      description: The original error message provided by the system.
+      examples:
+      - Something went wrong with the request.
+    FeatherCoreForbiddenError:
+      type: object
+      description: ''
+      properties:
+        key:
+          $ref: '#/components/schemas/FeatherCoreForbiddenErrorKey'
+        message:
+          $ref: '#/components/schemas/FeatherCoreErrorMessage'
+      required:
+      - key
+      - message
+    FeatherCoreForbiddenErrorKey:
+      type: string
+      description: The system key of the related object.
+      examples:
+      - module.model
+      - foo.bar
+    FeatherCoreGoneError:
+      type: object
+      description: ''
+      properties:
+        key:
+          $ref: '#/components/schemas/FeatherCoreGoneErrorKey'
+        message:
+          $ref: '#/components/schemas/FeatherCoreErrorMessage'
+      required:
+      - key
+      - message
+    FeatherCoreGoneErrorKey:
+      type: string
+      description: The system key of the related object.
+      examples:
+      - module.model
+      - foo.bar
+    FeatherCoreHeadersContentLength:
+      type: integer
+      description: Content length
+    FeatherCoreInternalServerErrorError:
+      type: object
+      description: ''
+      properties:
+        key:
+          $ref: '#/components/schemas/FeatherCoreInternalServerErrorErrorKey'
+        message:
+          $ref: '#/components/schemas/FeatherCoreErrorMessage'
+      required:
+      - key
+      - message
+    FeatherCoreInternalServerErrorErrorKey:
+      type: string
+      description: The key of the related object.
+      examples:
+      - module.model
+      - foo.bar
+    FeatherCoreListCount:
+      type: integer
+      description: Total elements
+      examples:
+      - 42
+    FeatherCoreListOrder:
+      type: string
+      enum:
+      - asc
+      - desc
+      default: asc
+      description: Order of the list (ascending or descending).
+      examples:
+      - asc
+      - desc
+    FeatherCoreListPage:
+      type: object
+      description: Page properties
+      properties:
+        size:
+          $ref: '#/components/schemas/FeatherCoreListPageSize'
+        index:
+          $ref: '#/components/schemas/FeatherCoreListPageIndex'
+      required:
+      - size
+      - index
+    FeatherCoreListPageIndex:
+      type: integer
+      default: 0
+      description: Page index
+      examples:
+      - 0
+    FeatherCoreListPageSize:
+      type: integer
+      default: 50
+      description: Page size
+      examples:
+      - 10
+    FeatherCoreListSearch:
+      type: string
+      description: Value of the search term.
+      examples:
+      - foo
+    FeatherCoreMethodNotAllowedError:
+      type: object
+      description: ''
+      properties:
+        key:
+          $ref: '#/components/schemas/FeatherCoreMethodNotAllowedErrorKey'
+        message:
+          $ref: '#/components/schemas/FeatherCoreErrorMessage'
+      required:
+      - key
+      - message
+    FeatherCoreMethodNotAllowedErrorKey:
+      type: string
+      description: The system key of the related object.
+      examples:
+      - module.model
+      - foo.bar
+    FeatherCoreNotAcceptableError:
+      type: object
+      description: ''
+      properties:
+        key:
+          $ref: '#/components/schemas/FeatherCoreNotAcceptableErrorKey'
+        message:
+          $ref: '#/components/schemas/FeatherCoreErrorMessage'
+      required:
+      - key
+      - message
+    FeatherCoreNotAcceptableErrorKey:
+      type: string
+      description: The system key of the related object.
+      examples:
+      - module.model
+      - foo.bar
+    FeatherCoreNotFoundError:
+      type: object
+      description: ''
+      properties:
+        key:
+          $ref: '#/components/schemas/FeatherCoreNotFoundErrorKey'
+        message:
+          $ref: '#/components/schemas/FeatherCoreErrorMessage'
+      required:
+      - key
+      - message
+    FeatherCoreNotFoundErrorKey:
+      type: string
+      description: The system key of the related object.
+      examples:
+      - module.model
+      - foo.bar
+    FeatherCoreUnauthorizedError:
+      type: object
+      description: ''
+      properties:
+        key:
+          $ref: '#/components/schemas/FeatherCoreUnauthorizedErrorKey'
+        message:
+          $ref: '#/components/schemas/FeatherCoreErrorMessage'
+      required:
+      - key
+      - message
+    FeatherCoreUnauthorizedErrorKey:
+      type: string
+      const: invalidUserToken
+      description: You can use this key for translation purposes.
+      examples:
+      - invalidUserToken
+    FeatherCoreUnprocessableContentError:
+      type: object
+      description: ''
+      properties:
+        key:
+          $ref: '#/components/schemas/FeatherCoreUnprocessableContentErrorKey'
+        message:
+          $ref: '#/components/schemas/FeatherCoreErrorMessage'
+        failures:
+          $ref: '#/components/schemas/FeatherCoreUnprocessableContentErrorFailure'
+      required:
+      - key
+      - message
+      - failures
+    FeatherCoreUnprocessableContentErrorFailure:
+      type: array
+      description: ''
+      items:
+        $ref: '#/components/schemas/FeatherCoreUnprocessableContentErrorFailureDetail'
+      maxItems: 1000
+      minItems: 0
+    FeatherCoreUnprocessableContentErrorFailureDetail:
+      type: object
+      description: ''
+      properties:
+        key:
+          $ref: '#/components/schemas/FeatherCoreUnprocessableContentErrorFailureDetailKey'
+        message:
+          $ref: '#/components/schemas/FeatherCoreErrorMessage'
+      required:
+      - key
+      - message
+    FeatherCoreUnprocessableContentErrorFailureDetailKey:
+      type: string
+      description: Related field key for the error detail.
+      examples:
+      - email
+      - password
+      - coordinate
+      - coordinate.latitude
+      - coordinate.longitude
+    FeatherCoreUnprocessableContentErrorKey:
+      type: string
+      const: validation
+      description: You can use this key for translation purposes.
+      examples:
+      - validation
+    FeatherCoreUnsupportedMediaTypeError:
+      type: object
+      description: ''
+      properties:
+        key:
+          $ref: '#/components/schemas/FeatherCoreUnsupportedMediaTypeErrorKey'
+        message:
+          $ref: '#/components/schemas/FeatherCoreErrorMessage'
+      required:
+      - key
+      - message
+    FeatherCoreUnsupportedMediaTypeErrorKey:
+      type: string
+      description: You can use this key for translation purposes.
+      examples:
+      - application/json
+      - text/html
+    FeatherCoreUpdatedAt:
+      type: string
+      format: date-time
+      description: Last update for the object
+      examples:
+      - '2023-04-04T09:20:15.000Z'
+    SystemPermissionCreate:
+      type: object
+      description: ''
+      properties:
+        key:
+          $ref: '#/components/schemas/SystemPermissionKey'
+        name:
+          $ref: '#/components/schemas/SystemPermissionName'
+        notes:
+          $ref: '#/components/schemas/SystemPermissionNotes'
+      required:
+      - key
+      - name
+    SystemPermissionDetail:
+      type: object
+      description: ''
+      properties:
+        key:
+          $ref: '#/components/schemas/SystemPermissionKey'
+        name:
+          $ref: '#/components/schemas/SystemPermissionName'
+        notes:
+          $ref: '#/components/schemas/SystemPermissionNotes'
+      required:
+      - key
+      - name
+    SystemPermissionKey:
+      type: string
+      description: Key of the permission
+      examples:
+      - namespace.context.action
+    SystemPermissionList:
+      type: object
+      description: Permission list
+      properties:
+        items:
+          $ref: '#/components/schemas/SystemPermissionListItems'
+        sort:
+          $ref: '#/components/schemas/SystemPermissionListSort'
+        order:
+          $ref: '#/components/schemas/FeatherCoreListOrder'
+        search:
+          $ref: '#/components/schemas/FeatherCoreListSearch'
+        page:
+          $ref: '#/components/schemas/FeatherCoreListPage'
+        count:
+          $ref: '#/components/schemas/FeatherCoreListCount'
+      required:
+      - items
+      - page
+      - count
+    SystemPermissionListItem:
+      type: object
+      description: Permission list item
+      properties:
+        key:
+          $ref: '#/components/schemas/SystemPermissionKey'
+        name:
+          $ref: '#/components/schemas/SystemPermissionName'
+      required:
+      - key
+      - name
+    SystemPermissionListItems:
+      type: array
+      description: Permission list items
+      items:
+        $ref: '#/components/schemas/SystemPermissionListItem'
+      maxItems: 1000
+      minItems: 0
+    SystemPermissionListSort:
+      type: string
+      enum:
+      - key
+      - name
+      description: The sort key for the list
+    SystemPermissionName:
+      type: string
+      description: Name of the permission
+      examples:
+      - Name of the permission
+    SystemPermissionNotes:
+      type: string
+      description: Description of the permission
+      examples:
+      - Notes for the permission
+    SystemPermissionPatch:
+      type: object
+      description: ''
+      properties:
+        key:
+          $ref: '#/components/schemas/SystemPermissionKey'
+        name:
+          $ref: '#/components/schemas/SystemPermissionName'
+        notes:
+          $ref: '#/components/schemas/SystemPermissionNotes'
+    SystemPermissionReference:
+      type: object
+      description: ''
+      properties:
+        key:
+          $ref: '#/components/schemas/SystemPermissionKey'
+        name:
+          $ref: '#/components/schemas/SystemPermissionName'
+      required:
+      - key
+      - name
+    SystemPermissionUpdate:
+      type: object
+      description: ''
+      properties:
+        key:
+          $ref: '#/components/schemas/SystemPermissionKey'
+        name:
+          $ref: '#/components/schemas/SystemPermissionName'
+        notes:
+          $ref: '#/components/schemas/SystemPermissionNotes'
+      required:
+      - key
+      - name
+    SystemVariableCreate:
+      type: object
+      description: ''
+      properties:
+        key:
+          $ref: '#/components/schemas/SystemVariableKey'
+        value:
+          $ref: '#/components/schemas/SystemVariableValue'
+        name:
+          $ref: '#/components/schemas/SystemVariableName'
+        notes:
+          $ref: '#/components/schemas/SystemVariableNotes'
+      required:
+      - key
+      - value
+    SystemVariableDetail:
+      type: object
+      description: ''
+      properties:
+        key:
+          $ref: '#/components/schemas/SystemVariableKey'
+        value:
+          $ref: '#/components/schemas/SystemVariableValue'
+        name:
+          $ref: '#/components/schemas/SystemVariableName'
+        notes:
+          $ref: '#/components/schemas/SystemVariableNotes'
+      required:
+      - key
+      - value
+    SystemVariableKey:
+      type: string
+      description: Key of the system variable
+      examples:
+      - system.email.address
+    SystemVariableList:
+      type: object
+      description: System varaible list
+      properties:
+        items:
+          $ref: '#/components/schemas/SystemVariableListItems'
+        sort:
+          $ref: '#/components/schemas/SystemVariableListSort'
+        order:
+          $ref: '#/components/schemas/FeatherCoreListOrder'
+        search:
+          $ref: '#/components/schemas/FeatherCoreListSearch'
+        page:
+          $ref: '#/components/schemas/FeatherCoreListPage'
+        count:
+          $ref: '#/components/schemas/FeatherCoreListCount'
+      required:
+      - items
+      - page
+      - count
+    SystemVariableListItem:
+      type: object
+      description: System variable list item
+      properties:
+        key:
+          $ref: '#/components/schemas/SystemVariableKey'
+        value:
+          $ref: '#/components/schemas/SystemVariableValue'
+        name:
+          $ref: '#/components/schemas/SystemVariableName'
+      required:
+      - key
+      - value
+    SystemVariableListItems:
+      type: array
+      description: System variable list items
+      items:
+        $ref: '#/components/schemas/SystemVariableListItem'
+      maxItems: 1000
+      minItems: 0
+    SystemVariableListSort:
+      type: string
+      enum:
+      - key
+      - name
+      - value
+      description: The sort key for the list
+    SystemVariableName:
+      type: string
+      description: Name of the system variable
+      examples:
+      - Sender address
+    SystemVariableNotes:
+      type: string
+      description: Notes of the system variable
+      examples:
+      - Any notes here
+    SystemVariablePatch:
+      type: object
+      description: ''
+      properties:
+        key:
+          $ref: '#/components/schemas/SystemVariableKey'
+        value:
+          $ref: '#/components/schemas/SystemVariableValue'
+        name:
+          $ref: '#/components/schemas/SystemVariableName'
+        notes:
+          $ref: '#/components/schemas/SystemVariableNotes'
+    SystemVariableReference:
+      type: object
+      description: ''
+      properties:
+        key:
+          $ref: '#/components/schemas/SystemVariableKey'
+        value:
+          $ref: '#/components/schemas/SystemVariableValue'
+      required:
+      - key
+      - value
+    SystemVariableUpdate:
+      type: object
+      description: ''
+      properties:
+        key:
+          $ref: '#/components/schemas/SystemVariableKey'
+        value:
+          $ref: '#/components/schemas/SystemVariableValue'
+        name:
+          $ref: '#/components/schemas/SystemVariableName'
+        notes:
+          $ref: '#/components/schemas/SystemVariableNotes'
+      required:
+      - key
+      - value
+    SystemVariableValue:
+      type: string
+      description: Value of the system variable
+      examples:
+      - something@mail.com
+    UserAccountCreate:
+      type: object
+      description: ''
+      properties:
+        email:
+          $ref: '#/components/schemas/UserAccountEmail'
+        password:
+          $ref: '#/components/schemas/UserAccountPassword'
+        roleKeys:
+          $ref: '#/components/schemas/UserAccountRoleKeys'
+        permissions:
+          $ref: '#/components/schemas/UserAccountPermissions'
+      required:
+      - email
+      - password
+      - roleKeys
+      - permissions
+    UserAccountDetail:
+      type: object
+      description: ''
+      properties:
+        id:
+          $ref: '#/components/schemas/UserAccountId'
+        email:
+          $ref: '#/components/schemas/UserAccountEmail'
+        roles:
+          $ref: '#/components/schemas/UserAccountRoles'
+        permissions:
+          $ref: '#/components/schemas/UserAccountPermissions'
+      required:
+      - id
+      - email
+      - roles
+      - permissions
+    UserAccountEmail:
+      type: string
+      format: email
+      description: E-mail address of the user
+      examples:
+      - info@binarybirds.com
+    UserAccountId:
+      type: string
+      description: Unique user account identifier
+      examples:
+      - P6p5WCctPKqhYKtGMUoTQ
+    UserAccountInvitationCreate:
+      type: object
+      description: ''
+      properties:
+        email:
+          $ref: '#/components/schemas/UserAccountInvitationEmail'
+      required:
+      - email
+    UserAccountInvitationDetail:
+      type: object
+      description: ''
+      properties:
+        id:
+          $ref: '#/components/schemas/UserAccountInvitationId'
+        email:
+          $ref: '#/components/schemas/UserAccountInvitationEmail'
+        token:
+          $ref: '#/components/schemas/UserAccountInvitationToken'
+        expiration:
+          $ref: '#/components/schemas/UserAccountInvitationExpiration'
+      required:
+      - id
+      - email
+      - token
+      - expiration
+    UserAccountInvitationEmail:
+      type: string
+      format: email
+      description: E-mail address for the invitation
+      examples:
+      - info@binarybirds.com
+    UserAccountInvitationExpiration:
+      type: string
+      format: date-time
+      description: Account invitation expiration date
+      examples:
+      - '2023-02-10T09:20:15.393Z'
+    UserAccountInvitationId:
+      type: string
+      description: Unique user account invitation identifier
+      examples:
+      - P6p5WCctPKqhYKtGMUoTQ
+    UserAccountInvitationList:
+      type: object
+      description: User account invitation list
+      properties:
+        items:
+          $ref: '#/components/schemas/UserAccountInvitationListItems'
+        sort:
+          $ref: '#/components/schemas/UserAccountInvitationListSort'
+        order:
+          $ref: '#/components/schemas/FeatherCoreListOrder'
+        search:
+          $ref: '#/components/schemas/FeatherCoreListSearch'
+        page:
+          $ref: '#/components/schemas/FeatherCoreListPage'
+        count:
+          $ref: '#/components/schemas/FeatherCoreListCount'
+      required:
+      - items
+      - page
+      - count
+    UserAccountInvitationListItem:
+      type: object
+      description: User account invitation list item
+      properties:
+        id:
+          $ref: '#/components/schemas/UserAccountInvitationId'
+        email:
+          $ref: '#/components/schemas/UserAccountInvitationEmail'
+      required:
+      - id
+      - email
+    UserAccountInvitationListItems:
+      type: array
+      description: User account invitation list items
+      items:
+        $ref: '#/components/schemas/UserAccountInvitationListItem'
+      maxItems: 1000
+      minItems: 0
+    UserAccountInvitationListSort:
+      type: string
+      const: email
+      description: The sort key for the list
+    UserAccountInvitationReference:
+      type: object
+      description: ''
+      properties:
+        id:
+          $ref: '#/components/schemas/UserAccountInvitationId'
+        email:
+          $ref: '#/components/schemas/UserAccountInvitationEmail'
+      required:
+      - id
+      - email
+    UserAccountInvitationToken:
+      type: string
+      description: Account invitation token
+      examples:
+      - pjZwJnl7lFIAkyXsvxlni16VHcdGQKlhd8AMh6wSRCRFyHCQrZpwBWesMdH8jSD6
+    UserAccountList:
+      type: object
+      description: User account list
+      properties:
+        items:
+          $ref: '#/components/schemas/UserAccountListItems'
+        sort:
+          $ref: '#/components/schemas/UserAccountListSort'
+        order:
+          $ref: '#/components/schemas/FeatherCoreListOrder'
+        search:
+          $ref: '#/components/schemas/FeatherCoreListSearch'
+        page:
+          $ref: '#/components/schemas/FeatherCoreListPage'
+        count:
+          $ref: '#/components/schemas/FeatherCoreListCount'
+      required:
+      - items
+      - page
+      - count
+    UserAccountListItem:
+      type: object
+      description: User account list item
+      properties:
+        id:
+          $ref: '#/components/schemas/UserAccountId'
+        email:
+          $ref: '#/components/schemas/UserAccountEmail'
+      required:
+      - id
+      - email
+    UserAccountListItems:
+      type: array
+      description: User account list items
+      items:
+        $ref: '#/components/schemas/UserAccountListItem'
+      maxItems: 1000
+      minItems: 0
+    UserAccountListSort:
+      type: string
+      const: email
+      description: The sort key for the list
+    UserAccountPassword:
+      type: string
+      format: password
+      description: Password of the user
+      examples:
+      - ChangeMe1
+    UserAccountPatch:
+      type: object
+      description: ''
+      properties:
+        email:
+          $ref: '#/components/schemas/UserAccountEmail'
+        password:
+          $ref: '#/components/schemas/UserAccountPassword'
+        roleKeys:
+          $ref: '#/components/schemas/UserAccountRoleKeys'
+    UserAccountPermissions:
+      type: array
+      description: ''
+      items:
+        $ref: '#/components/schemas/SystemPermissionKey'
+      maxItems: 1000
+      minItems: 0
+    UserAccountReference:
+      type: object
+      description: ''
+      properties:
+        id:
+          $ref: '#/components/schemas/UserAccountId'
+        email:
+          $ref: '#/components/schemas/UserAccountEmail'
+      required:
+      - id
+      - email
+    UserAccountRoleKeys:
+      type: array
+      description: User role keys
+      items:
+        $ref: '#/components/schemas/UserRoleKey'
+      maxItems: 1000
+      minItems: 0
+    UserAccountRoles:
+      type: array
+      description: User roles
+      items:
+        $ref: '#/components/schemas/UserRoleReference'
+      maxItems: 1000
+      minItems: 0
+    UserAccountUpdate:
+      type: object
+      description: ''
+      properties:
+        email:
+          $ref: '#/components/schemas/UserAccountEmail'
+        password:
+          $ref: '#/components/schemas/UserAccountPassword'
+        roleKeys:
+          $ref: '#/components/schemas/UserAccountRoleKeys'
+      required:
+      - email
+      - roleKeys
+    UserAuthEmail:
+      type: string
+      format: email
+      description: Email address of the user
+      examples:
+      - info@binarybirds.com
+    UserAuthExpiration:
+      type: string
+      format: date-time
+      description: Expiration of the auth token
+      examples:
+      - '2023-02-10T09:20:15.393Z'
+    UserAuthPassword:
+      type: string
+      format: password
+      description: Password of the user
+      examples:
+      - ChangeMe1
+    UserAuthRequest:
+      type: object
+      description: User auth request
+      properties:
+        email:
+          $ref: '#/components/schemas/UserAuthEmail'
+        password:
+          $ref: '#/components/schemas/UserAuthPassword'
+      required:
+      - email
+      - password
+    UserAuthResponse:
+      type: object
+      description: User auth response
+      properties:
+        account:
+          $ref: '#/components/schemas/UserAccountDetail'
+        token:
+          $ref: '#/components/schemas/UserAuthToken'
+      required:
+      - account
+      - token
+    UserAuthToken:
+      type: object
+      description: User auth token details
+      properties:
+        value:
+          $ref: '#/components/schemas/UserAuthValue'
+        expiration:
+          $ref: '#/components/schemas/UserAuthExpiration'
+      required:
+      - value
+      - expiration
+    UserAuthValue:
+      type: string
+      description: User auth token
+      examples:
+      - pjZwJnl7lFIAkyXsvxlni16VHcdGQKlhd8AMh6wSRCRFyHCQrZpwBWesMdH8jSD6
+    UserOauthAuthorizePostRequest:
+      type: object
+      description: ''
+      properties:
+        clientId:
+          $ref: '#/components/schemas/UserOauthClientId'
+        redirectUrl:
+          $ref: '#/components/schemas/UserOauthRedirectUrl'
+        scope:
+          $ref: '#/components/schemas/UserOauthScope'
+        state:
+          $ref: '#/components/schemas/UserOauthState'
+        responseType:
+          $ref: '#/components/schemas/UserOauthResponseType'
+        accountId:
+          $ref: '#/components/schemas/UserAccountId'
+    UserOauthClientAudience:
+      type: string
+      description: Identifies the intended audience for the access token
+      examples:
+      - http://drive.com
+    UserOauthClientClientId:
+      type: string
+      description: The client id
+      examples:
+      - clientId
+    UserOauthClientClientSecret:
+      type: string
+      description: The client secret
+      examples:
+      - clientSecret
+    UserOauthClientClientType:
+      type: string
+      enum:
+      - app
+      - api
+      description: The type of the client
+      examples:
+      - app
+    UserOauthClientCreate:
+      type: object
+      description: ''
+      properties:
+        name:
+          $ref: '#/components/schemas/UserOauthClientName'
+        type:
+          $ref: '#/components/schemas/UserOauthClientClientType'
+        redirectUrl:
+          $ref: '#/components/schemas/UserOauthClientRedirectUrl'
+        issuer:
+          $ref: '#/components/schemas/UserOauthClientIssuer'
+        subject:
+          $ref: '#/components/schemas/UserOauthClientSubject'
+        audience:
+          $ref: '#/components/schemas/UserOauthClientAudience'
+      required:
+      - name
+      - type
+      - redirectUrl
+      - issuer
+      - subject
+      - audience
+    UserOauthClientDetail:
+      type: object
+      description: ''
+      properties:
+        clientId:
+          $ref: '#/components/schemas/UserOauthClientClientId'
+        name:
+          $ref: '#/components/schemas/UserOauthClientName'
+        type:
+          $ref: '#/components/schemas/UserOauthClientClientType'
+        clientSecret:
+          $ref: '#/components/schemas/UserOauthClientClientSecret'
+        redirectUrl:
+          $ref: '#/components/schemas/UserOauthClientRedirectUrl'
+        issuer:
+          $ref: '#/components/schemas/UserOauthClientIssuer'
+        subject:
+          $ref: '#/components/schemas/UserOauthClientSubject'
+        audience:
+          $ref: '#/components/schemas/UserOauthClientAudience'
+        privateKey:
+          $ref: '#/components/schemas/UserOauthClientPrivateKey'
+        publicKey:
+          $ref: '#/components/schemas/UserOauthClientPublicKey'
+      required:
+      - clientId
+      - name
+      - type
+      - clientSecret
+      - redirectUrl
+      - issuer
+      - subject
+      - audience
+      - privateKey
+      - publicKey
+    UserOauthClientId:
+      type: string
+      description: The client id
+      examples:
+      - clientId
+    UserOauthClientIssuer:
+      type: string
+      description: The issuer is the authorization server
+      examples:
+      - http://accounts.com
+    UserOauthClientList:
+      type: object
+      description: OauthClient list
+      properties:
+        items:
+          $ref: '#/components/schemas/UserOauthClientListItems'
+        sort:
+          $ref: '#/components/schemas/UserOauthClientListSort'
+        order:
+          $ref: '#/components/schemas/FeatherCoreListOrder'
+        search:
+          $ref: '#/components/schemas/FeatherCoreListSearch'
+        page:
+          $ref: '#/components/schemas/FeatherCoreListPage'
+        count:
+          $ref: '#/components/schemas/FeatherCoreListCount'
+      required:
+      - items
+      - page
+      - count
+    UserOauthClientListItem:
+      type: object
+      description: OauthClient list item
+      properties:
+        clientId:
+          $ref: '#/components/schemas/UserOauthClientClientId'
+        name:
+          $ref: '#/components/schemas/UserOauthClientName'
+        type:
+          $ref: '#/components/schemas/UserOauthClientClientType'
+      required:
+      - clientId
+      - name
+      - type
+    UserOauthClientListItems:
+      type: array
+      description: OauthClient list items
+      items:
+        $ref: '#/components/schemas/UserOauthClientListItem'
+      maxItems: 1000
+      minItems: 0
+    UserOauthClientListSort:
+      type: string
+      enum:
+      - name
+      - type
+      description: The sort key for the list
+    UserOauthClientName:
+      type: string
+      description: A private name for the client for better identification
+      examples:
+      - My client
+    UserOauthClientPatch:
+      type: object
+      description: ''
+      properties:
+        clientId:
+          $ref: '#/components/schemas/UserOauthClientClientId'
+        name:
+          $ref: '#/components/schemas/UserOauthClientName'
+        type:
+          $ref: '#/components/schemas/UserOauthClientClientType'
+        clientSecret:
+          $ref: '#/components/schemas/UserOauthClientClientSecret'
+        redirectUrl:
+          $ref: '#/components/schemas/UserOauthClientRedirectUrl'
+        issuer:
+          $ref: '#/components/schemas/UserOauthClientIssuer'
+        subject:
+          $ref: '#/components/schemas/UserOauthClientSubject'
+        audience:
+          $ref: '#/components/schemas/UserOauthClientAudience'
+        privateKey:
+          $ref: '#/components/schemas/UserOauthClientPrivateKey'
+        publicKey:
+          $ref: '#/components/schemas/UserOauthClientPublicKey'
+    UserOauthClientPrivateKey:
+      type: string
+      description: A private key used to sign the jwt
+      examples:
+      - privateKey
+    UserOauthClientPublicKey:
+      type: string
+      description: A public key used to verify the jwt
+      examples:
+      - publicKey
+    UserOauthClientRedirectUrl:
+      type: string
+      description: The client redirects to this url
+      examples:
+      - http://localhost:8080/redirect
+    UserOauthClientSecret:
+      type: string
+      description: The client secret
+      examples:
+      - clientSecret
+    UserOauthClientSubject:
+      type: string
+      description: The subject of the access token
+      examples:
+      - user/client/userId
+    UserOauthClientUpdate:
+      type: object
+      description: ''
+      properties:
+        clientId:
+          $ref: '#/components/schemas/UserOauthClientClientId'
+        name:
+          $ref: '#/components/schemas/UserOauthClientName'
+        type:
+          $ref: '#/components/schemas/UserOauthClientClientType'
+        clientSecret:
+          $ref: '#/components/schemas/UserOauthClientClientSecret'
+        redirectUrl:
+          $ref: '#/components/schemas/UserOauthClientRedirectUrl'
+        issuer:
+          $ref: '#/components/schemas/UserOauthClientIssuer'
+        subject:
+          $ref: '#/components/schemas/UserOauthClientSubject'
+        audience:
+          $ref: '#/components/schemas/UserOauthClientAudience'
+        privateKey:
+          $ref: '#/components/schemas/UserOauthClientPrivateKey'
+        publicKey:
+          $ref: '#/components/schemas/UserOauthClientPublicKey'
+      required:
+      - clientId
+      - name
+      - type
+      - clientSecret
+      - redirectUrl
+      - issuer
+      - subject
+      - audience
+      - privateKey
+      - publicKey
+    UserOauthCode:
+      type: string
+      description: authorization code returned before
+      examples:
+      - uiu9879khh
+    UserOauthGrantType:
+      type: string
+      description: grant type
+      examples:
+      - authorization_code/client_credentials
+    UserOauthJWT:
+      type: string
+      description: JWT
+      examples:
+      - uiu9879khh.rtzrtz.6hdhfgh
+    UserOauthLocationHeader:
+      type: string
+      description: Location header
+      examples:
+      - http://localhost:8080/redirect?code=asdasfg
+    UserOauthRedirectUrl:
+      type: string
+      description: The url to redirect to after successful request
+      examples:
+      - url.com
+    UserOauthResponseType:
+      type: string
+      description: Request-specific data
+      examples:
+      - code
+    UserOauthScope:
+      type: string
+      description: 'Scope like: read write'
+      examples:
+      - read write
+    UserOauthState:
+      type: string
+      description: Request-specific data
+      examples:
+      - kjsngsfgn
+    UserOauthTokenPostRequest:
+      type: object
+      description: ''
+      properties:
+        grantType:
+          $ref: '#/components/schemas/UserOauthGrantType'
+        clientId:
+          $ref: '#/components/schemas/UserOauthClientId'
+        clientSecret:
+          $ref: '#/components/schemas/UserOauthClientSecret'
+        code:
+          $ref: '#/components/schemas/UserOauthCode'
+        redirectUrl:
+          $ref: '#/components/schemas/UserOauthRedirectUrl'
+    UserOauthTokenPostResponse:
+      type: object
+      description: ''
+      properties:
+        jwt:
+          $ref: '#/components/schemas/UserOauthJWT'
+      required:
+      - jwt
+    UserPasswordEmail:
+      type: string
+      format: email
+      description: Email address of the user
+      examples:
+      - info@binarybirds.com
+    UserPasswordPassword:
+      type: string
+      format: password
+      description: Password of the user
+      examples:
+      - ChangeMe1
+    UserPasswordReset:
+      type: object
+      description: ''
+      properties:
+        email:
+          $ref: '#/components/schemas/UserPasswordEmail'
+      required:
+      - email
+    UserPasswordSet:
+      type: object
+      description: ''
+      properties:
+        password:
+          $ref: '#/components/schemas/UserPasswordPassword'
+      required:
+      - password
+    UserPasswordToken:
+      type: string
+      description: The password reset token
+      examples:
+      - uuimnfzda8b35r2o1wnadx4hq3p46vzo02u5fx9vitgrmlgbgeasz5d3lvz7d8rq
+    UserPushCreate:
+      type: object
+      description: ''
+      properties:
+        title:
+          $ref: '#/components/schemas/UserPushTitle'
+        message:
+          $ref: '#/components/schemas/UserPushMessage'
+        recipients:
+          $ref: '#/components/schemas/UserPushRecipients'
+      required:
+      - title
+      - message
+      - recipients
+    UserPushDate:
+      type: string
+      format: date-time
+      description: Push message create date
+      examples:
+      - '2023-02-10T09:20:15.393Z'
+    UserPushDetail:
+      type: object
+      description: ''
+      properties:
+        id:
+          $ref: '#/components/schemas/UserPushId'
+        title:
+          $ref: '#/components/schemas/UserPushTitle'
+        message:
+          $ref: '#/components/schemas/UserPushMessage'
+        topic:
+          $ref: '#/components/schemas/UserPushTopic'
+        date:
+          $ref: '#/components/schemas/UserPushDate'
+      required:
+      - id
+      - title
+      - message
+      - topic
+      - date
+    UserPushId:
+      type: string
+      description: Unique push identifier
+      examples:
+      - P6p5WCctPKqhYKtGMUoTQ
+    UserPushList:
+      type: object
+      description: Push message list
+      properties:
+        items:
+          $ref: '#/components/schemas/UserPushListItems'
+        sort:
+          $ref: '#/components/schemas/UserPushListSort'
+        order:
+          $ref: '#/components/schemas/FeatherCoreListOrder'
+        search:
+          $ref: '#/components/schemas/FeatherCoreListSearch'
+        page:
+          $ref: '#/components/schemas/FeatherCoreListPage'
+        count:
+          $ref: '#/components/schemas/FeatherCoreListCount'
+      required:
+      - items
+      - page
+      - count
+    UserPushListItem:
+      type: object
+      description: Push message list item
+      properties:
+        id:
+          $ref: '#/components/schemas/UserPushId'
+        title:
+          $ref: '#/components/schemas/UserPushTitle'
+        message:
+          $ref: '#/components/schemas/UserPushMessage'
+      required:
+      - id
+      - title
+      - message
+    UserPushListItems:
+      type: array
+      description: Push message list items
+      items:
+        $ref: '#/components/schemas/UserPushListItem'
+      maxItems: 1000
+      minItems: 0
+    UserPushListSort:
+      type: string
+      enum:
+      - title
+      - message
+      description: The sort key for the list
+    UserPushMessage:
+      type: string
+      description: Push message
+      examples:
+      - message
+    UserPushRecipients:
+      type: array
+      description: Push message recipients to send
+      items:
+        $ref: '#/components/schemas/UserPushTokenId'
+      maxItems: 1000
+      minItems: 0
+    UserPushReference:
+      type: object
+      description: ''
+      properties:
+        id:
+          $ref: '#/components/schemas/UserPushId'
+        title:
+          $ref: '#/components/schemas/UserPushTitle'
+        message:
+          $ref: '#/components/schemas/UserPushMessage'
+      required:
+      - id
+      - title
+      - message
+    UserPushTitle:
+      type: string
+      description: Push message title
+      examples:
+      - title
+    UserPushTokenCreate:
+      type: object
+      description: ''
+      properties:
+        accountId:
+          $ref: '#/components/schemas/UserAccountId'
+        platform:
+          $ref: '#/components/schemas/UserPushTokenPlatform'
+        token:
+          $ref: '#/components/schemas/UserPushTokenToken'
+      required:
+      - accountId
+      - platform
+      - token
+    UserPushTokenDetail:
+      type: object
+      description: ''
+      properties:
+        id:
+          $ref: '#/components/schemas/UserPushTokenId'
+        accountId:
+          $ref: '#/components/schemas/UserAccountId'
+        platform:
+          $ref: '#/components/schemas/UserPushTokenPlatform'
+        token:
+          $ref: '#/components/schemas/UserPushTokenToken'
+      required:
+      - id
+      - accountId
+      - platform
+      - token
+    UserPushTokenId:
+      type: string
+      description: Unique user push token identifier
+      examples:
+      - P6p5WCctPKqhYKtGMUoTQ
+    UserPushTokenPlatform:
+      type: string
+      enum:
+      - android
+      - ios
+      description: User device platform type
+      examples:
+      - ios
+    UserPushTokenReference:
+      type: object
+      description: ''
+      properties:
+        id:
+          $ref: '#/components/schemas/UserPushTokenId'
+        token:
+          $ref: '#/components/schemas/UserPushTokenToken'
+      required:
+      - id
+      - token
+    UserPushTokenToken:
+      type: string
+      description: Push token value
+      examples:
+      - pjZwJnl7lFIAkyXsvxlni16VHcdGQKlhd8AMh6wSRCRFyHCQrZpwBWesMdH8jSD6
+    UserPushTokenUpdate:
+      type: object
+      description: ''
+      properties:
+        token:
+          $ref: '#/components/schemas/UserPushTokenToken'
+      required:
+      - token
+    UserPushTopic:
+      type: string
+      enum:
+      - documentShare
+      - message
+      description: Push message topic type
+      examples:
+      - message
+    UserRegisterToken:
+      type: string
+      description: The invitation token
+      examples:
+      - uuimnfzda8b35r2o1wnadx4hq3p46vzo02u5fx9vitgrmlgbgeasz5d3lvz7d8rq
+    UserRoleCreate:
+      type: object
+      description: ''
+      properties:
+        key:
+          $ref: '#/components/schemas/UserRoleKey'
+        name:
+          $ref: '#/components/schemas/UserRoleName'
+        notes:
+          $ref: '#/components/schemas/UserRoleNotes'
+        permissionKeys:
+          $ref: '#/components/schemas/UserRolePermissionKeys'
+      required:
+      - key
+      - name
+      - permissionKeys
+    UserRoleDetail:
+      type: object
+      description: ''
+      properties:
+        key:
+          $ref: '#/components/schemas/UserRoleKey'
+        name:
+          $ref: '#/components/schemas/UserRoleName'
+        notes:
+          $ref: '#/components/schemas/UserRoleNotes'
+        permissions:
+          $ref: '#/components/schemas/UserRolePermissions'
+      required:
+      - key
+      - name
+      - permissions
+    UserRoleKey:
+      type: string
+      description: Key of the role
+      examples:
+      - manager
+    UserRoleList:
+      type: object
+      description: Role list
+      properties:
+        items:
+          $ref: '#/components/schemas/UserRoleListItems'
+        sort:
+          $ref: '#/components/schemas/UserRoleListSort'
+        order:
+          $ref: '#/components/schemas/FeatherCoreListOrder'
+        search:
+          $ref: '#/components/schemas/FeatherCoreListSearch'
+        page:
+          $ref: '#/components/schemas/FeatherCoreListPage'
+        count:
+          $ref: '#/components/schemas/FeatherCoreListCount'
+      required:
+      - items
+      - page
+      - count
+    UserRoleListItem:
+      type: object
+      description: Role list item
+      properties:
+        key:
+          $ref: '#/components/schemas/UserRoleKey'
+        name:
+          $ref: '#/components/schemas/UserRoleName'
+      required:
+      - key
+      - name
+    UserRoleListItems:
+      type: array
+      description: Role list items
+      items:
+        $ref: '#/components/schemas/UserRoleListItem'
+      maxItems: 1000
+      minItems: 0
+    UserRoleListSort:
+      type: string
+      enum:
+      - key
+      - name
+      description: The sort key for the list
+    UserRoleName:
+      type: string
+      description: Name of the role
+      examples:
+      - Manager
+    UserRoleNotes:
+      type: string
+      description: Description of the role
+      examples:
+      - Manager role
+    UserRolePatch:
+      type: object
+      description: ''
+      properties:
+        key:
+          $ref: '#/components/schemas/UserRoleKey'
+        name:
+          $ref: '#/components/schemas/UserRoleName'
+        notes:
+          $ref: '#/components/schemas/UserRoleNotes'
+        permissionKeys:
+          $ref: '#/components/schemas/UserRolePermissionKeys'
+    UserRolePermissionKeys:
+      type: array
+      description: System permission keys
+      items:
+        $ref: '#/components/schemas/SystemPermissionKey'
+      maxItems: 1000
+      minItems: 0
+    UserRolePermissions:
+      type: array
+      description: System permissions
+      items:
+        $ref: '#/components/schemas/SystemPermissionReference'
+      maxItems: 1000
+      minItems: 0
+    UserRoleReference:
+      type: object
+      description: ''
+      properties:
+        key:
+          $ref: '#/components/schemas/UserRoleKey'
+        name:
+          $ref: '#/components/schemas/UserRoleName'
+      required:
+      - key
+      - name
+    UserRoleUpdate:
+      type: object
+      description: ''
+      properties:
+        key:
+          $ref: '#/components/schemas/UserRoleKey'
+        name:
+          $ref: '#/components/schemas/UserRoleName'
+        notes:
+          $ref: '#/components/schemas/UserRoleNotes'
+        permissionKeys:
+          $ref: '#/components/schemas/UserRolePermissionKeys'
+      required:
+      - key
+      - name
+      - permissionKeys
+  responses:
+    FeatherCoreBadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FeatherCoreBadRequestError'
+    FeatherCoreConflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FeatherCoreConflictError'
+    FeatherCoreForbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FeatherCoreForbiddenError'
+    FeatherCoreFound:
+      description: Found
+    FeatherCoreGone:
+      description: Gone
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FeatherCoreGoneError'
+    FeatherCoreHead:
+      description: Ok
+      headers:
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+    FeatherCoreInternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FeatherCoreInternalServerErrorError'
+    FeatherCoreMethodNotAllowed:
+      description: Method not allowed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FeatherCoreMethodNotAllowedError'
+    FeatherCoreNoContent:
+      description: No content
+    FeatherCoreNotAcceptable:
+      description: Not acceptable
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FeatherCoreNotAcceptableError'
+    FeatherCoreNotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FeatherCoreNotFoundError'
+    FeatherCoreOk:
+      description: ok
+    FeatherCoreSeeOther:
+      description: See Other
+    FeatherCoreTemporaryRedirect:
+      description: Temporary Redirect
+    FeatherCoreUnauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FeatherCoreUnauthorizedError'
+    FeatherCoreUnprocessableContent:
+      description: Unprocessable content
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FeatherCoreUnprocessableContentError'
+    FeatherCoreUnsupportedMediaType:
+      description: Unsupported media type
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FeatherCoreUnsupportedMediaTypeError'
+    SystemPermissionDetail:
+      description: System Permission detail object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemPermissionDetail'
+    SystemPermissionList:
+      description: System Permission list object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemPermissionList'
+    SystemVariableDetail:
+      description: System variable detail object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemVariableDetail'
+    SystemVariableList:
+      description: System variable list object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemVariableList'
+    UserAccountDetail:
+      description: User Account detail object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserAccountDetail'
+    UserAccountInvitationDetail:
+      description: User Account invitation detail object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserAccountInvitationDetail'
+    UserAccountInvitationList:
+      description: User Account invitation list object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserAccountInvitationList'
+    UserAccountList:
+      description: User Account list object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserAccountList'
+    UserAuthResponse:
+      description: Sign in response object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserAuthResponse'
+    UserOauthClientDetail:
+      description: OauthClient detail object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserOauthClientDetail'
+    UserOauthClientList:
+      description: OauthClient list object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserOauthClientList'
+    UserOauthRedirectResponse:
+      description: Redirect response
+      headers:
+        Location:
+          $ref: '#/components/headers/Location'
+    UserOauthTokenPostResponse:
+      description: code exchange response object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserOauthTokenPostResponse'
+    UserPasswordReset:
+      description: Initiate a reset password flow
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserPasswordReset'
+    UserPasswordSet:
+      description: Set new password
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserPasswordSet'
+    UserPushDetail:
+      description: Push message detail object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserPushDetail'
+    UserPushList:
+      description: Push message list object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserPushList'
+    UserPushTokenCreate:
+      description: Create a push token object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserPushTokenCreate'
+    UserPushTokenUpdate:
+      description: Updates a push token object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserPushTokenUpdate'
+    UserRegisterPost:
+      description: Register a new user account
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserAuthResponse'
+    UserRoleDetail:
+      description: User Role detail object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserRoleDetail'
+    UserRoleList:
+      description: User Role list object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserRoleList'
+  parameters:
+    FeatherCoreListOrder:
+      name: order
+      in: query
+      schema:
+        $ref: '#/components/schemas/FeatherCoreListOrder'
+      description: Sort order parameter
+    FeatherCoreListPageIndex:
+      name: pageIndex
+      in: query
+      schema:
+        $ref: '#/components/schemas/FeatherCoreListPageIndex'
+      description: The current page number
+    FeatherCoreListPageSize:
+      name: pageSize
+      in: query
+      schema:
+        $ref: '#/components/schemas/FeatherCoreListPageSize'
+      description: The number of items per page
+    FeatherCoreListSearch:
+      name: search
+      in: query
+      schema:
+        $ref: '#/components/schemas/FeatherCoreListSearch'
+      description: The list search value
+    SystemPermissionKey:
+      name: permissionKey
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/SystemPermissionKey'
+      description: System permission key
+    SystemPermissionListSort:
+      name: sort
+      in: query
+      schema:
+        $ref: '#/components/schemas/SystemPermissionListSort'
+      description: Sort by parameter
+    SystemVariableKey:
+      name: key
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/SystemVariableKey'
+      description: System variable key
+    SystemVariableListSort:
+      name: sort
+      in: query
+      schema:
+        $ref: '#/components/schemas/SystemVariableListSort'
+      description: Sort by parameter
+    UserAccountId:
+      name: accountId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/UserAccountId'
+      description: User account identifier
+    UserAccountInvitationId:
+      name: id
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/UserAccountInvitationId'
+      description: User account invitation identifier
+    UserAccountInvitationListSort:
+      name: sort
+      in: query
+      schema:
+        $ref: '#/components/schemas/UserAccountInvitationListSort'
+      description: Sort by parameter
+    UserAccountListSort:
+      name: sort
+      in: query
+      schema:
+        $ref: '#/components/schemas/UserAccountListSort'
+      description: Sort by parameter
+    UserOauthClientClientId:
+      name: clientId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/UserOauthClientClientId'
+      description: OauthClient identifier
+    UserOauthClientId:
+      name: clientId
+      in: query
+      schema:
+        $ref: '#/components/schemas/UserOauthClientId'
+      description: clientId
+    UserOauthClientListSort:
+      name: sort
+      in: query
+      schema:
+        $ref: '#/components/schemas/UserOauthClientListSort'
+      description: Sort by parameter
+    UserOauthRedirectUrl:
+      name: redirectUrl
+      in: query
+      schema:
+        $ref: '#/components/schemas/UserOauthRedirectUrl'
+      description: Url to redirect to
+    UserOauthResponseType:
+      name: responseType
+      in: query
+      schema:
+        $ref: '#/components/schemas/UserOauthResponseType'
+      description: responseType
+    UserOauthScope:
+      name: scope
+      in: query
+      schema:
+        $ref: '#/components/schemas/UserOauthScope'
+      description: scope
+    UserOauthState:
+      name: state
+      in: query
+      schema:
+        $ref: '#/components/schemas/UserOauthState'
+      description: state
+    UserPasswordToken:
+      name: token
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/UserPasswordToken'
+      description: The password reset token
+    UserPushId:
+      name: pushId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/UserPushId'
+      description: Push message id
+    UserPushListSort:
+      name: sort
+      in: query
+      schema:
+        $ref: '#/components/schemas/UserPushListSort'
+      description: Sort by parameter
+    UserPushTokenId:
+      name: pushTokenId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/UserPushTokenId'
+      description: User push token identifier
+    UserRegisterToken:
+      name: token
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/UserRegisterToken'
+      description: The invitation token
+    UserRoleKey:
+      name: roleKey
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/UserRoleKey'
+      description: User role key
+    UserRoleListSort:
+      name: sort
+      in: query
+      schema:
+        $ref: '#/components/schemas/UserRoleListSort'
+      description: Sort by parameter
+  requestBodies:
+    SystemPermissionCreate:
+      description: Create request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemPermissionCreate'
+      required: true
+    SystemPermissionPatch:
+      description: Patch request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemPermissionPatch'
+      required: true
+    SystemPermissionUpdate:
+      description: Update request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemPermissionUpdate'
+      required: true
+    SystemVariableCreate:
+      description: Create request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemVariableCreate'
+      required: true
+    SystemVariablePatch:
+      description: Patch request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemVariablePatch'
+      required: true
+    SystemVariableUpdate:
+      description: Update request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemVariableUpdate'
+      required: true
+    UserAccountCreate:
+      description: Create request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserAccountCreate'
+      required: true
+    UserAccountInvitationCreate:
+      description: Create request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserAccountInvitationCreate'
+      required: true
+    UserAccountPatch:
+      description: Patch request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserAccountPatch'
+      required: true
+    UserAccountUpdate:
+      description: Update request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserAccountUpdate'
+      required: true
+    UserAuthRequest:
+      description: Sign in request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserAuthRequest'
+      required: true
+    UserOauthAuthorizePostRequest:
+      description: get authorization code request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserOauthAuthorizePostRequest'
+      required: true
+    UserOauthClientCreate:
+      description: Create request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserOauthClientCreate'
+      required: true
+    UserOauthClientPatch:
+      description: Patch request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserOauthClientPatch'
+      required: true
+    UserOauthClientUpdate:
+      description: Update request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserOauthClientUpdate'
+      required: true
+    UserOauthTokenPostRequest:
+      description: exchange token request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserOauthTokenPostRequest'
+      required: true
+    UserPasswordReset:
+      description: Reset password request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserPasswordReset'
+      required: true
+    UserPasswordSet:
+      description: Set new password request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserPasswordSet'
+      required: true
+    UserPushCreate:
+      description: Create request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserPushCreate'
+      required: true
+    UserPushTokenCreate:
+      description: Create push token request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserPushTokenCreate'
+      required: true
+    UserPushTokenUpdate:
+      description: Update push token request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserPushTokenUpdate'
+      required: true
+    UserRegisterPost:
+      description: Register account request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserAccountCreate'
+      required: true
+    UserRoleCreate:
+      description: Create request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserRoleCreate'
+      required: true
+    UserRolePatch:
+      description: Patch request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserRolePatch'
+      required: true
+    UserRoleUpdate:
+      description: Update request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserRoleUpdate'
+      required: true
+  headers:
+    Content-Length:
+      schema:
+        $ref: '#/components/schemas/FeatherCoreHeadersContentLength'
+      description: Content length header
+    Location:
+      schema:
+        $ref: '#/components/schemas/UserOauthLocationHeader'
+      description: Location Header
+  securitySchemes:
+    FeatherCoreBearerToken:
+      description: Authorization header using a Bearer token
+      type: http
+      scheme: bearer
+      bearerFormat: token
