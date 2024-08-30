@@ -8,6 +8,7 @@
 import FeatherComponent
 import FeatherDatabase
 import FeatherModuleKit
+import FeatherValidation
 import Logging
 import NanoID
 import UserGatewayAccountsKit
@@ -39,16 +40,42 @@ struct AccountController: UserGatewayAccountInterface {
             try await accountsClient.detailUserGatewayAccounts(
                 .init(path: .init(accountId: id.rawValue))
             )
-            .ok.body.json
 
-        return .init(
-            id: .init(rawValue: ret.id),
-            email: ret.email,
-            roles: ret.roles.map {
-                .init(key: .init(rawValue: $0.key), name: $0.name)
-            },
-            permissions: ret.permissions.map { .init(rawValue: $0) }
-        )
+        switch ret {
+        case .ok(let response):
+            switch response.body {
+            case .json(let data):
+                return .init(
+                    id: .init(rawValue: data.id),
+                    email: data.email,
+                    roles: data.roles.map {
+                        .init(key: .init(rawValue: $0.key), name: $0.name)
+                    },
+                    permissions: data.permissions.map { .init(rawValue: $0) }
+                )
+            }
+
+        case .badRequest(_):
+            throw UserGateway.Error.unknown
+
+        case .unauthorized(_):
+            throw UserGateway.Error.unknown
+
+        case .forbidden(_):
+            throw UserGateway.Error.unknown
+
+        case .notFound(let notFoundResponse):
+            switch notFoundResponse.body {
+            case .json(let data):
+                if let error = ModuleError(data) {
+                    throw error
+                }
+            }
+            throw UserGateway.Error.unknown
+
+        case .undocumented(_, _):
+            throw UserGateway.Error.unknown
+        }
     }
 
     func update(
@@ -68,16 +95,51 @@ struct AccountController: UserGatewayAccountInterface {
                     )
                 )
             )
-            .ok.body.json
 
-        return .init(
-            id: .init(rawValue: ret.id),
-            email: ret.email,
-            roles: ret.roles.map {
-                .init(key: .init(rawValue: $0.key), name: $0.name)
-            },
-            permissions: ret.permissions.map { .init(rawValue: $0) }
-        )
+        switch ret {
+        case .ok(let response):
+            switch response.body {
+            case .json(let data):
+                return .init(
+                    id: .init(rawValue: data.id),
+                    email: data.email,
+                    roles: data.roles.map {
+                        .init(key: .init(rawValue: $0.key), name: $0.name)
+                    },
+                    permissions: data.permissions.map { .init(rawValue: $0) }
+                )
+            }
+
+        case .badRequest(_):
+            throw UserGateway.Error.unknown
+
+        case .unauthorized(_):
+            throw UserGateway.Error.unknown
+
+        case .forbidden(_):
+            throw UserGateway.Error.unknown
+
+        case .notFound(let notFoundResponse):
+            switch notFoundResponse.body {
+            case .json(let data):
+                if let error = ModuleError(data) {
+                    throw error
+                }
+            }
+            throw UserGateway.Error.unknown
+
+        case .unsupportedMediaType(_):
+            throw UserGateway.Error.unknown
+
+        case .unprocessableContent(let unprocessableContentResponse):
+            switch unprocessableContentResponse.body {
+            case .json(let data):
+                throw ValidatorError(data)
+            }
+
+        case .undocumented(_, _):
+            throw UserGateway.Error.unknown
+        }
     }
 
     func patch(
@@ -99,16 +161,51 @@ struct AccountController: UserGatewayAccountInterface {
                     )
                 )
             )
-            .ok.body.json
 
-        return .init(
-            id: .init(rawValue: ret.id),
-            email: ret.email,
-            roles: ret.roles.map {
-                .init(key: .init(rawValue: $0.key), name: $0.name)
-            },
-            permissions: ret.permissions.map { .init(rawValue: $0) }
-        )
+        switch ret {
+        case .ok(let response):
+            switch response.body {
+            case .json(let data):
+                return .init(
+                    id: .init(rawValue: data.id),
+                    email: data.email,
+                    roles: data.roles.map {
+                        .init(key: .init(rawValue: $0.key), name: $0.name)
+                    },
+                    permissions: data.permissions.map { .init(rawValue: $0) }
+                )
+            }
+
+        case .badRequest(_):
+            throw UserGateway.Error.unknown
+
+        case .unauthorized(_):
+            throw UserGateway.Error.unknown
+
+        case .forbidden(_):
+            throw UserGateway.Error.unknown
+
+        case .notFound(let notFoundResponse):
+            switch notFoundResponse.body {
+            case .json(let data):
+                if let error = ModuleError(data) {
+                    throw error
+                }
+            }
+            throw UserGateway.Error.unknown
+
+        case .unsupportedMediaType(_):
+            throw UserGateway.Error.unknown
+
+        case .unprocessableContent(let unprocessableContentResponse):
+            switch unprocessableContentResponse.body {
+            case .json(let data):
+                throw ValidatorError(data)
+            }
+
+        case .undocumented(_, _):
+            throw UserGateway.Error.unknown
+        }
     }
 
     func list(_ input: UserGateway.Account.List.Query) async throws
@@ -127,14 +224,31 @@ struct AccountController: UserGatewayAccountInterface {
                         )
                 )
             )
-            .ok.body.json
 
-        return .init(
-            items: ret.items.map {
-                .init(id: .init(rawValue: $0.id), email: $0.email)
-            },
-            count: UInt(ret.count)
-        )
+        switch ret {
+        case .ok(let response):
+            switch response.body {
+            case .json(let data):
+                return .init(
+                    items: data.items.map {
+                        .init(id: .init(rawValue: $0.id), email: $0.email)
+                    },
+                    count: UInt(data.count)
+                )
+            }
+
+        case .badRequest(_):
+            throw UserGateway.Error.unknown
+
+        case .unauthorized(_):
+            throw UserGateway.Error.unknown
+
+        case .forbidden(_):
+            throw UserGateway.Error.unknown
+
+        case .undocumented(_, _):
+            throw UserGateway.Error.unknown
+        }
     }
 
     func reference(ids: [ID<User.Account>])
@@ -144,10 +258,45 @@ struct AccountController: UserGatewayAccountInterface {
             try await accountsClient.referenceUserGatewayAccounts(
                 .init(body: .json(ids.map { $0.rawValue }))
             )
-            .ok.body.json
 
-        return ret.map {
-            .init(id: .init(rawValue: $0.id), email: $0.email)
+        switch ret {
+        case .ok(let response):
+            switch response.body {
+            case .json(let data):
+                return data.map {
+                    .init(id: .init(rawValue: $0.id), email: $0.email)
+                }
+            }
+
+        case .badRequest(_):
+            throw UserGateway.Error.unknown
+
+        case .unauthorized(_):
+            throw UserGateway.Error.unknown
+
+        case .forbidden(_):
+            throw UserGateway.Error.unknown
+
+        case .notFound(let notFoundResponse):
+            switch notFoundResponse.body {
+            case .json(let data):
+                if let error = ModuleError(data) {
+                    throw error
+                }
+            }
+            throw UserGateway.Error.unknown
+
+        case .unsupportedMediaType(_):
+            throw UserGateway.Error.unknown
+
+        case .unprocessableContent(let unprocessableContentResponse):
+            switch unprocessableContentResponse.body {
+            case .json(let data):
+                throw ValidatorError(data)
+            }
+
+        case .undocumented(_, _):
+            throw UserGateway.Error.unknown
         }
     }
 }

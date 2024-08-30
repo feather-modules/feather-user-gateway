@@ -27,11 +27,6 @@ public enum UserGateway {
 
     public enum Error: Swift.Error {
         case unknown
-        case invalidPassword
-        case invalidAuthToken
-        case invalidInvitationToken
-        case invalidPasswordResetToken
-        case invalidAccount
     }
 
     public enum Account: Identifiable {}
