@@ -3,16 +3,99 @@ info:
   title: UserGateway - Accounts - API
   description: 'The complete Accounts API definition used by the UserGateway.
 
-    (Generated on: 2024. Aug 27. at 12:17:38)'
+    (Generated on: 2024. Sep 1. at 10:41:49)'
   contact:
     name: Binary Birds
     url: https://binarybirds.com
     email: info@binarybirds.com
   version: 1.0.0
 tags:
+- name: User - Oauth
+  description: ''
 - name: UserGateway - Accounts
   description: ''
 paths:
+  /user/oauth:
+    get:
+      tags:
+      - User - Oauth
+      summary: start authorize
+      description: start authorize
+      operationId: authorizeGetUserOauth
+      parameters:
+      - $ref: '#/components/parameters/UserOauthClientId'
+      - $ref: '#/components/parameters/UserOauthRedirectUri'
+      - $ref: '#/components/parameters/UserOauthScope'
+      - $ref: '#/components/parameters/UserOauthState'
+      - $ref: '#/components/parameters/UserOauthResponseType'
+      - $ref: '#/components/parameters/UserOauthReturnRedirectUri'
+      responses:
+        200:
+          $ref: '#/components/responses/UserOauthRedirect200Response'
+        302:
+          $ref: '#/components/responses/UserOauthRedirectResponse'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+      security: []
+    post:
+      tags:
+      - User - Oauth
+      summary: get authorize code
+      description: get authorize code and return it with redirect
+      operationId: authorizePostUserOauth
+      parameters:
+      - $ref: '#/components/parameters/UserOauthReturnRedirectUri'
+      requestBody:
+        description: get authorization code request body
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserOauthAuthorizePostRequest'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/UserOauthRedirect200Response'
+        302:
+          $ref: '#/components/responses/UserOauthRedirectResponse'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        409:
+          $ref: '#/components/responses/FeatherCoreConflict'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+      security: []
+  /user/oauth/token:
+    post:
+      tags:
+      - User - Oauth
+      summary: returns a JWT
+      description: exchange authorization code for JWT or get server JWT
+      operationId: tokenReturnUserOauth
+      requestBody:
+        description: exchange token request body
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserOauthTokenPostRequest'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/UserOauthTokenPostResponse'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        409:
+          $ref: '#/components/responses/FeatherCoreConflict'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+      security: []
   /usergateway/accounts:
     get:
       tags:
@@ -716,6 +799,122 @@ components:
         $ref: '#/components/schemas/UserAccountReference'
       maxItems: 1000
       minItems: 0
+    UserOauthAccessToken:
+      type: string
+      description: Access token aka JWT
+      examples:
+      - uiu9879khh.rtzrtz.6hdhfgh
+    UserOauthAuthorizePostRequest:
+      type: object
+      description: ''
+      properties:
+        client_id:
+          $ref: '#/components/schemas/UserOauthClientId'
+        redirect_uri:
+          $ref: '#/components/schemas/UserOauthRedirectUri'
+        scope:
+          $ref: '#/components/schemas/UserOauthScope'
+        state:
+          $ref: '#/components/schemas/UserOauthState'
+        response_type:
+          $ref: '#/components/schemas/UserOauthResponseType'
+        user_id:
+          $ref: '#/components/schemas/UserAccountId'
+    UserOauthClientId:
+      type: string
+      description: The client id
+      examples:
+      - clientId
+    UserOauthClientSecret:
+      type: string
+      description: The client secret
+      examples:
+      - clientSecret
+    UserOauthCode:
+      type: string
+      description: authorization code returned before
+      examples:
+      - uiu9879khh
+    UserOauthExpiresIn:
+      type: integer
+      description: Expires in
+      minimum: 3600
+    UserOauthGrantType:
+      type: string
+      description: grant type
+      examples:
+      - authorization_code/client_credentials
+    UserOauthLocationHeader:
+      type: string
+      description: Location header
+      examples:
+      - http://localhost:8080/redirect?code=asdasfg
+    UserOauthRedirect200Response:
+      type: object
+      description: ''
+      properties:
+        redirect_uri:
+          $ref: '#/components/schemas/UserOauthRedirectUri'
+    UserOauthRedirectUri:
+      type: string
+      description: The url to redirect to after successful request
+      examples:
+      - url.com
+    UserOauthResponseType:
+      type: string
+      description: Request-specific data
+      examples:
+      - code
+    UserOauthReturnRedirectUri:
+      type: boolean
+      default: false
+      description: return redirect with 200 or 302
+    UserOauthScope:
+      type: string
+      description: 'Scope like: read write'
+      examples:
+      - read write
+    UserOauthState:
+      type: string
+      description: Request-specific data
+      examples:
+      - kjsngsfgn
+    UserOauthTokenPostRequest:
+      type: object
+      description: ''
+      properties:
+        grant_type:
+          $ref: '#/components/schemas/UserOauthGrantType'
+        client_id:
+          $ref: '#/components/schemas/UserOauthClientId'
+        client_secret:
+          $ref: '#/components/schemas/UserOauthClientSecret'
+        code:
+          $ref: '#/components/schemas/UserOauthCode'
+        redirect_uri:
+          $ref: '#/components/schemas/UserOauthRedirectUri'
+    UserOauthTokenPostResponse:
+      type: object
+      description: ''
+      properties:
+        access_token:
+          $ref: '#/components/schemas/UserOauthAccessToken'
+        token_type:
+          $ref: '#/components/schemas/UserOauthTokenType'
+        expires_in:
+          $ref: '#/components/schemas/UserOauthExpiresIn'
+        scope:
+          $ref: '#/components/schemas/UserOauthScope'
+      required:
+      - access_token
+      - token_type
+      - expires_in
+      - scope
+    UserOauthTokenType:
+      type: string
+      description: Access token type
+      examples:
+      - Bearer
     UserRoleCreate:
       type: object
       description: ''
@@ -960,6 +1159,23 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/UserGatewayAccountsReferenceArray'
+    UserOauthRedirect200Response:
+      description: Redirect response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserOauthRedirect200Response'
+    UserOauthRedirectResponse:
+      description: Redirect response
+      headers:
+        Location:
+          $ref: '#/components/headers/Location'
+    UserOauthTokenPostResponse:
+      description: Code exchange response object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserOauthTokenPostResponse'
   parameters:
     FeatherCoreListOrder:
       name: order
@@ -998,6 +1214,42 @@ components:
       schema:
         $ref: '#/components/schemas/UserAccountListSort'
       description: Sort by parameter
+    UserOauthClientId:
+      name: client_id
+      in: query
+      schema:
+        $ref: '#/components/schemas/UserOauthClientId'
+      description: clientId
+    UserOauthRedirectUri:
+      name: redirect_uri
+      in: query
+      schema:
+        $ref: '#/components/schemas/UserOauthRedirectUri'
+      description: Url to redirect to
+    UserOauthResponseType:
+      name: response_type
+      in: query
+      schema:
+        $ref: '#/components/schemas/UserOauthResponseType'
+      description: responseType
+    UserOauthReturnRedirectUri:
+      name: return_redirect_uri
+      in: query
+      schema:
+        $ref: '#/components/schemas/UserOauthReturnRedirectUri'
+      description: true/false to return with 200/302
+    UserOauthScope:
+      name: scope
+      in: query
+      schema:
+        $ref: '#/components/schemas/UserOauthScope'
+      description: scope
+    UserOauthState:
+      name: state
+      in: query
+      schema:
+        $ref: '#/components/schemas/UserOauthState'
+      description: state
   requestBodies:
     UserGatewayAccountsIdArray:
       description: User ids
@@ -1006,11 +1258,29 @@ components:
           schema:
             $ref: '#/components/schemas/UserGatewayAccountsIdArray'
       required: true
+    UserOauthAuthorizePostRequest:
+      description: get authorization code request body
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/UserOauthAuthorizePostRequest'
+      required: true
+    UserOauthTokenPostRequest:
+      description: exchange token request body
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/UserOauthTokenPostRequest'
+      required: true
   headers:
     Content-Length:
       schema:
         $ref: '#/components/schemas/FeatherCoreHeadersContentLength'
       description: Content length header
+    Location:
+      schema:
+        $ref: '#/components/schemas/UserOauthLocationHeader'
+      description: Location Header
   securitySchemes:
     FeatherCoreBearerToken:
       description: Authorization header using a Bearer token

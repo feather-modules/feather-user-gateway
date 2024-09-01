@@ -18,11 +18,18 @@ extension Permission {
 
 public enum UserGateway {
 
+    public enum AlwaysThrowingGateway {}
+
     public enum ACL: ACLSet {
 
         public static var all: [FeatherACL.Permission] {
             Account.ACL.all
         }
+    }
+
+    public enum OauthError: Swift.Error {
+        case invalidGrant
+        case unauthorizedClient
     }
 
     public enum Error: Swift.Error {
@@ -31,6 +38,7 @@ public enum UserGateway {
 
     public enum Account: Identifiable {}
     public enum Role: Identifiable {}
+    public enum OAuth: Identifiable {}
 }
 
 public protocol UserGatewayInterface: ModuleInterface {

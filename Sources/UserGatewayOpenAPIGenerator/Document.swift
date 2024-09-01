@@ -18,6 +18,7 @@ let components: [Component.Type] =
         User.Role.Schemas.self,
 
         UserGateway.self,
+        User.Oauth.self,
     ]
 
 let documents: [OpenAPIDocument] = [
