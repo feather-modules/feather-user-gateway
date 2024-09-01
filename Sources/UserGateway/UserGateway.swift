@@ -27,20 +27,20 @@ public struct UserGatewayClientInit {
     }
 }
 
-public struct UserGatewayAccountsInit {
+public struct UserGatewayAccountInit {
     public struct Config {
         public init() {}
     }
 
-    let accountsClientInit: UserGatewayClientInit?
+    let accountClientInit: UserGatewayClientInit?
     let userModuleInit: UserModuleInterface?
     let config: Config
 
     public init(
-        accountsClientInit: UserGatewayClientInit,
+        accountClientInit: UserGatewayClientInit,
         config: Config = .init()
     ) {
-        self.accountsClientInit = accountsClientInit
+        self.accountClientInit = accountClientInit
         self.userModuleInit = nil
         self.config = config
     }
@@ -49,32 +49,77 @@ public struct UserGatewayAccountsInit {
         userModuleInit: UserModuleInterface,
         config: Config = .init()
     ) {
-        self.accountsClientInit = nil
+        self.accountClientInit = nil
         self.userModuleInit = userModuleInit
         self.config = config
     }
 }
 
-struct UserGatewayAccountsProxy: Sendable {
-    let accountsClient: UserGatewayAccountsKit.Client?
-    let userModule: UserModuleInterface?
+public struct UserGatewayOAuthInit {
+    public struct Config {
+        public init() {}
+    }
+
+    let oauthClientInit: UserGatewayClientInit?
+    let config: Config
 
     public init(
-        accountsGatewayInit: UserGatewayAccountsInit
+        oauthClientInit: UserGatewayClientInit,
+        config: Config = .init()
     ) {
-        if let accountsClientInit = accountsGatewayInit.accountsClientInit {
-            self.accountsClient = .init(
-                serverURL: accountsClientInit.serverURL,
-                configuration: accountsClientInit.configuration,  //+ custom configuration
-                transport: accountsClientInit.transport,
-                middlewares: accountsClientInit.middlewares  //+ custom Middlewares
+        self.oauthClientInit = oauthClientInit
+        self.config = config
+    }
+
+    public init(
+        _: AlwaysThrowingUserGateway.Type,
+        config: Config = .init()
+    ) {
+        self.oauthClientInit = nil
+        self.config = config
+    }
+}
+
+struct UserGatewayOAuthProxy: Sendable {
+    let oauthClient: UserGatewayAccountsKit.Client?
+
+    public init(
+        oauthGatewayInit: UserGatewayOAuthInit
+    ) {
+        if let oauthClientInit = oauthGatewayInit.oauthClientInit {
+            self.oauthClient = .init(
+                serverURL: oauthClientInit.serverURL,
+                configuration: oauthClientInit.configuration,  //+ custom configuration
+                transport: oauthClientInit.transport,
+                middlewares: oauthClientInit.middlewares  //+ custom Middlewares
             )
         }
         else {
-            self.accountsClient = nil
+            self.oauthClient = nil
+        }
+    }
+}
+
+struct UserGatewayAccountProxy: Sendable {
+    let accountClient: UserGatewayAccountsKit.Client?
+    let userModule: UserModuleInterface?
+
+    public init(
+        accountGatewayInit: UserGatewayAccountInit
+    ) {
+        if let accountClientInit = accountGatewayInit.accountClientInit {
+            self.accountClient = .init(
+                serverURL: accountClientInit.serverURL,
+                configuration: accountClientInit.configuration,  //+ custom configuration
+                transport: accountClientInit.transport,
+                middlewares: accountClientInit.middlewares  //+ custom Middlewares
+            )
+        }
+        else {
+            self.accountClient = nil
         }
 
-        if let userModule = accountsGatewayInit.userModuleInit {
+        if let userModule = accountGatewayInit.userModuleInit {
             self.userModule = userModule
         }
         else {
@@ -83,37 +128,57 @@ struct UserGatewayAccountsProxy: Sendable {
     }
 }
 
+public enum AlwaysThrowingUserGateway {}
+
 public struct UserGatewayModule: UserGatewayInterface {
     public let system: SystemModuleInterface
     let components: ComponentRegistry
     let logger: Logger
-    let accountsProxy: UserGatewayAccountsProxy
+    let accountProxy: UserGatewayAccountProxy
+    let oauthProxy: UserGatewayOAuthProxy
 
     public init(
         system: SystemModuleInterface,
         components: ComponentRegistry,
-        accountsGatewayInit: UserGatewayAccountsInit,
+        accountGatewayInit: UserGatewayAccountInit,
+        oauthGatewayInit: UserGatewayOAuthInit,
         logger: Logger = .init(label: "user-gateway")
     ) {
         self.system = system
         self.components = components
         self.logger = logger
-        self.accountsProxy = .init(accountsGatewayInit: accountsGatewayInit)
+        self.accountProxy = .init(accountGatewayInit: accountGatewayInit)
+        self.oauthProxy = .init(oauthGatewayInit: oauthGatewayInit)
     }
 
     public var account: UserGatewayKit.UserGatewayAccountInterface {
-        if let userModule = accountsProxy.userModule {
-            return AccountControllerLocal(
+        if let accountClient = accountProxy.accountClient {
+            return AccountController(
                 components: components,
                 user: self,
-                userModule: userModule
+                accountClient: accountClient
             )
         }
 
-        return AccountController(
+        return AccountControllerLocal(
             components: components,
             user: self,
-            accountsClient: accountsProxy.accountsClient!
+            userModule: accountProxy.userModule!
+        )
+    }
+
+    public var oauth: UserGatewayKit.UserGatewayOAuthInterface {
+        if let oauthClient = oauthProxy.oauthClient {
+            return OAuthController(
+                components: components,
+                user: self,
+                oauthClient: oauthClient
+            )
+        }
+
+        return OAuthControllerLocal(
+            components: components,
+            user: self
         )
     }
 }

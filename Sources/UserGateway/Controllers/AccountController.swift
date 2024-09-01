@@ -19,16 +19,16 @@ import UserModuleKit
 struct AccountController: UserGatewayAccountInterface {
     let components: ComponentRegistry
     let user: UserGatewayInterface
-    let accountsClient: Client
+    let accountClient: Client
 
     public init(
         components: ComponentRegistry,
         user: UserGatewayInterface,
-        accountsClient: Client
+        accountClient: Client
     ) {
         self.components = components
         self.user = user
-        self.accountsClient = accountsClient
+        self.accountClient = accountClient
     }
 
     // MARK: -
@@ -37,7 +37,7 @@ struct AccountController: UserGatewayAccountInterface {
         _ id: ID<User.Account>
     ) async throws -> UserGateway.Account.Detail {
         let ret =
-            try await accountsClient.detailUserGatewayAccounts(
+            try await accountClient.detailUserGatewayAccounts(
                 .init(path: .init(accountId: id.rawValue))
             )
 
@@ -83,7 +83,7 @@ struct AccountController: UserGatewayAccountInterface {
         _ input: UserGateway.Account.Update
     ) async throws -> UserGateway.Account.Detail {
         let ret =
-            try await accountsClient.updateUserGatewayAccounts(
+            try await accountClient.updateUserGatewayAccounts(
                 .init(
                     path: .init(accountId: id.rawValue),
                     body: .json(
@@ -147,7 +147,7 @@ struct AccountController: UserGatewayAccountInterface {
         _ input: UserGateway.Account.Patch
     ) async throws -> UserGateway.Account.Detail {
         let ret =
-            try await accountsClient.patchUserGatewayAccounts(
+            try await accountClient.patchUserGatewayAccounts(
                 .init(
                     path: .init(accountId: id.rawValue),
                     body: .json(
@@ -212,7 +212,7 @@ struct AccountController: UserGatewayAccountInterface {
         -> UserGateway.Account.List
     {
         let ret =
-            try await accountsClient.listUserGatewayAccounts(
+            try await accountClient.listUserGatewayAccounts(
                 .init(
                     query:
                         .init(
@@ -255,7 +255,7 @@ struct AccountController: UserGatewayAccountInterface {
         async throws -> [UserGateway.Account.Reference]
     {
         let ret =
-            try await accountsClient.referenceUserGatewayAccounts(
+            try await accountClient.referenceUserGatewayAccounts(
                 .init(body: .json(ids.map { $0.rawValue }))
             )
 

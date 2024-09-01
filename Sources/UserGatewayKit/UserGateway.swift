@@ -25,12 +25,18 @@ public enum UserGateway {
         }
     }
 
+    public enum OauthError: Swift.Error {
+        case invalidGrant
+        case unauthorizedClient
+    }
+
     public enum Error: Swift.Error {
         case unknown
     }
 
     public enum Account: Identifiable {}
     public enum Role: Identifiable {}
+    public enum OAuth: Identifiable {}
 }
 
 public protocol UserGatewayInterface: ModuleInterface {
