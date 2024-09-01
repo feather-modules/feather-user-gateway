@@ -32,14 +32,18 @@ struct OAuthController: UserGatewayOAuthInterface {
     }
 
     // MARK: -
-    func getJWT(_ request: UserGateway.OAuth.JwtRequest) async throws -> UserGateway.OAuth.JwtResponse {
+    func getJWT(_ request: UserGateway.OAuth.JwtRequest) async throws
+        -> UserGateway.OAuth.JwtResponse
+    {
         let ret = try await oauthClient.tokenReturnUserOauth(
             body: .urlEncodedForm(
-                .init(grant_type: request.grantType,
-                      client_id: request.clientId,
-                      client_secret: request.clientSecret,
-                      code: request.code,
-                      redirect_uri: request.redirectUri)
+                .init(
+                    grant_type: request.grantType,
+                    client_id: request.clientId,
+                    client_secret: request.clientSecret,
+                    code: request.code,
+                    redirect_uri: request.redirectUri
+                )
             )
         )
 
@@ -47,10 +51,12 @@ struct OAuthController: UserGatewayOAuthInterface {
         case .ok(let response):
             switch response.body {
             case .json(let data):
-                return .init(accessToken: data.access_token,
-                             tokenType: data.token_type,
-                             expiresIn: data.expires_in,
-                             scope: data.scope)
+                return .init(
+                    accessToken: data.access_token,
+                    tokenType: data.token_type,
+                    expiresIn: data.expires_in,
+                    scope: data.scope
+                )
             }
 
         case .badRequest(_):
@@ -64,7 +70,7 @@ struct OAuthController: UserGatewayOAuthInterface {
 
         case .undocumented(_, _):
             throw UserGateway.Error.unknown
-            
+
         case .conflict(_):
             throw UserGateway.Error.unknown
         }

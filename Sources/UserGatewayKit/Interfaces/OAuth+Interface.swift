@@ -11,5 +11,5 @@ import UserModuleKit
 public protocol UserGatewayOAuthInterface: Sendable {
 
     func getJWT(_ request: UserGateway.OAuth.JwtRequest) async throws
-                                        -> UserGateway.OAuth.JwtResponse
+        -> UserGateway.OAuth.JwtResponse
 }

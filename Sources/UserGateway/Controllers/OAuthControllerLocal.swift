@@ -29,7 +29,9 @@ struct OAuthControllerLocal: UserGatewayOAuthInterface {
     }
 
     // MARK: -
-    func getJWT(_ request: UserGateway.OAuth.JwtRequest) async throws -> UserGateway.OAuth.JwtResponse {
+    func getJWT(_ request: UserGateway.OAuth.JwtRequest) async throws
+        -> UserGateway.OAuth.JwtResponse
+    {
         throw User.Error.unknown
     }
 }
