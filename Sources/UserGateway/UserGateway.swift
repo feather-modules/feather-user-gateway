@@ -72,7 +72,7 @@ public struct UserGatewayOAuthInit {
     }
 
     public init(
-        _: AlwaysThrowingUserGateway.Type,
+        _: UserGateway.AlwaysThrowingGateway.Type,
         config: Config = .init()
     ) {
         self.oauthClientInit = nil
@@ -127,8 +127,6 @@ struct UserGatewayAccountProxy: Sendable {
         }
     }
 }
-
-public enum AlwaysThrowingUserGateway {}
 
 public struct UserGatewayModule: UserGatewayInterface {
     public let system: SystemModuleInterface

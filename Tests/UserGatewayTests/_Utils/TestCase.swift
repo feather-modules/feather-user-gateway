@@ -35,7 +35,7 @@ class TestCase: XCTestCase {
             system: system,
             components: components,
             accountGatewayInit: .init(userModuleInit: userModule),
-            oauthGatewayInit: .init(AlwaysThrowingUserGateway.self)
+            oauthGatewayInit: .init(UserGateway.AlwaysThrowingGateway.self)
         )
 
         try await components.configure(.singleton, eventLoopGroup)

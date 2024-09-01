@@ -18,6 +18,8 @@ extension Permission {
 
 public enum UserGateway {
 
+    public enum AlwaysThrowingGateway {}
+
     public enum ACL: ACLSet {
 
         public static var all: [FeatherACL.Permission] {
