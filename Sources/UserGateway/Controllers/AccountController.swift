@@ -48,6 +48,16 @@ struct AccountController: UserGatewayAccountInterface {
                 return .init(
                     id: .init(rawValue: data.id),
                     email: data.email,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    imageKey: data.imageKey,
+                    position: data.position,
+                    publicEmail: data.publicEmail,
+                    phone: data.phone,
+                    web: data.web,
+                    lat: data.lat,
+                    lon: data.lon,
+                    lastLocationUpdate: data.lastLocationUpdate,
                     roles: data.roles.map {
                         .init(key: .init(rawValue: $0.key), name: $0.name)
                     },
@@ -103,6 +113,16 @@ struct AccountController: UserGatewayAccountInterface {
                 return .init(
                     id: .init(rawValue: data.id),
                     email: data.email,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    imageKey: data.imageKey,
+                    position: data.position,
+                    publicEmail: data.publicEmail,
+                    phone: data.phone,
+                    web: data.web,
+                    lat: data.lat,
+                    lon: data.lon,
+                    lastLocationUpdate: data.lastLocationUpdate,
                     roles: data.roles.map {
                         .init(key: .init(rawValue: $0.key), name: $0.name)
                     },
@@ -169,6 +189,16 @@ struct AccountController: UserGatewayAccountInterface {
                 return .init(
                     id: .init(rawValue: data.id),
                     email: data.email,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    imageKey: data.imageKey,
+                    position: data.position,
+                    publicEmail: data.publicEmail,
+                    phone: data.phone,
+                    web: data.web,
+                    lat: data.lat,
+                    lon: data.lon,
+                    lastLocationUpdate: data.lastLocationUpdate,
                     roles: data.roles.map {
                         .init(key: .init(rawValue: $0.key), name: $0.name)
                     },
@@ -231,7 +261,12 @@ struct AccountController: UserGatewayAccountInterface {
             case .json(let data):
                 return .init(
                     items: data.items.map {
-                        .init(id: .init(rawValue: $0.id), email: $0.email)
+                        .init(
+                            id: .init(rawValue: $0.id),
+                            email: $0.email,
+                            firstName: $0.firstName,
+                            lastName: $0.lastName
+                        )
                     },
                     count: UInt(data.count)
                 )
@@ -264,7 +299,12 @@ struct AccountController: UserGatewayAccountInterface {
             switch response.body {
             case .json(let data):
                 return data.map {
-                    .init(id: .init(rawValue: $0.id), email: $0.email)
+                    .init(
+                        id: .init(rawValue: $0.id),
+                        email: $0.email,
+                        firstName: $0.firstName,
+                        lastName: $0.lastName
+                    )
                 }
             }
 

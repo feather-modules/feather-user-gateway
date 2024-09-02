@@ -3,7 +3,7 @@ info:
   title: UserGateway - Accounts - API
   description: 'The complete Accounts API definition used by the UserGateway.
 
-    (Generated on: 2024. Sep 1. at 10:41:49)'
+    (Generated on: 2024. Sep 2. at 11:47:48)'
   contact:
     name: Binary Birds
     url: https://binarybirds.com
@@ -645,6 +645,26 @@ components:
           $ref: '#/components/schemas/UserAccountEmail'
         password:
           $ref: '#/components/schemas/UserAccountPassword'
+        firstName:
+          $ref: '#/components/schemas/UserAccountFirstName'
+        lastName:
+          $ref: '#/components/schemas/UserAccountLastName'
+        imageKey:
+          $ref: '#/components/schemas/UserAccountImageKey'
+        position:
+          $ref: '#/components/schemas/UserAccountPosition'
+        publicEmail:
+          $ref: '#/components/schemas/UserAccountPublicEmail'
+        phone:
+          $ref: '#/components/schemas/UserAccountPhone'
+        web:
+          $ref: '#/components/schemas/UserAccountWeb'
+        lat:
+          $ref: '#/components/schemas/UserAccountLat'
+        lon:
+          $ref: '#/components/schemas/UserAccountLon'
+        lastLocationUpdate:
+          $ref: '#/components/schemas/UserAccountLastLocationUpdate'
         roleKeys:
           $ref: '#/components/schemas/UserAccountRoleKeys'
         permissions:
@@ -662,6 +682,26 @@ components:
           $ref: '#/components/schemas/UserAccountId'
         email:
           $ref: '#/components/schemas/UserAccountEmail'
+        firstName:
+          $ref: '#/components/schemas/UserAccountFirstName'
+        lastName:
+          $ref: '#/components/schemas/UserAccountLastName'
+        imageKey:
+          $ref: '#/components/schemas/UserAccountImageKey'
+        position:
+          $ref: '#/components/schemas/UserAccountPosition'
+        publicEmail:
+          $ref: '#/components/schemas/UserAccountPublicEmail'
+        phone:
+          $ref: '#/components/schemas/UserAccountPhone'
+        web:
+          $ref: '#/components/schemas/UserAccountWeb'
+        lat:
+          $ref: '#/components/schemas/UserAccountLat'
+        lon:
+          $ref: '#/components/schemas/UserAccountLon'
+        lastLocationUpdate:
+          $ref: '#/components/schemas/UserAccountLastLocationUpdate'
         roles:
           $ref: '#/components/schemas/UserAccountRoles'
         permissions:
@@ -677,11 +717,37 @@ components:
       description: E-mail address of the user
       examples:
       - info@binarybirds.com
+    UserAccountFirstName:
+      type: string
+      description: Profile first name
+      examples:
+      - John
     UserAccountId:
       type: string
       description: Unique user account identifier
       examples:
       - P6p5WCctPKqhYKtGMUoTQ
+    UserAccountImageKey:
+      type: string
+      description: Profile image key of the role
+      examples:
+      - 345jnkjwevnjk4n56
+    UserAccountLastLocationUpdate:
+      type: string
+      format: date-time
+      description: Profile last location update
+      examples:
+      - '2023-02-10T09:20:15.393Z'
+    UserAccountLastName:
+      type: string
+      description: Profile last name
+      examples:
+      - Doe
+    UserAccountLat:
+      type: number
+      format: double
+      description: Profile last location latitude
+      minimum: 0e+0
     UserAccountList:
       type: object
       description: User account list
@@ -710,6 +776,10 @@ components:
           $ref: '#/components/schemas/UserAccountId'
         email:
           $ref: '#/components/schemas/UserAccountEmail'
+        firstName:
+          $ref: '#/components/schemas/UserAccountFirstName'
+        lastName:
+          $ref: '#/components/schemas/UserAccountLastName'
       required:
       - id
       - email
@@ -722,8 +792,16 @@ components:
       minItems: 0
     UserAccountListSort:
       type: string
-      const: email
+      enum:
+      - email
+      - firstName
+      - lastName
       description: The sort key for the list
+    UserAccountLon:
+      type: number
+      format: double
+      description: Profile last location longitude
+      minimum: 0e+0
     UserAccountPassword:
       type: string
       format: password
@@ -736,6 +814,26 @@ components:
       properties:
         email:
           $ref: '#/components/schemas/UserAccountEmail'
+        firstName:
+          $ref: '#/components/schemas/UserAccountFirstName'
+        lastName:
+          $ref: '#/components/schemas/UserAccountLastName'
+        imageKey:
+          $ref: '#/components/schemas/UserAccountImageKey'
+        position:
+          $ref: '#/components/schemas/UserAccountPosition'
+        publicEmail:
+          $ref: '#/components/schemas/UserAccountPublicEmail'
+        phone:
+          $ref: '#/components/schemas/UserAccountPhone'
+        web:
+          $ref: '#/components/schemas/UserAccountWeb'
+        lat:
+          $ref: '#/components/schemas/UserAccountLat'
+        lon:
+          $ref: '#/components/schemas/UserAccountLon'
+        lastLocationUpdate:
+          $ref: '#/components/schemas/UserAccountLastLocationUpdate'
         password:
           $ref: '#/components/schemas/UserAccountPassword'
         roleKeys:
@@ -747,6 +845,22 @@ components:
         $ref: '#/components/schemas/SystemPermissionKey'
       maxItems: 1000
       minItems: 0
+    UserAccountPhone:
+      type: string
+      description: Profile phone
+      examples:
+      - '+12425346356'
+    UserAccountPosition:
+      type: string
+      description: Profile position
+      examples:
+      - Doe
+    UserAccountPublicEmail:
+      type: string
+      format: email
+      description: Public e-mail address of the profile
+      examples:
+      - info@binarybirds.com
     UserAccountReference:
       type: object
       description: ''
@@ -755,6 +869,10 @@ components:
           $ref: '#/components/schemas/UserAccountId'
         email:
           $ref: '#/components/schemas/UserAccountEmail'
+        firstName:
+          $ref: '#/components/schemas/UserAccountFirstName'
+        lastName:
+          $ref: '#/components/schemas/UserAccountLastName'
       required:
       - id
       - email
@@ -778,6 +896,26 @@ components:
       properties:
         email:
           $ref: '#/components/schemas/UserAccountEmail'
+        firstName:
+          $ref: '#/components/schemas/UserAccountFirstName'
+        lastName:
+          $ref: '#/components/schemas/UserAccountLastName'
+        imageKey:
+          $ref: '#/components/schemas/UserAccountImageKey'
+        position:
+          $ref: '#/components/schemas/UserAccountPosition'
+        publicEmail:
+          $ref: '#/components/schemas/UserAccountPublicEmail'
+        phone:
+          $ref: '#/components/schemas/UserAccountPhone'
+        web:
+          $ref: '#/components/schemas/UserAccountWeb'
+        lat:
+          $ref: '#/components/schemas/UserAccountLat'
+        lon:
+          $ref: '#/components/schemas/UserAccountLon'
+        lastLocationUpdate:
+          $ref: '#/components/schemas/UserAccountLastLocationUpdate'
         password:
           $ref: '#/components/schemas/UserAccountPassword'
         roleKeys:
@@ -785,6 +923,11 @@ components:
       required:
       - email
       - roleKeys
+    UserAccountWeb:
+      type: string
+      description: Profile web page
+      examples:
+      - https://google.nl
     UserGatewayAccountsIdArray:
       type: array
       description: User ids

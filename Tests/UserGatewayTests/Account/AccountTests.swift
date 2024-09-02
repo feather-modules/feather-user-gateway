@@ -21,6 +21,16 @@ final class AccountTests: TestCase {
             .init(
                 email: email,
                 password: "ChangeMe1",
+                firstName: "firstName",
+                lastName: "lastName",
+                imageKey: nil,
+                position: nil,
+                publicEmail: nil,
+                phone: nil,
+                web: nil,
+                lat: nil,
+                lon: nil,
+                lastLocationUpdate: nil,
                 roleKeys: [
                     .init(rawValue: "manager")
                 ]
@@ -58,6 +68,16 @@ final class AccountTests: TestCase {
             .init(
                 email: email,
                 password: "ChangeMe1",
+                firstName: "firstName",
+                lastName: "lastName",
+                imageKey: nil,
+                position: nil,
+                publicEmail: nil,
+                phone: nil,
+                web: nil,
+                lat: nil,
+                lon: nil,
+                lastLocationUpdate: nil,
                 roleKeys: [role1.key]
             )
         )
@@ -96,6 +116,16 @@ final class AccountTests: TestCase {
             .init(
                 email: email,
                 password: "ChangeMe1",
+                firstName: "firstName",
+                lastName: "lastName",
+                imageKey: nil,
+                position: nil,
+                publicEmail: nil,
+                phone: nil,
+                web: nil,
+                lat: nil,
+                lon: nil,
+                lastLocationUpdate: nil,
                 roleKeys: [role1.key]
             )
         )
@@ -104,6 +134,17 @@ final class AccountTests: TestCase {
             account.id,
             .init(
                 email: email,
+                password: "ChangeMe1",
+                firstName: "firstName",
+                lastName: "lastName",
+                imageKey: nil,
+                position: nil,
+                publicEmail: nil,
+                phone: nil,
+                web: nil,
+                lat: nil,
+                lon: nil,
+                lastLocationUpdate: nil,
                 roleKeys: [role2.key]
             )
         )

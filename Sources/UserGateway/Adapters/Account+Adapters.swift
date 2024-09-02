@@ -61,6 +61,10 @@ extension User.Account.List.Query.Sort.Keys {
         switch type {
         case .email:
             self = .email
+        case .firstName:
+            self = .firstName
+        case .lastName:
+            self = .lastName
         }
     }
 }
@@ -70,6 +74,10 @@ extension Components.Parameters.UserAccountListSort {
         switch by {
         case .email:
             self = .email
+        case .firstName:
+            self = .firstName
+        case .lastName:
+            self = .lastName
         }
     }
 }
