@@ -21,14 +21,4 @@ public protocol UserGatewayAccountInterface: Sendable {
     func require(
         _ id: ID<User.Account>
     ) async throws -> UserGateway.Account.Detail
-
-    func update(
-        _ id: ID<User.Account>,
-        _ input: UserGateway.Account.Update
-    ) async throws -> UserGateway.Account.Detail
-
-    func patch(
-        _ id: ID<User.Account>,
-        _ input: UserGateway.Account.Patch
-    ) async throws -> UserGateway.Account.Detail
 }

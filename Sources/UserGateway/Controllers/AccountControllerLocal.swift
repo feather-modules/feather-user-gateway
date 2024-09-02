@@ -37,20 +37,6 @@ struct AccountControllerLocal: UserGatewayAccountInterface {
         try await userModule.account.require(id)
     }
 
-    func update(
-        _ id: ID<User.Account>,
-        _ input: UserGateway.Account.Update
-    ) async throws -> UserGateway.Account.Detail {
-        try await userModule.account.update(id, input)
-    }
-
-    func patch(
-        _ id: ID<User.Account>,
-        _ input: UserGateway.Account.Patch
-    ) async throws -> UserGateway.Account.Detail {
-        try await userModule.account.patch(id, input)
-    }
-
     func list(_ input: UserGateway.Account.List.Query) async throws
         -> UserGateway.Account.List
     {

@@ -3,7 +3,7 @@ info:
   title: UserGateway - Accounts - API
   description: 'The complete Accounts API definition used by the UserGateway.
 
-    (Generated on: 2024. Sep 2. at 11:47:48)'
+    (Generated on: 2024. Sep 2. at 12:59:41)'
   contact:
     name: Binary Birds
     url: https://binarybirds.com
@@ -171,66 +171,6 @@ paths:
           $ref: '#/components/responses/FeatherCoreForbidden'
         404:
           $ref: '#/components/responses/FeatherCoreNotFound'
-      security:
-      - FeatherCoreBearerToken: []
-    put:
-      tags:
-      - UserGateway - Accounts
-      summary: Update a User Account
-      description: Updates a User Account
-      operationId: updateUserGatewayAccounts
-      requestBody:
-        description: Update request body
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserAccountUpdate'
-        required: true
-      responses:
-        200:
-          $ref: '#/components/responses/UserAccountDetail'
-        400:
-          $ref: '#/components/responses/FeatherCoreBadRequest'
-        401:
-          $ref: '#/components/responses/FeatherCoreUnauthorized'
-        403:
-          $ref: '#/components/responses/FeatherCoreForbidden'
-        404:
-          $ref: '#/components/responses/FeatherCoreNotFound'
-        415:
-          $ref: '#/components/responses/FeatherCoreUnsupportedMediaType'
-        422:
-          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
-      security:
-      - FeatherCoreBearerToken: []
-    patch:
-      tags:
-      - UserGateway - Accounts
-      summary: Patch a User Account
-      description: Patch a given User Account
-      operationId: patchUserGatewayAccounts
-      requestBody:
-        description: Patch request body
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserAccountPatch'
-        required: true
-      responses:
-        200:
-          $ref: '#/components/responses/UserAccountDetail'
-        400:
-          $ref: '#/components/responses/FeatherCoreBadRequest'
-        401:
-          $ref: '#/components/responses/FeatherCoreUnauthorized'
-        403:
-          $ref: '#/components/responses/FeatherCoreForbidden'
-        404:
-          $ref: '#/components/responses/FeatherCoreNotFound'
-        415:
-          $ref: '#/components/responses/FeatherCoreUnsupportedMediaType'
-        422:
-          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
       security:
       - FeatherCoreBearerToken: []
 components:
