@@ -1,6 +1,4 @@
 import FeatherDatabase
-import SystemModuleDatabaseKit
-import SystemModuleKit
 import UserGatewayDatabaseKit
 import UserGatewayKit
 import XCTest

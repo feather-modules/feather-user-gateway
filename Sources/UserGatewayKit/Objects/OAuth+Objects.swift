@@ -6,7 +6,6 @@
 //
 
 import FeatherModuleKit
-import SystemModuleKit
 import UserModuleKit
 
 extension UserGateway.OAuth {

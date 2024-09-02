@@ -32,7 +32,6 @@ class TestCase: XCTestCase {
         userModule = UserModule(system: system, components: components)
 
         module = UserGatewayModule(
-            system: system,
             components: components,
             accountGatewayInit: .init(userModuleInit: userModule),
             oauthGatewayInit: .init(UserGateway.AlwaysThrowingGateway.self)

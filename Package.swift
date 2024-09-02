@@ -40,7 +40,6 @@ let package = Package(
             name: "UserGatewayKit",
             dependencies: [
                 .product(name: "FeatherModuleKit", package: "feather-module-kit"),
-                .product(name: "SystemModuleKit", package: "feather-system-module"),
                 .product(name: "FeatherACL", package: "feather-access-control"),
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
                 .target(name: "UserGatewayAccountsKit"),
@@ -58,7 +57,6 @@ let package = Package(
             dependencies: [
                 //.product(name: "Crypto", package: "swift-crypto"),
                 .product(name: "Bcrypt", package: "swift-bcrypt"),
-                .product(name: "SystemModule", package: "feather-system-module"),
                 .product(name: "FeatherValidationFoundation", package: "feather-validation"),
                 .target(name: "UserGatewayDatabaseKit"),
                 .product(name: "UserModuleKit", package: "feather-user-module"),
@@ -90,6 +88,7 @@ let package = Package(
                 .target(name: "UserGatewayMigrationKit"),
                 .product(name: "UserModule", package: "feather-user-module"),
                 .product(name: "UserModuleMigrationKit", package: "feather-user-module"),
+                .product(name: "SystemModuleKit", package: "feather-system-module"),
                 // drivers
                 .product(name: "FeatherDatabaseDriverSQLite", package: "feather-database-driver-sqlite"),
             ]
@@ -112,7 +111,6 @@ let package = Package(
             name: "UserGatewayAccountsKit",
             dependencies: [
                 .product(name: "FeatherModuleKit", package: "feather-module-kit"),
-                .product(name: "SystemModuleKit", package: "feather-system-module"),
                 .product(name: "FeatherACL", package: "feather-access-control"),
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],

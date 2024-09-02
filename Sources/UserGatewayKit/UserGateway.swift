@@ -7,7 +7,6 @@
 
 import FeatherACL
 import FeatherModuleKit
-import SystemModuleKit
 
 extension Permission {
 

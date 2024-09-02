@@ -3,7 +3,6 @@ import FeatherModuleKit
 import Foundation
 import Logging
 import OpenAPIRuntime
-import SystemModuleKit
 import UserGatewayAccountsKit
 import UserGatewayKit
 import UserModuleKit
@@ -129,20 +128,17 @@ struct UserGatewayAccountProxy: Sendable {
 }
 
 public struct UserGatewayModule: UserGatewayInterface {
-    public let system: SystemModuleInterface
     let components: ComponentRegistry
     let logger: Logger
     let accountProxy: UserGatewayAccountProxy
     let oauthProxy: UserGatewayOAuthProxy
 
     public init(
-        system: SystemModuleInterface,
         components: ComponentRegistry,
         accountGatewayInit: UserGatewayAccountInit,
         oauthGatewayInit: UserGatewayOAuthInit,
         logger: Logger = .init(label: "user-gateway")
     ) {
-        self.system = system
         self.components = components
         self.logger = logger
         self.accountProxy = .init(accountGatewayInit: accountGatewayInit)
