@@ -88,9 +88,11 @@ struct UserGatewayOAuthProxy: Sendable {
         if let oauthClientInit = oauthGatewayInit.oauthClientInit {
             self.oauthClient = .init(
                 serverURL: oauthClientInit.serverURL,
-                configuration: oauthClientInit.configuration,  //+ custom configuration
+                //+ custom configuration
+                configuration: oauthClientInit.configuration,
                 transport: oauthClientInit.transport,
-                middlewares: oauthClientInit.middlewares  //+ custom Middlewares
+                //+ custom Middlewares
+                middlewares: oauthClientInit.middlewares
             )
         }
         else {
@@ -109,9 +111,11 @@ struct UserGatewayAccountProxy: Sendable {
         if let accountClientInit = accountGatewayInit.accountClientInit {
             self.accountClient = .init(
                 serverURL: accountClientInit.serverURL,
-                configuration: accountClientInit.configuration,  //+ custom configuration
+                //+ custom configuration
+                configuration: accountClientInit.configuration,
                 transport: accountClientInit.transport,
-                middlewares: accountClientInit.middlewares  //+ custom Middlewares
+                //+ custom Middlewares
+                middlewares: accountClientInit.middlewares
             )
         }
         else {
