@@ -23,7 +23,6 @@ let package = Package(
         .package(url: "https://github.com/binarybirds/swift-bcrypt", from: "1.0.2"),
         .package(url: "https://github.com/feather-framework/feather-database-driver-sqlite", .upToNextMinor(from: "0.4.0")),
         .package(url: "https://github.com/feather-framework/feather-module-kit", .upToNextMinor(from: "0.5.0")),
-        .package(url: "https://github.com/feather-modules/feather-user-module", branch: "feature/oauth2"),
         .package(url: "https://github.com/feather-modules/feather-system-module", .upToNextMinor(from: "0.17.0")),
         .package(url: "https://github.com/feather-framework/feather-validation", .upToNextMinor(from: "0.1.1")),
         .package(url: "https://github.com/feather-framework/feather-access-control", .upToNextMinor(from: "0.2.0")),
@@ -32,8 +31,9 @@ let package = Package(
         .package(url: "https://github.com/jpsim/Yams", from: "5.0.0"),
         .package(url: "https://github.com/apple/swift-openapi-generator", from: "1.0.0"),
         .package(url: "https://github.com/apple/swift-openapi-runtime", from: "1.0.0"),
-        .package(url: "https://github.com/feather-modules/feather-user-api", branch: "feature/oauth2"),
-        .package(url: "git@github.com:feather-modules/feather-user-gateway-accounts-api", branch: "feature/oauth2"),
+        .package(url: "https://github.com/feather-modules/feather-user-api", .upToNextMinor(from: "0.7.0")),
+        .package(url: "https://github.com/feather-modules/feather-user-module", .upToNextMinor(from: "0.19.0")),
+        .package(url: "https://github.com/feather-modules/feather-user-gateway-accounts-api", .upToNextMinor(from: "0.1.0")),
     ],
     targets: [
         .target(
