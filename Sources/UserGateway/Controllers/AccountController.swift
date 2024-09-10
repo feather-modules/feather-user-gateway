@@ -51,17 +51,9 @@ struct AccountController: UserGatewayAccountInterface {
                     firstName: data.firstName,
                     lastName: data.lastName,
                     imageKey: data.imageKey,
-                    position: data.position,
-                    publicEmail: data.publicEmail,
-                    phone: data.phone,
-                    web: data.web,
-                    lat: data.lat,
-                    lon: data.lon,
-                    lastLocationUpdate: data.lastLocationUpdate,
                     roles: data.roles.map {
                         .init(key: .init(rawValue: $0.key), name: $0.name)
-                    },
-                    permissions: data.permissions.map { .init(rawValue: $0) }
+                    }
                 )
             }
 
