@@ -35,7 +35,7 @@ struct OAuthController: UserGatewayOAuthInterface {
     func getJWT(_ request: UserGateway.OAuth.JwtRequest) async throws
         -> UserGateway.OAuth.JwtResponse
     {
-        let ret = try await oauthClient.tokenReturnUserOauth(
+        let ret = try await oauthClient.tokenReturnOauthAuth(
             body: .urlEncodedForm(
                 .init(
                     grant_type: request.grantType?.rawValue,
