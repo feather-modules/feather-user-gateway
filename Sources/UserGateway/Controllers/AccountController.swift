@@ -53,7 +53,9 @@ struct AccountController: UserGatewayAccountInterface {
                     imageKey: data.imageKey,
                     roles: data.roles.map {
                         .init(key: .init(rawValue: $0.key), name: $0.name)
-                    }
+                    },
+                    permissions: data.permissions.map { .init(rawValue: $0) }
+                    
                 )
             }
 

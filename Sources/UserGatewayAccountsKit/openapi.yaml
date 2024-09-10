@@ -3,7 +3,7 @@ info:
   title: UserGateway - Accounts - API
   description: 'The complete Accounts API definition used by the UserGateway.
 
-    (Generated on: 2024. Sep 10. at 15:19:27)'
+    (Generated on: 10 Sep 2024 at 18:12:27)'
   contact:
     name: Binary Birds
     url: https://binarybirds.com
@@ -1229,10 +1229,13 @@ components:
           $ref: '#/components/schemas/UserAccountImageKey'
         roles:
           $ref: '#/components/schemas/UserAccountRoles'
+        permissions:
+          $ref: '#/components/schemas/UserAccountPermissions'
       required:
       - id
       - email
       - roles
+      - permissions
     UserAccountEmail:
       type: string
       format: email
@@ -1346,6 +1349,13 @@ components:
           $ref: '#/components/schemas/UserAccountPassword'
         roleKeys:
           $ref: '#/components/schemas/UserAccountRoleKeys'
+    UserAccountPermissions:
+      type: array
+      description: ''
+      items:
+        $ref: '#/components/schemas/SystemPermissionKey'
+      maxItems: 1000
+      minItems: 0
     UserAccountPhone:
       type: string
       description: Profile phone
