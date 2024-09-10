@@ -1,6 +1,7 @@
 import FeatherAPIKit
 import FeatherOpenAPIKit
 import Foundation
+import OauthAPIKit
 import OpenAPIKit
 import SystemAPIKit
 import UserAPIKit
@@ -18,7 +19,7 @@ let components: [Component.Type] =
         User.Role.Schemas.self,
 
         UserGateway.self,
-        User.Oauth.self,
+        Oauth.self,
     ]
 
 let documents: [OpenAPIDocument] = [

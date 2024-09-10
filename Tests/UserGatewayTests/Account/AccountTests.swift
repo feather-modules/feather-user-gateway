@@ -24,13 +24,6 @@ final class AccountTests: TestCase {
                 firstName: "firstName",
                 lastName: "lastName",
                 imageKey: nil,
-                position: nil,
-                publicEmail: nil,
-                phone: nil,
-                web: nil,
-                lat: nil,
-                lon: nil,
-                lastLocationUpdate: nil,
                 roleKeys: [
                     .init(rawValue: "manager")
                 ]

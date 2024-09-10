@@ -38,7 +38,7 @@ struct OAuthController: UserGatewayOAuthInterface {
         let ret = try await oauthClient.tokenReturnUserOauth(
             body: .urlEncodedForm(
                 .init(
-                    grant_type: request.grantType,
+                    grant_type: request.grantType?.rawValue,
                     client_id: request.clientId,
                     client_secret: request.clientSecret,
                     code: request.code,
