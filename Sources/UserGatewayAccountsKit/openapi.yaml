@@ -3,37 +3,41 @@ info:
   title: UserGateway - Accounts - API
   description: 'The complete Accounts API definition used by the UserGateway.
 
-    (Generated on: 2024. Sep 2. at 12:59:41)'
+    (Generated on: 2024. Sep 10. at 15:19:27)'
   contact:
     name: Binary Birds
     url: https://binarybirds.com
     email: info@binarybirds.com
   version: 1.0.0
 tags:
-- name: User - Oauth
+- name: Oauth
+  description: ''
+- name: Oauth - Client
+  description: ''
+- name: Oauth - Role
   description: ''
 - name: UserGateway - Accounts
   description: ''
 paths:
-  /user/oauth:
+  /authorization:
     get:
       tags:
-      - User - Oauth
+      - Oauth
       summary: start authorize
       description: start authorize
-      operationId: authorizeGetUserOauth
+      operationId: authorizeGetOauthAuth
       parameters:
-      - $ref: '#/components/parameters/UserOauthClientId'
-      - $ref: '#/components/parameters/UserOauthRedirectUri'
-      - $ref: '#/components/parameters/UserOauthScope'
-      - $ref: '#/components/parameters/UserOauthState'
-      - $ref: '#/components/parameters/UserOauthResponseType'
-      - $ref: '#/components/parameters/UserOauthReturnRedirectUri'
+      - $ref: '#/components/parameters/OauthAuthClientId'
+      - $ref: '#/components/parameters/OauthAuthRedirectUri'
+      - $ref: '#/components/parameters/OauthAuthScope'
+      - $ref: '#/components/parameters/OauthAuthState'
+      - $ref: '#/components/parameters/OauthAuthResponseType'
+      - $ref: '#/components/parameters/OauthAuthReturnRedirectUri'
       responses:
         200:
-          $ref: '#/components/responses/UserOauthRedirect200Response'
+          $ref: '#/components/responses/OauthAuthRedirect200Response'
         302:
-          $ref: '#/components/responses/UserOauthRedirectResponse'
+          $ref: '#/components/responses/OauthAuthRedirectResponse'
         400:
           $ref: '#/components/responses/FeatherCoreBadRequest'
         401:
@@ -43,24 +47,24 @@ paths:
       security: []
     post:
       tags:
-      - User - Oauth
+      - Oauth
       summary: get authorize code
       description: get authorize code and return it with redirect
-      operationId: authorizePostUserOauth
+      operationId: authorizePostOauthAuth
       parameters:
-      - $ref: '#/components/parameters/UserOauthReturnRedirectUri'
+      - $ref: '#/components/parameters/OauthAuthReturnRedirectUri'
       requestBody:
         description: get authorization code request body
         content:
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/UserOauthAuthorizePostRequest'
+              $ref: '#/components/schemas/OauthAuthAuthorizePostRequest'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/UserOauthRedirect200Response'
+          $ref: '#/components/responses/OauthAuthRedirect200Response'
         302:
-          $ref: '#/components/responses/UserOauthRedirectResponse'
+          $ref: '#/components/responses/OauthAuthRedirectResponse'
         400:
           $ref: '#/components/responses/FeatherCoreBadRequest'
         401:
@@ -70,23 +74,204 @@ paths:
         403:
           $ref: '#/components/responses/FeatherCoreForbidden'
       security: []
-  /user/oauth/token:
+  /authorization/client:
+    get:
+      tags:
+      - Oauth - Client
+      summary: List Oauth Clients
+      description: List available Oauth Clients
+      operationId: listOauthClient
+      parameters:
+      - $ref: '#/components/parameters/OauthClientListSort'
+      - $ref: '#/components/parameters/FeatherCoreListSearch'
+      - $ref: '#/components/parameters/FeatherCoreListPageSize'
+      - $ref: '#/components/parameters/FeatherCoreListPageIndex'
+      - $ref: '#/components/parameters/FeatherCoreListOrder'
+      responses:
+        200:
+          $ref: '#/components/responses/OauthClientList'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+      security:
+      - FeatherCoreBearerToken: []
     post:
       tags:
-      - User - Oauth
+      - Oauth - Client
+      summary: Create an Oauth Client
+      description: "    Creates a new Oauth Client.\n    For the \"app\" type the
+        ClientSecret is not generated and saved.\n    For the \"api\" type \"redirectUri\"
+        and \"loginRedirectUri\" are not needed and not saved if added."
+      operationId: createOauthClient
+      requestBody:
+        description: Create request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OauthClientCreate'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/OauthClientDetail'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        415:
+          $ref: '#/components/responses/FeatherCoreUnsupportedMediaType'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+  /authorization/client/{clientId}:
+    parameters:
+    - $ref: '#/components/parameters/OauthClientClientId'
+    get:
+      tags:
+      - Oauth - Client
+      summary: Oauth Client details
+      description: Get the details of an oauth client
+      operationId: detailOauthClient
+      responses:
+        200:
+          $ref: '#/components/responses/OauthClientDetail'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+      security:
+      - FeatherCoreBearerToken: []
+    put:
+      tags:
+      - Oauth - Client
+      summary: Update an Oauth Client
+      description: Updates an Oauth Client
+      operationId: updateOauthClient
+      requestBody:
+        description: Update request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OauthClientUpdate'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/OauthClientDetail'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+        415:
+          $ref: '#/components/responses/FeatherCoreUnsupportedMediaType'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+    delete:
+      tags:
+      - Oauth - Client
+      summary: Delete one Oauth Client
+      description: Delete one Oauth Client using identifier
+      operationId: deleteOauthClient
+      responses:
+        204:
+          $ref: '#/components/responses/FeatherCoreNoContent'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+    patch:
+      tags:
+      - Oauth - Client
+      summary: Patch an Oauth Client
+      description: Patch a given Oauth Client
+      operationId: patchOauthClient
+      requestBody:
+        description: Patch request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OauthClientPatch'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/OauthClientDetail'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+        404:
+          $ref: '#/components/responses/FeatherCoreNotFound'
+        415:
+          $ref: '#/components/responses/FeatherCoreUnsupportedMediaType'
+        422:
+          $ref: '#/components/responses/FeatherCoreUnprocessableContent'
+      security:
+      - FeatherCoreBearerToken: []
+  /authorization/roles:
+    get:
+      tags:
+      - Oauth - Role
+      summary: List Oauth Roles
+      description: List available Oauth Roles
+      operationId: listOauthRole
+      parameters:
+      - $ref: '#/components/parameters/OauthRoleListSort'
+      - $ref: '#/components/parameters/FeatherCoreListSearch'
+      - $ref: '#/components/parameters/FeatherCoreListPageSize'
+      - $ref: '#/components/parameters/FeatherCoreListPageIndex'
+      - $ref: '#/components/parameters/FeatherCoreListOrder'
+      responses:
+        200:
+          $ref: '#/components/responses/OauthRoleList'
+        400:
+          $ref: '#/components/responses/FeatherCoreBadRequest'
+        401:
+          $ref: '#/components/responses/FeatherCoreUnauthorized'
+        403:
+          $ref: '#/components/responses/FeatherCoreForbidden'
+      security:
+      - FeatherCoreBearerToken: []
+  /authorization/token:
+    post:
+      tags:
+      - Oauth
       summary: returns a JWT
       description: exchange authorization code for JWT or get server JWT
-      operationId: tokenReturnUserOauth
+      operationId: tokenReturnOauthAuth
       requestBody:
         description: exchange token request body
         content:
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/UserOauthTokenPostRequest'
+              $ref: '#/components/schemas/OauthAuthTokenPostRequest'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/UserOauthTokenPostResponse'
+          $ref: '#/components/responses/OauthAuthTokenPostResponse'
         400:
           $ref: '#/components/responses/FeatherCoreBadRequest'
         401:
@@ -458,6 +643,437 @@ components:
       description: Last update for the object
       examples:
       - '2023-04-04T09:20:15.000Z'
+    OauthAuthAccessToken:
+      type: string
+      description: Access token aka JWT
+      examples:
+      - uiu9879khh.rtzrtz.6hdhfgh
+    OauthAuthAuthorizePostRequest:
+      type: object
+      description: ''
+      properties:
+        client_id:
+          $ref: '#/components/schemas/OauthAuthClientId'
+        redirect_uri:
+          $ref: '#/components/schemas/OauthAuthRedirectUri'
+        scope:
+          $ref: '#/components/schemas/OauthAuthScope'
+        state:
+          $ref: '#/components/schemas/OauthAuthState'
+        response_type:
+          $ref: '#/components/schemas/OauthAuthResponseType'
+        user_id:
+          $ref: '#/components/schemas/OauthAuthUserId'
+    OauthAuthClientId:
+      type: string
+      description: The client id
+      examples:
+      - clientId
+    OauthAuthClientSecret:
+      type: string
+      description: The client secret
+      examples:
+      - clientSecret
+    OauthAuthCode:
+      type: string
+      description: authorization code returned before
+      examples:
+      - uiu9879khh
+    OauthAuthExpiresIn:
+      type: integer
+      description: Expires in
+      minimum: 3600
+    OauthAuthGrantType:
+      type: string
+      description: grant type
+      examples:
+      - authorization_code/client_credentials
+    OauthAuthLocationHeader:
+      type: string
+      description: Location header
+      examples:
+      - http://localhost:8080/redirect?code=asdasfg
+    OauthAuthRedirect200Response:
+      type: object
+      description: ''
+      properties:
+        redirect_uri:
+          $ref: '#/components/schemas/OauthAuthRedirectUri'
+    OauthAuthRedirectUri:
+      type: string
+      description: The url to redirect to after successful request
+      examples:
+      - url.com
+    OauthAuthResponseType:
+      type: string
+      description: Request-specific data
+      examples:
+      - code
+    OauthAuthReturnRedirectUri:
+      type: boolean
+      default: false
+      description: return redirect with 200 or 302
+    OauthAuthScope:
+      type: string
+      description: 'Scope like: read write'
+      examples:
+      - read write
+    OauthAuthState:
+      type: string
+      description: Request-specific data
+      examples:
+      - kjsngsfgn
+    OauthAuthTokenPostRequest:
+      type: object
+      description: ''
+      properties:
+        grant_type:
+          $ref: '#/components/schemas/OauthAuthGrantType'
+        client_id:
+          $ref: '#/components/schemas/OauthAuthClientId'
+        client_secret:
+          $ref: '#/components/schemas/OauthAuthClientSecret'
+        code:
+          $ref: '#/components/schemas/OauthAuthCode'
+        redirect_uri:
+          $ref: '#/components/schemas/OauthAuthRedirectUri'
+        scope:
+          $ref: '#/components/schemas/OauthAuthScope'
+    OauthAuthTokenPostResponse:
+      type: object
+      description: ''
+      properties:
+        access_token:
+          $ref: '#/components/schemas/OauthAuthAccessToken'
+        token_type:
+          $ref: '#/components/schemas/OauthAuthTokenType'
+        expires_in:
+          $ref: '#/components/schemas/OauthAuthExpiresIn'
+        scope:
+          $ref: '#/components/schemas/OauthAuthScope'
+      required:
+      - access_token
+      - token_type
+      - expires_in
+      - scope
+    OauthAuthTokenType:
+      type: string
+      description: Access token type
+      examples:
+      - Bearer
+    OauthAuthUserId:
+      type: string
+      description: Bearar token for checking the accountId
+      examples:
+      - code
+    OauthClientAudience:
+      type: string
+      description: Identifies the intended audience for the access token
+      examples:
+      - drive/lms/intranet
+    OauthClientClientId:
+      type: string
+      description: The client id
+      examples:
+      - clientId
+    OauthClientClientSecret:
+      type: string
+      description: The client secret
+      examples:
+      - clientSecret
+    OauthClientClientType:
+      type: string
+      enum:
+      - app
+      - server
+      description: The type of the client
+      examples:
+      - app
+    OauthClientCreate:
+      type: object
+      description: ''
+      properties:
+        name:
+          $ref: '#/components/schemas/OauthClientName'
+        type:
+          $ref: '#/components/schemas/OauthClientClientType'
+        redirectUri:
+          $ref: '#/components/schemas/OauthClientRedirectUri'
+        loginRedirectUri:
+          $ref: '#/components/schemas/OauthClientLoginRedirectUri'
+        issuer:
+          $ref: '#/components/schemas/OauthClientIssuer'
+        subject:
+          $ref: '#/components/schemas/OauthClientSubject'
+        audience:
+          $ref: '#/components/schemas/OauthClientAudience'
+        serverRoles:
+          $ref: '#/components/schemas/OauthClientServerRoles'
+      required:
+      - name
+      - type
+      - issuer
+      - subject
+      - audience
+      - serverRoles
+    OauthClientDetail:
+      type: object
+      description: ''
+      properties:
+        clientId:
+          $ref: '#/components/schemas/OauthClientClientId'
+        name:
+          $ref: '#/components/schemas/OauthClientName'
+        type:
+          $ref: '#/components/schemas/OauthClientClientType'
+        clientSecret:
+          $ref: '#/components/schemas/OauthClientClientSecret'
+        redirectUri:
+          $ref: '#/components/schemas/OauthClientRedirectUri'
+        loginRedirectUri:
+          $ref: '#/components/schemas/OauthClientLoginRedirectUri'
+        issuer:
+          $ref: '#/components/schemas/OauthClientIssuer'
+        subject:
+          $ref: '#/components/schemas/OauthClientSubject'
+        audience:
+          $ref: '#/components/schemas/OauthClientAudience'
+        privateKey:
+          $ref: '#/components/schemas/OauthClientPrivateKey'
+        publicKey:
+          $ref: '#/components/schemas/OauthClientPublicKey'
+        serverRoles:
+          $ref: '#/components/schemas/OauthClientServerRoles'
+      required:
+      - clientId
+      - name
+      - type
+      - issuer
+      - subject
+      - audience
+      - privateKey
+      - publicKey
+      - serverRoles
+    OauthClientIssuer:
+      type: string
+      description: The issuer is the authorization server
+      examples:
+      - http://accounts.com
+    OauthClientList:
+      type: object
+      description: OauthClient list
+      properties:
+        items:
+          $ref: '#/components/schemas/OauthClientListItems'
+        sort:
+          $ref: '#/components/schemas/OauthClientListSort'
+        order:
+          $ref: '#/components/schemas/FeatherCoreListOrder'
+        search:
+          $ref: '#/components/schemas/FeatherCoreListSearch'
+        page:
+          $ref: '#/components/schemas/FeatherCoreListPage'
+        count:
+          $ref: '#/components/schemas/FeatherCoreListCount'
+      required:
+      - items
+      - page
+      - count
+    OauthClientListItem:
+      type: object
+      description: OauthClient list item
+      properties:
+        clientId:
+          $ref: '#/components/schemas/OauthClientClientId'
+        name:
+          $ref: '#/components/schemas/OauthClientName'
+        type:
+          $ref: '#/components/schemas/OauthClientClientType'
+      required:
+      - clientId
+      - name
+      - type
+    OauthClientListItems:
+      type: array
+      description: OauthClient list items
+      items:
+        $ref: '#/components/schemas/OauthClientListItem'
+      maxItems: 1000
+      minItems: 0
+    OauthClientListSort:
+      type: string
+      enum:
+      - name
+      - type
+      description: The sort key for the list
+    OauthClientLoginRedirectUri:
+      type: string
+      description: Redirect uri for the login screen
+      examples:
+      - http://localhost:8080/redirect
+    OauthClientName:
+      type: string
+      description: A private name for the client for better identification
+      examples:
+      - My client
+    OauthClientPatch:
+      type: object
+      description: ''
+      properties:
+        name:
+          $ref: '#/components/schemas/OauthClientName'
+        type:
+          $ref: '#/components/schemas/OauthClientClientType'
+        clientSecret:
+          $ref: '#/components/schemas/OauthClientClientSecret'
+        redirectUri:
+          $ref: '#/components/schemas/OauthClientRedirectUri'
+        loginRedirectUri:
+          $ref: '#/components/schemas/OauthClientLoginRedirectUri'
+        issuer:
+          $ref: '#/components/schemas/OauthClientIssuer'
+        subject:
+          $ref: '#/components/schemas/OauthClientSubject'
+        audience:
+          $ref: '#/components/schemas/OauthClientAudience'
+        privateKey:
+          $ref: '#/components/schemas/OauthClientPrivateKey'
+        publicKey:
+          $ref: '#/components/schemas/OauthClientPublicKey'
+        serverRoles:
+          $ref: '#/components/schemas/OauthClientServerRoles'
+    OauthClientPrivateKey:
+      type: string
+      description: A private key used to sign the jwt
+      examples:
+      - privateKey
+    OauthClientPublicKey:
+      type: string
+      description: A public key used to verify the jwt
+      examples:
+      - publicKey
+    OauthClientRedirectUri:
+      type: string
+      description: The client redirects to this url
+      examples:
+      - http://localhost:8080/redirect
+    OauthClientServerRoles:
+      type: array
+      description: Oauth server roles
+      items:
+        $ref: '#/components/schemas/OauthRoleReference'
+      maxItems: 1000
+      minItems: 0
+    OauthClientSubject:
+      type: string
+      description: The subject of the access token
+      examples:
+      - userId
+    OauthClientUpdate:
+      type: object
+      description: ''
+      properties:
+        name:
+          $ref: '#/components/schemas/OauthClientName'
+        type:
+          $ref: '#/components/schemas/OauthClientClientType'
+        clientSecret:
+          $ref: '#/components/schemas/OauthClientClientSecret'
+        redirectUri:
+          $ref: '#/components/schemas/OauthClientRedirectUri'
+        loginRedirectUri:
+          $ref: '#/components/schemas/OauthClientLoginRedirectUri'
+        issuer:
+          $ref: '#/components/schemas/OauthClientIssuer'
+        subject:
+          $ref: '#/components/schemas/OauthClientSubject'
+        audience:
+          $ref: '#/components/schemas/OauthClientAudience'
+        privateKey:
+          $ref: '#/components/schemas/OauthClientPrivateKey'
+        publicKey:
+          $ref: '#/components/schemas/OauthClientPublicKey'
+        serverRoles:
+          $ref: '#/components/schemas/OauthClientServerRoles'
+      required:
+      - name
+      - type
+      - issuer
+      - subject
+      - audience
+      - privateKey
+      - publicKey
+      - serverRoles
+    OauthRoleKey:
+      type: string
+      description: Key of the role
+      examples:
+      - manager
+    OauthRoleList:
+      type: object
+      description: Role list
+      properties:
+        items:
+          $ref: '#/components/schemas/OauthRoleListItems'
+        sort:
+          $ref: '#/components/schemas/OauthRoleListSort'
+        order:
+          $ref: '#/components/schemas/FeatherCoreListOrder'
+        search:
+          $ref: '#/components/schemas/FeatherCoreListSearch'
+        page:
+          $ref: '#/components/schemas/FeatherCoreListPage'
+        count:
+          $ref: '#/components/schemas/FeatherCoreListCount'
+      required:
+      - items
+      - page
+      - count
+    OauthRoleListItem:
+      type: object
+      description: Role list item
+      properties:
+        key:
+          $ref: '#/components/schemas/OauthRoleKey'
+        name:
+          $ref: '#/components/schemas/OauthRoleName'
+      required:
+      - key
+      - name
+    OauthRoleListItems:
+      type: array
+      description: Role list items
+      items:
+        $ref: '#/components/schemas/OauthRoleListItem'
+      maxItems: 1000
+      minItems: 0
+    OauthRoleListSort:
+      type: string
+      enum:
+      - key
+      - name
+      description: The sort key for the list
+    OauthRoleName:
+      type: string
+      description: Name of the role
+      examples:
+      - Manager
+    OauthRoleNotes:
+      type: string
+      description: Description of the role
+      examples:
+      - Manager role
+    OauthRoleReference:
+      type: object
+      description: ''
+      properties:
+        key:
+          $ref: '#/components/schemas/OauthRoleKey'
+        name:
+          $ref: '#/components/schemas/OauthRoleName'
+      required:
+      - key
+      - name
     SystemPermissionCreate:
       type: object
       description: ''
@@ -591,29 +1207,12 @@ components:
           $ref: '#/components/schemas/UserAccountLastName'
         imageKey:
           $ref: '#/components/schemas/UserAccountImageKey'
-        position:
-          $ref: '#/components/schemas/UserAccountPosition'
-        publicEmail:
-          $ref: '#/components/schemas/UserAccountPublicEmail'
-        phone:
-          $ref: '#/components/schemas/UserAccountPhone'
-        web:
-          $ref: '#/components/schemas/UserAccountWeb'
-        lat:
-          $ref: '#/components/schemas/UserAccountLat'
-        lon:
-          $ref: '#/components/schemas/UserAccountLon'
-        lastLocationUpdate:
-          $ref: '#/components/schemas/UserAccountLastLocationUpdate'
         roleKeys:
           $ref: '#/components/schemas/UserAccountRoleKeys'
-        permissions:
-          $ref: '#/components/schemas/UserAccountPermissions'
       required:
       - email
       - password
       - roleKeys
-      - permissions
     UserAccountDetail:
       type: object
       description: ''
@@ -628,29 +1227,12 @@ components:
           $ref: '#/components/schemas/UserAccountLastName'
         imageKey:
           $ref: '#/components/schemas/UserAccountImageKey'
-        position:
-          $ref: '#/components/schemas/UserAccountPosition'
-        publicEmail:
-          $ref: '#/components/schemas/UserAccountPublicEmail'
-        phone:
-          $ref: '#/components/schemas/UserAccountPhone'
-        web:
-          $ref: '#/components/schemas/UserAccountWeb'
-        lat:
-          $ref: '#/components/schemas/UserAccountLat'
-        lon:
-          $ref: '#/components/schemas/UserAccountLon'
-        lastLocationUpdate:
-          $ref: '#/components/schemas/UserAccountLastLocationUpdate'
         roles:
           $ref: '#/components/schemas/UserAccountRoles'
-        permissions:
-          $ref: '#/components/schemas/UserAccountPermissions'
       required:
       - id
       - email
       - roles
-      - permissions
     UserAccountEmail:
       type: string
       format: email
@@ -760,31 +1342,10 @@ components:
           $ref: '#/components/schemas/UserAccountLastName'
         imageKey:
           $ref: '#/components/schemas/UserAccountImageKey'
-        position:
-          $ref: '#/components/schemas/UserAccountPosition'
-        publicEmail:
-          $ref: '#/components/schemas/UserAccountPublicEmail'
-        phone:
-          $ref: '#/components/schemas/UserAccountPhone'
-        web:
-          $ref: '#/components/schemas/UserAccountWeb'
-        lat:
-          $ref: '#/components/schemas/UserAccountLat'
-        lon:
-          $ref: '#/components/schemas/UserAccountLon'
-        lastLocationUpdate:
-          $ref: '#/components/schemas/UserAccountLastLocationUpdate'
         password:
           $ref: '#/components/schemas/UserAccountPassword'
         roleKeys:
           $ref: '#/components/schemas/UserAccountRoleKeys'
-    UserAccountPermissions:
-      type: array
-      description: ''
-      items:
-        $ref: '#/components/schemas/SystemPermissionKey'
-      maxItems: 1000
-      minItems: 0
     UserAccountPhone:
       type: string
       description: Profile phone
@@ -842,20 +1403,6 @@ components:
           $ref: '#/components/schemas/UserAccountLastName'
         imageKey:
           $ref: '#/components/schemas/UserAccountImageKey'
-        position:
-          $ref: '#/components/schemas/UserAccountPosition'
-        publicEmail:
-          $ref: '#/components/schemas/UserAccountPublicEmail'
-        phone:
-          $ref: '#/components/schemas/UserAccountPhone'
-        web:
-          $ref: '#/components/schemas/UserAccountWeb'
-        lat:
-          $ref: '#/components/schemas/UserAccountLat'
-        lon:
-          $ref: '#/components/schemas/UserAccountLon'
-        lastLocationUpdate:
-          $ref: '#/components/schemas/UserAccountLastLocationUpdate'
         password:
           $ref: '#/components/schemas/UserAccountPassword'
         roleKeys:
@@ -882,122 +1429,6 @@ components:
         $ref: '#/components/schemas/UserAccountReference'
       maxItems: 1000
       minItems: 0
-    UserOauthAccessToken:
-      type: string
-      description: Access token aka JWT
-      examples:
-      - uiu9879khh.rtzrtz.6hdhfgh
-    UserOauthAuthorizePostRequest:
-      type: object
-      description: ''
-      properties:
-        client_id:
-          $ref: '#/components/schemas/UserOauthClientId'
-        redirect_uri:
-          $ref: '#/components/schemas/UserOauthRedirectUri'
-        scope:
-          $ref: '#/components/schemas/UserOauthScope'
-        state:
-          $ref: '#/components/schemas/UserOauthState'
-        response_type:
-          $ref: '#/components/schemas/UserOauthResponseType'
-        user_id:
-          $ref: '#/components/schemas/UserAccountId'
-    UserOauthClientId:
-      type: string
-      description: The client id
-      examples:
-      - clientId
-    UserOauthClientSecret:
-      type: string
-      description: The client secret
-      examples:
-      - clientSecret
-    UserOauthCode:
-      type: string
-      description: authorization code returned before
-      examples:
-      - uiu9879khh
-    UserOauthExpiresIn:
-      type: integer
-      description: Expires in
-      minimum: 3600
-    UserOauthGrantType:
-      type: string
-      description: grant type
-      examples:
-      - authorization_code/client_credentials
-    UserOauthLocationHeader:
-      type: string
-      description: Location header
-      examples:
-      - http://localhost:8080/redirect?code=asdasfg
-    UserOauthRedirect200Response:
-      type: object
-      description: ''
-      properties:
-        redirect_uri:
-          $ref: '#/components/schemas/UserOauthRedirectUri'
-    UserOauthRedirectUri:
-      type: string
-      description: The url to redirect to after successful request
-      examples:
-      - url.com
-    UserOauthResponseType:
-      type: string
-      description: Request-specific data
-      examples:
-      - code
-    UserOauthReturnRedirectUri:
-      type: boolean
-      default: false
-      description: return redirect with 200 or 302
-    UserOauthScope:
-      type: string
-      description: 'Scope like: read write'
-      examples:
-      - read write
-    UserOauthState:
-      type: string
-      description: Request-specific data
-      examples:
-      - kjsngsfgn
-    UserOauthTokenPostRequest:
-      type: object
-      description: ''
-      properties:
-        grant_type:
-          $ref: '#/components/schemas/UserOauthGrantType'
-        client_id:
-          $ref: '#/components/schemas/UserOauthClientId'
-        client_secret:
-          $ref: '#/components/schemas/UserOauthClientSecret'
-        code:
-          $ref: '#/components/schemas/UserOauthCode'
-        redirect_uri:
-          $ref: '#/components/schemas/UserOauthRedirectUri'
-    UserOauthTokenPostResponse:
-      type: object
-      description: ''
-      properties:
-        access_token:
-          $ref: '#/components/schemas/UserOauthAccessToken'
-        token_type:
-          $ref: '#/components/schemas/UserOauthTokenType'
-        expires_in:
-          $ref: '#/components/schemas/UserOauthExpiresIn'
-        scope:
-          $ref: '#/components/schemas/UserOauthScope'
-      required:
-      - access_token
-      - token_type
-      - expires_in
-      - scope
-    UserOauthTokenType:
-      type: string
-      description: Access token type
-      examples:
-      - Bearer
     UserRoleCreate:
       type: object
       description: ''
@@ -1224,6 +1655,41 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/FeatherCoreUnsupportedMediaTypeError'
+    OauthAuthRedirect200Response:
+      description: Redirect response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OauthAuthRedirect200Response'
+    OauthAuthRedirectResponse:
+      description: Redirect response
+      headers:
+        Location:
+          $ref: '#/components/headers/Location'
+    OauthAuthTokenPostResponse:
+      description: Code exchange response object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OauthAuthTokenPostResponse'
+    OauthClientDetail:
+      description: OauthClient detail object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OauthClientDetail'
+    OauthClientList:
+      description: OauthClient list object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OauthClientList'
+    OauthRoleList:
+      description: Oauth Role list object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OauthRoleList'
     UserAccountDetail:
       description: User Account detail object
       content:
@@ -1242,23 +1708,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/UserGatewayAccountsReferenceArray'
-    UserOauthRedirect200Response:
-      description: Redirect response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UserOauthRedirect200Response'
-    UserOauthRedirectResponse:
-      description: Redirect response
-      headers:
-        Location:
-          $ref: '#/components/headers/Location'
-    UserOauthTokenPostResponse:
-      description: Code exchange response object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UserOauthTokenPostResponse'
   parameters:
     FeatherCoreListOrder:
       name: order
@@ -1284,6 +1733,68 @@ components:
       schema:
         $ref: '#/components/schemas/FeatherCoreListSearch'
       description: The list search value
+    OauthAuthClientId:
+      name: client_id
+      in: query
+      schema:
+        $ref: '#/components/schemas/OauthAuthClientId'
+      description: clientId
+    OauthAuthRedirectUri:
+      name: redirect_uri
+      in: query
+      schema:
+        $ref: '#/components/schemas/OauthAuthRedirectUri'
+      description: Url to redirect to
+    OauthAuthResponseType:
+      name: response_type
+      in: query
+      schema:
+        $ref: '#/components/schemas/OauthAuthResponseType'
+      description: responseType
+    OauthAuthReturnRedirectUri:
+      name: return_redirect_uri
+      in: query
+      schema:
+        $ref: '#/components/schemas/OauthAuthReturnRedirectUri'
+      description: true/false to return with 200/302
+    OauthAuthScope:
+      name: scope
+      in: query
+      schema:
+        $ref: '#/components/schemas/OauthAuthScope'
+      description: scope
+    OauthAuthState:
+      name: state
+      in: query
+      schema:
+        $ref: '#/components/schemas/OauthAuthState'
+      description: state
+    OauthClientClientId:
+      name: clientId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/OauthClientClientId'
+      description: OauthClient identifier
+    OauthClientListSort:
+      name: sort
+      in: query
+      schema:
+        $ref: '#/components/schemas/OauthClientListSort'
+      description: Sort by parameter
+    OauthRoleKey:
+      name: roleKey
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/OauthRoleKey'
+      description: Oauth role key
+    OauthRoleListSort:
+      name: sort
+      in: query
+      schema:
+        $ref: '#/components/schemas/OauthRoleListSort'
+      description: Sort by parameter
     UserAccountId:
       name: accountId
       in: path
@@ -1297,63 +1808,48 @@ components:
       schema:
         $ref: '#/components/schemas/UserAccountListSort'
       description: Sort by parameter
-    UserOauthClientId:
-      name: client_id
-      in: query
-      schema:
-        $ref: '#/components/schemas/UserOauthClientId'
-      description: clientId
-    UserOauthRedirectUri:
-      name: redirect_uri
-      in: query
-      schema:
-        $ref: '#/components/schemas/UserOauthRedirectUri'
-      description: Url to redirect to
-    UserOauthResponseType:
-      name: response_type
-      in: query
-      schema:
-        $ref: '#/components/schemas/UserOauthResponseType'
-      description: responseType
-    UserOauthReturnRedirectUri:
-      name: return_redirect_uri
-      in: query
-      schema:
-        $ref: '#/components/schemas/UserOauthReturnRedirectUri'
-      description: true/false to return with 200/302
-    UserOauthScope:
-      name: scope
-      in: query
-      schema:
-        $ref: '#/components/schemas/UserOauthScope'
-      description: scope
-    UserOauthState:
-      name: state
-      in: query
-      schema:
-        $ref: '#/components/schemas/UserOauthState'
-      description: state
   requestBodies:
+    OauthAuthAuthorizePostRequest:
+      description: get authorization code request body
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/OauthAuthAuthorizePostRequest'
+      required: true
+    OauthAuthTokenPostRequest:
+      description: exchange token request body
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/OauthAuthTokenPostRequest'
+      required: true
+    OauthClientCreate:
+      description: Create request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OauthClientCreate'
+      required: true
+    OauthClientPatch:
+      description: Patch request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OauthClientPatch'
+      required: true
+    OauthClientUpdate:
+      description: Update request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OauthClientUpdate'
+      required: true
     UserGatewayAccountsIdArray:
       description: User ids
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/UserGatewayAccountsIdArray'
-      required: true
-    UserOauthAuthorizePostRequest:
-      description: get authorization code request body
-      content:
-        application/x-www-form-urlencoded:
-          schema:
-            $ref: '#/components/schemas/UserOauthAuthorizePostRequest'
-      required: true
-    UserOauthTokenPostRequest:
-      description: exchange token request body
-      content:
-        application/x-www-form-urlencoded:
-          schema:
-            $ref: '#/components/schemas/UserOauthTokenPostRequest'
       required: true
   headers:
     Content-Length:
@@ -1362,7 +1858,7 @@ components:
       description: Content length header
     Location:
       schema:
-        $ref: '#/components/schemas/UserOauthLocationHeader'
+        $ref: '#/components/schemas/OauthAuthLocationHeader'
       description: Location Header
   securitySchemes:
     FeatherCoreBearerToken:
