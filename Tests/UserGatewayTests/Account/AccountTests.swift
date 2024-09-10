@@ -22,7 +22,7 @@ final class AccountTests: TestCase {
                 permissionKeys: [.init(rawValue: "manager.test.permission")]
             )
         )
-        
+
         let account = try await userModule.account.create(
             .init(
                 email: email,
@@ -37,7 +37,7 @@ final class AccountTests: TestCase {
         )
 
         let detail = try await module.account.require(account.id)
-        
+
         print(detail)
 
         XCTAssertEqual(detail.roles.count, 1)

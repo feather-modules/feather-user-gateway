@@ -55,7 +55,7 @@ struct AccountController: UserGatewayAccountInterface {
                         .init(key: .init(rawValue: $0.key), name: $0.name)
                     },
                     permissions: data.permissions.map { .init(rawValue: $0) }
-                    
+
                 )
             }
 
