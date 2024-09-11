@@ -42,7 +42,8 @@ struct OAuthController: UserGatewayOAuthInterface {
                     client_id: request.clientId,
                     client_secret: request.clientSecret,
                     code: request.code,
-                    redirect_uri: request.redirectUri
+                    redirect_uri: request.redirectUri,
+                    scope: request.scope
                 )
             )
         )
