@@ -3,7 +3,7 @@ info:
   title: UserGateway - Accounts - API
   description: 'The complete Accounts API definition used by the UserGateway.
 
-    (Generated on: 10 Sep 2024 at 18:12:27)'
+    (Generated on: 12 Sep 2024 at 14:54:33)'
   contact:
     name: Binary Birds
     url: https://binarybirds.com
@@ -103,7 +103,7 @@ paths:
       - Oauth - Client
       summary: Create an Oauth Client
       description: "    Creates a new Oauth Client.\n    For the \"app\" type the
-        ClientSecret is not generated and saved.\n    For the \"api\" type \"redirectUri\"
+        ClientSecret is not generated and saved.\n    For the \"server\" type \"redirectUri\"
         and \"loginRedirectUri\" are not needed and not saved if added."
       operationId: createOauthClient
       requestBody:
@@ -770,7 +770,7 @@ components:
       type: string
       description: Identifies the intended audience for the access token
       examples:
-      - drive/lms/intranet
+      - http://drive.com
     OauthClientClientId:
       type: string
       description: The client id
@@ -785,7 +785,7 @@ components:
       type: string
       enum:
       - app
-      - server
+      - api
       description: The type of the client
       examples:
       - app
@@ -803,19 +803,15 @@ components:
           $ref: '#/components/schemas/OauthClientLoginRedirectUri'
         issuer:
           $ref: '#/components/schemas/OauthClientIssuer'
-        subject:
-          $ref: '#/components/schemas/OauthClientSubject'
         audience:
           $ref: '#/components/schemas/OauthClientAudience'
-        serverRoles:
-          $ref: '#/components/schemas/OauthClientServerRoles'
+        roleKeys:
+          $ref: '#/components/schemas/OauthClientRoleKeys'
       required:
       - name
       - type
       - issuer
-      - subject
       - audience
-      - serverRoles
     OauthClientDetail:
       type: object
       description: ''
@@ -834,26 +830,22 @@ components:
           $ref: '#/components/schemas/OauthClientLoginRedirectUri'
         issuer:
           $ref: '#/components/schemas/OauthClientIssuer'
-        subject:
-          $ref: '#/components/schemas/OauthClientSubject'
         audience:
           $ref: '#/components/schemas/OauthClientAudience'
         privateKey:
           $ref: '#/components/schemas/OauthClientPrivateKey'
         publicKey:
           $ref: '#/components/schemas/OauthClientPublicKey'
-        serverRoles:
-          $ref: '#/components/schemas/OauthClientServerRoles'
+        roles:
+          $ref: '#/components/schemas/OauthClientRoles'
       required:
       - clientId
       - name
       - type
       - issuer
-      - subject
       - audience
       - privateKey
       - publicKey
-      - serverRoles
     OauthClientIssuer:
       type: string
       description: The issuer is the authorization server
@@ -932,16 +924,14 @@ components:
           $ref: '#/components/schemas/OauthClientLoginRedirectUri'
         issuer:
           $ref: '#/components/schemas/OauthClientIssuer'
-        subject:
-          $ref: '#/components/schemas/OauthClientSubject'
         audience:
           $ref: '#/components/schemas/OauthClientAudience'
         privateKey:
           $ref: '#/components/schemas/OauthClientPrivateKey'
         publicKey:
           $ref: '#/components/schemas/OauthClientPublicKey'
-        serverRoles:
-          $ref: '#/components/schemas/OauthClientServerRoles'
+        roleKeys:
+          $ref: '#/components/schemas/OauthClientRoleKeys'
     OauthClientPrivateKey:
       type: string
       description: A private key used to sign the jwt
@@ -957,18 +947,20 @@ components:
       description: The client redirects to this url
       examples:
       - http://localhost:8080/redirect
-    OauthClientServerRoles:
+    OauthClientRoleKeys:
+      type: array
+      description: Oauth server role keys
+      items:
+        $ref: '#/components/schemas/OauthRoleKey'
+      maxItems: 1000
+      minItems: 0
+    OauthClientRoles:
       type: array
       description: Oauth server roles
       items:
         $ref: '#/components/schemas/OauthRoleReference'
       maxItems: 1000
       minItems: 0
-    OauthClientSubject:
-      type: string
-      description: The subject of the access token
-      examples:
-      - userId
     OauthClientUpdate:
       type: object
       description: ''
@@ -985,25 +977,21 @@ components:
           $ref: '#/components/schemas/OauthClientLoginRedirectUri'
         issuer:
           $ref: '#/components/schemas/OauthClientIssuer'
-        subject:
-          $ref: '#/components/schemas/OauthClientSubject'
         audience:
           $ref: '#/components/schemas/OauthClientAudience'
         privateKey:
           $ref: '#/components/schemas/OauthClientPrivateKey'
         publicKey:
           $ref: '#/components/schemas/OauthClientPublicKey'
-        serverRoles:
-          $ref: '#/components/schemas/OauthClientServerRoles'
+        roleKeys:
+          $ref: '#/components/schemas/OauthClientRoleKeys'
       required:
       - name
       - type
       - issuer
-      - subject
       - audience
       - privateKey
       - publicKey
-      - serverRoles
     OauthRoleKey:
       type: string
       description: Key of the role
