@@ -33,7 +33,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-openapi-runtime", from: "1.0.0"),
         
         .package(url: "https://github.com/feather-modules/feather-user-api", .upToNextMinor(from: "0.8.2")),
-        .package(url: "https://github.com/feather-modules/feather-oauth-api", .upToNextMinor(from: "0.1.2")),
+        .package(url: "https://github.com/feather-modules/feather-oauth-api", .upToNextMinor(from: "0.1.3")),
         .package(url: "https://github.com/feather-modules/feather-user-module", .upToNextMinor(from: "0.21.0")),
         .package(url: "https://github.com/feather-modules/feather-user-gateway-accounts-api", .upToNextMinor(from: "0.1.3")),
     ],
