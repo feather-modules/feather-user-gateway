@@ -6,10 +6,10 @@
 //
 
 import FeatherModuleKit
-import UserModuleKit
+import OauthModuleKit
 
 extension UserGateway.OAuth {
 
-    public typealias JwtRequest = User.Oauth.JwtRequest
-    public typealias JwtResponse = User.Oauth.JwtResponse
+    public typealias JwtRequest = Oauth.Flow.JwtRequest
+    public typealias JwtResponse = Oauth.Flow.JwtResponse
 }

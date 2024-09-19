@@ -3,7 +3,7 @@ info:
   title: UserGateway - Accounts - API
   description: 'The complete Accounts API definition used by the UserGateway.
 
-    (Generated on: 12 Sep 2024 at 14:54:33)'
+    (Generated on: 2024. Sep 19. at 8:43:40)'
   contact:
     name: Binary Birds
     url: https://binarybirds.com
@@ -770,7 +770,7 @@ components:
       type: string
       description: Identifies the intended audience for the access token
       examples:
-      - http://drive.com
+      - drive/lms/intranet
     OauthClientClientId:
       type: string
       description: The client id
@@ -785,7 +785,7 @@ components:
       type: string
       enum:
       - app
-      - api
+      - server
       description: The type of the client
       examples:
       - app
@@ -1437,6 +1437,8 @@ components:
           $ref: '#/components/schemas/UserRoleName'
         notes:
           $ref: '#/components/schemas/UserRoleNotes'
+        type:
+          $ref: '#/components/schemas/UserRoleRoleType'
         permissionKeys:
           $ref: '#/components/schemas/UserRolePermissionKeys'
       required:
@@ -1453,11 +1455,14 @@ components:
           $ref: '#/components/schemas/UserRoleName'
         notes:
           $ref: '#/components/schemas/UserRoleNotes'
+        type:
+          $ref: '#/components/schemas/UserRoleRoleType'
         permissions:
           $ref: '#/components/schemas/UserRolePermissions'
       required:
       - key
       - name
+      - type
       - permissions
     UserRoleKey:
       type: string
@@ -1528,6 +1533,8 @@ components:
           $ref: '#/components/schemas/UserRoleName'
         notes:
           $ref: '#/components/schemas/UserRoleNotes'
+        type:
+          $ref: '#/components/schemas/UserRoleRoleType'
         permissionKeys:
           $ref: '#/components/schemas/UserRolePermissionKeys'
     UserRolePermissionKeys:
@@ -1555,6 +1562,14 @@ components:
       required:
       - key
       - name
+    UserRoleRoleType:
+      type: string
+      enum:
+      - open
+      - protected
+      description: Role type
+      examples:
+      - open
     UserRoleUpdate:
       type: object
       description: ''
@@ -1565,6 +1580,8 @@ components:
           $ref: '#/components/schemas/UserRoleName'
         notes:
           $ref: '#/components/schemas/UserRoleNotes'
+        type:
+          $ref: '#/components/schemas/UserRoleRoleType'
         permissionKeys:
           $ref: '#/components/schemas/UserRolePermissionKeys'
       required:
