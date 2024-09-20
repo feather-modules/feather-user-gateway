@@ -36,10 +36,16 @@ struct AccountController: UserGatewayAccountInterface {
     func require(
         _ id: ID<User.Account>
     ) async throws -> UserGateway.Account.Detail {
-        let ret =
-            try await accountClient.detailUserGatewayAccounts(
+        let ret: Operations.detailUserGatewayAccounts.Output
+
+        do {
+            ret = try await accountClient.detailUserGatewayAccounts(
                 .init(path: .init(accountId: id.rawValue))
             )
+        }
+        catch {
+            throw UserGateway.Error.endpointUnreachable
+        }
 
         switch ret {
         case .ok(let response):
@@ -87,8 +93,10 @@ struct AccountController: UserGatewayAccountInterface {
     func list(_ input: UserGateway.Account.List.Query) async throws
         -> UserGateway.Account.List
     {
-        let ret =
-            try await accountClient.listUserGatewayAccounts(
+        let ret: Operations.listUserGatewayAccounts.Output
+
+        do {
+            ret = try await accountClient.listUserGatewayAccounts(
                 .init(
                     query:
                         .init(
@@ -100,6 +108,10 @@ struct AccountController: UserGatewayAccountInterface {
                         )
                 )
             )
+        }
+        catch {
+            throw UserGateway.Error.endpointUnreachable
+        }
 
         switch ret {
         case .ok(let response):
@@ -138,10 +150,16 @@ struct AccountController: UserGatewayAccountInterface {
     func reference(ids: [ID<User.Account>])
         async throws -> [UserGateway.Account.Reference]
     {
-        let ret =
-            try await accountClient.referenceUserGatewayAccounts(
+        let ret: Operations.referenceUserGatewayAccounts.Output
+
+        do {
+            ret = try await accountClient.referenceUserGatewayAccounts(
                 .init(body: .json(ids.map { $0.rawValue }))
             )
+        }
+        catch {
+            throw UserGateway.Error.endpointUnreachable
+        }
 
         switch ret {
         case .ok(let response):

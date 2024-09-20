@@ -35,18 +35,25 @@ struct OAuthController: UserGatewayOAuthInterface {
     func getJWT(_ request: UserGateway.OAuth.JwtRequest) async throws
         -> UserGateway.OAuth.JwtResponse
     {
-        let ret = try await oauthClient.tokenReturnOauthAuth(
-            body: .urlEncodedForm(
-                .init(
-                    grant_type: request.grantType?.rawValue,
-                    client_id: request.clientId,
-                    client_secret: request.clientSecret,
-                    code: request.code,
-                    redirect_uri: request.redirectUri,
-                    scope: request.scope
+        let ret: Operations.tokenReturnOauthAuth.Output
+
+        do {
+            ret = try await oauthClient.tokenReturnOauthAuth(
+                body: .urlEncodedForm(
+                    .init(
+                        grant_type: request.grantType?.rawValue,
+                        client_id: request.clientId,
+                        client_secret: request.clientSecret,
+                        code: request.code,
+                        redirect_uri: request.redirectUri,
+                        scope: request.scope
+                    )
                 )
             )
-        )
+        }
+        catch {
+            throw UserGateway.Error.endpointUnreachable
+        }
 
         switch ret {
         case .ok(let response):

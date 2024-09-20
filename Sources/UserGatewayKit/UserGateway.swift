@@ -35,6 +35,7 @@ public enum UserGateway {
 
     public enum Error: Swift.Error {
         case unknown
+        case endpointUnreachable
         case httpResponse(HTTPResponse, HTTPBody?)
     }
 
