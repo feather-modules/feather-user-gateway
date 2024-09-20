@@ -36,10 +36,16 @@ struct AccountController: UserGatewayAccountInterface {
     func require(
         _ id: ID<User.Account>
     ) async throws -> UserGateway.Account.Detail {
-        let ret =
-            try await accountClient.detailUserGatewayAccounts(
+        let ret: Operations.detailUserGatewayAccounts.Output
+
+        do {
+            ret = try await accountClient.detailUserGatewayAccounts(
                 .init(path: .init(accountId: id.rawValue))
             )
+        }
+        catch {
+            throw UserGateway.Error.endpointUnreachable
+        }
 
         switch ret {
         case .ok(let response):
@@ -59,34 +65,38 @@ struct AccountController: UserGatewayAccountInterface {
                 )
             }
 
-        case .badRequest(_):
-            throw UserGateway.Error.unknown
+        case .badRequest(let response):
+            try UserGatewayModule.throwResponse(response)
 
-        case .unauthorized(_):
-            throw UserGateway.Error.unknown
+        case .unauthorized(let response):
+            try UserGatewayModule.throwResponse(response)
 
-        case .forbidden(_):
-            throw UserGateway.Error.unknown
+        case .forbidden(let response):
+            try UserGatewayModule.throwResponse(response)
 
-        case .notFound(let notFoundResponse):
-            switch notFoundResponse.body {
+        case .notFound(let response):
+            switch response.body {
             case .json(let data):
                 if let error = ModuleError(data) {
                     throw error
                 }
             }
-            throw UserGateway.Error.unknown
+            try UserGatewayModule.throwResponse(response)
 
-        case .undocumented(_, _):
-            throw UserGateway.Error.unknown
+        case .undocumented(let code, let response):
+            try UserGatewayModule.throwResponse(code, response)
         }
+
+        throw UserGateway.Error.unknown
     }
 
     func list(_ input: UserGateway.Account.List.Query) async throws
         -> UserGateway.Account.List
     {
-        let ret =
-            try await accountClient.listUserGatewayAccounts(
+        let ret: Operations.listUserGatewayAccounts.Output
+
+        do {
+            ret = try await accountClient.listUserGatewayAccounts(
                 .init(
                     query:
                         .init(
@@ -98,6 +108,10 @@ struct AccountController: UserGatewayAccountInterface {
                         )
                 )
             )
+        }
+        catch {
+            throw UserGateway.Error.endpointUnreachable
+        }
 
         switch ret {
         case .ok(let response):
@@ -109,34 +123,43 @@ struct AccountController: UserGatewayAccountInterface {
                             id: .init(rawValue: $0.id),
                             email: $0.email,
                             firstName: $0.firstName,
-                            lastName: $0.lastName
+                            lastName: $0.lastName,
+                            imageKey: $0.imageKey
                         )
                     },
                     count: UInt(data.count)
                 )
             }
 
-        case .badRequest(_):
-            throw UserGateway.Error.unknown
+        case .badRequest(let response):
+            try UserGatewayModule.throwResponse(response)
 
-        case .unauthorized(_):
-            throw UserGateway.Error.unknown
+        case .unauthorized(let response):
+            try UserGatewayModule.throwResponse(response)
 
-        case .forbidden(_):
-            throw UserGateway.Error.unknown
+        case .forbidden(let response):
+            try UserGatewayModule.throwResponse(response)
 
-        case .undocumented(_, _):
-            throw UserGateway.Error.unknown
+        case .undocumented(let code, let response):
+            try UserGatewayModule.throwResponse(code, response)
         }
+
+        throw UserGateway.Error.unknown
     }
 
     func reference(ids: [ID<User.Account>])
         async throws -> [UserGateway.Account.Reference]
     {
-        let ret =
-            try await accountClient.referenceUserGatewayAccounts(
+        let ret: Operations.referenceUserGatewayAccounts.Output
+
+        do {
+            ret = try await accountClient.referenceUserGatewayAccounts(
                 .init(body: .json(ids.map { $0.rawValue }))
             )
+        }
+        catch {
+            throw UserGateway.Error.endpointUnreachable
+        }
 
         switch ret {
         case .ok(let response):
@@ -147,31 +170,32 @@ struct AccountController: UserGatewayAccountInterface {
                         id: .init(rawValue: $0.id),
                         email: $0.email,
                         firstName: $0.firstName,
-                        lastName: $0.lastName
+                        lastName: $0.lastName,
+                        imageKey: $0.imageKey
                     )
                 }
             }
 
-        case .badRequest(_):
-            throw UserGateway.Error.unknown
+        case .badRequest(let response):
+            try UserGatewayModule.throwResponse(response)
 
-        case .unauthorized(_):
-            throw UserGateway.Error.unknown
+        case .unauthorized(let response):
+            try UserGatewayModule.throwResponse(response)
 
-        case .forbidden(_):
-            throw UserGateway.Error.unknown
+        case .forbidden(let response):
+            try UserGatewayModule.throwResponse(response)
 
-        case .notFound(let notFoundResponse):
-            switch notFoundResponse.body {
+        case .notFound(let response):
+            switch response.body {
             case .json(let data):
                 if let error = ModuleError(data) {
                     throw error
                 }
             }
-            throw UserGateway.Error.unknown
+            try UserGatewayModule.throwResponse(response)
 
-        case .unsupportedMediaType(_):
-            throw UserGateway.Error.unknown
+        case .unsupportedMediaType(let response):
+            try UserGatewayModule.throwResponse(response)
 
         case .unprocessableContent(let unprocessableContentResponse):
             switch unprocessableContentResponse.body {
@@ -179,8 +203,10 @@ struct AccountController: UserGatewayAccountInterface {
                 throw ValidatorError(data)
             }
 
-        case .undocumented(_, _):
-            throw UserGateway.Error.unknown
+        case .undocumented(let code, let response):
+            try UserGatewayModule.throwResponse(code, response)
         }
+
+        throw UserGateway.Error.unknown
     }
 }

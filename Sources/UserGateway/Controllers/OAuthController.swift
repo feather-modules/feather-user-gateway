@@ -35,18 +35,25 @@ struct OAuthController: UserGatewayOAuthInterface {
     func getJWT(_ request: UserGateway.OAuth.JwtRequest) async throws
         -> UserGateway.OAuth.JwtResponse
     {
-        let ret = try await oauthClient.tokenReturnOauthAuth(
-            body: .urlEncodedForm(
-                .init(
-                    grant_type: request.grantType?.rawValue,
-                    client_id: request.clientId,
-                    client_secret: request.clientSecret,
-                    code: request.code,
-                    redirect_uri: request.redirectUri,
-                    scope: request.scope
+        let ret: Operations.tokenReturnOauthAuth.Output
+
+        do {
+            ret = try await oauthClient.tokenReturnOauthAuth(
+                body: .urlEncodedForm(
+                    .init(
+                        grant_type: request.grantType?.rawValue,
+                        client_id: request.clientId,
+                        client_secret: request.clientSecret,
+                        code: request.code,
+                        redirect_uri: request.redirectUri,
+                        scope: request.scope
+                    )
                 )
             )
-        )
+        }
+        catch {
+            throw UserGateway.Error.endpointUnreachable
+        }
 
         switch ret {
         case .ok(let response):
@@ -60,20 +67,22 @@ struct OAuthController: UserGatewayOAuthInterface {
                 )
             }
 
-        case .badRequest(_):
-            throw UserGateway.OauthError.invalidGrant
+        case .badRequest(let response):
+            try UserGatewayModule.throwResponse(response)
 
-        case .unauthorized(_):
-            throw UserGateway.Error.unknown
+        case .unauthorized(let response):
+            try UserGatewayModule.throwResponse(response)
 
-        case .forbidden(_):
-            throw UserGateway.OauthError.unauthorizedClient
+        case .forbidden(let response):
+            try UserGatewayModule.throwResponse(response)
 
-        case .undocumented(_, _):
-            throw UserGateway.Error.unknown
+        case .undocumented(let code, let response):
+            try UserGatewayModule.throwResponse(code, response)
 
-        case .conflict(_):
-            throw UserGateway.Error.unknown
+        case .conflict(let response):
+            try UserGatewayModule.throwResponse(response)
         }
+
+        throw UserGateway.Error.unknown
     }
 }

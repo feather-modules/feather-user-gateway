@@ -7,6 +7,8 @@
 
 import FeatherACL
 import FeatherModuleKit
+import HTTPTypes
+import OpenAPIRuntime
 
 extension Permission {
 
@@ -33,6 +35,8 @@ public enum UserGateway {
 
     public enum Error: Swift.Error {
         case unknown
+        case endpointUnreachable
+        case httpResponse(HTTPResponse, HTTPBody?)
     }
 
     public enum Account: Identifiable {}
