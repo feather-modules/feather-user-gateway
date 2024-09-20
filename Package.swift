@@ -32,11 +32,9 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-openapi-generator", from: "1.0.0"),
         .package(url: "https://github.com/apple/swift-openapi-runtime", from: "1.0.0"),
         
-        .package(url: "https://github.com/feather-modules/feather-user-api", branch: "fix/user-account-reference-image-key"),
-//        .package(url: "https://github.com/feather-modules/feather-user-api", .upToNextMinor(from: "0.9.0")),
+        .package(url: "https://github.com/feather-modules/feather-user-api", .upToNextMinor(from: "0.10.0")),
         .package(url: "https://github.com/feather-modules/feather-oauth-api", .upToNextMinor(from: "0.1.3")),
-        .package(url: "https://github.com/feather-modules/feather-user-module", branch: "fix/user-account-reference-image-key"),
-//        .package(url: "https://github.com/feather-modules/feather-user-module", .upToNextMinor(from: "0.22.0")),
+        .package(url: "https://github.com/feather-modules/feather-user-module", .upToNextMinor(from: "0.23.0")),
         .package(url: "https://github.com/feather-modules/feather-oauth-module", .upToNextMinor(from: "0.1.0")),
         .package(url: "https://github.com/feather-modules/feather-user-gateway-accounts-api", .upToNextMinor(from: "0.1.4")),
     ],
