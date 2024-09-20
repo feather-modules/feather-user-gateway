@@ -109,7 +109,8 @@ struct AccountController: UserGatewayAccountInterface {
                             id: .init(rawValue: $0.id),
                             email: $0.email,
                             firstName: $0.firstName,
-                            lastName: $0.lastName
+                            lastName: $0.lastName,
+                            imageKey: $0.imageKey
                         )
                     },
                     count: UInt(data.count)
@@ -147,7 +148,8 @@ struct AccountController: UserGatewayAccountInterface {
                         id: .init(rawValue: $0.id),
                         email: $0.email,
                         firstName: $0.firstName,
-                        lastName: $0.lastName
+                        lastName: $0.lastName,
+                        imageKey: $0.imageKey
                     )
                 }
             }
