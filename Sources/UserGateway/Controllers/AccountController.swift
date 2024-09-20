@@ -59,27 +59,29 @@ struct AccountController: UserGatewayAccountInterface {
                 )
             }
 
-        case .badRequest(_):
-            throw UserGateway.Error.unknown
+        case .badRequest(let response):
+            try UserGatewayModule.throwResponse(response)
 
-        case .unauthorized(_):
-            throw UserGateway.Error.unknown
+        case .unauthorized(let response):
+            try UserGatewayModule.throwResponse(response)
 
-        case .forbidden(_):
-            throw UserGateway.Error.unknown
+        case .forbidden(let response):
+            try UserGatewayModule.throwResponse(response)
 
-        case .notFound(let notFoundResponse):
-            switch notFoundResponse.body {
+        case .notFound(let response):
+            switch response.body {
             case .json(let data):
                 if let error = ModuleError(data) {
                     throw error
                 }
             }
-            throw UserGateway.Error.unknown
+            try UserGatewayModule.throwResponse(response)
 
-        case .undocumented(_, _):
-            throw UserGateway.Error.unknown
+        case .undocumented(let code, let response):
+            try UserGatewayModule.throwResponse(code, response)
         }
+
+        throw UserGateway.Error.unknown
     }
 
     func list(_ input: UserGateway.Account.List.Query) async throws
@@ -117,18 +119,20 @@ struct AccountController: UserGatewayAccountInterface {
                 )
             }
 
-        case .badRequest(_):
-            throw UserGateway.Error.unknown
+        case .badRequest(let response):
+            try UserGatewayModule.throwResponse(response)
 
-        case .unauthorized(_):
-            throw UserGateway.Error.unknown
+        case .unauthorized(let response):
+            try UserGatewayModule.throwResponse(response)
 
-        case .forbidden(_):
-            throw UserGateway.Error.unknown
+        case .forbidden(let response):
+            try UserGatewayModule.throwResponse(response)
 
-        case .undocumented(_, _):
-            throw UserGateway.Error.unknown
+        case .undocumented(let code, let response):
+            try UserGatewayModule.throwResponse(code, response)
         }
+
+        throw UserGateway.Error.unknown
     }
 
     func reference(ids: [ID<User.Account>])
@@ -154,26 +158,26 @@ struct AccountController: UserGatewayAccountInterface {
                 }
             }
 
-        case .badRequest(_):
-            throw UserGateway.Error.unknown
+        case .badRequest(let response):
+            try UserGatewayModule.throwResponse(response)
 
-        case .unauthorized(_):
-            throw UserGateway.Error.unknown
+        case .unauthorized(let response):
+            try UserGatewayModule.throwResponse(response)
 
-        case .forbidden(_):
-            throw UserGateway.Error.unknown
+        case .forbidden(let response):
+            try UserGatewayModule.throwResponse(response)
 
-        case .notFound(let notFoundResponse):
-            switch notFoundResponse.body {
+        case .notFound(let response):
+            switch response.body {
             case .json(let data):
                 if let error = ModuleError(data) {
                     throw error
                 }
             }
-            throw UserGateway.Error.unknown
+            try UserGatewayModule.throwResponse(response)
 
-        case .unsupportedMediaType(_):
-            throw UserGateway.Error.unknown
+        case .unsupportedMediaType(let response):
+            try UserGatewayModule.throwResponse(response)
 
         case .unprocessableContent(let unprocessableContentResponse):
             switch unprocessableContentResponse.body {
@@ -181,8 +185,10 @@ struct AccountController: UserGatewayAccountInterface {
                 throw ValidatorError(data)
             }
 
-        case .undocumented(_, _):
-            throw UserGateway.Error.unknown
+        case .undocumented(let code, let response):
+            try UserGatewayModule.throwResponse(code, response)
         }
+
+        throw UserGateway.Error.unknown
     }
 }

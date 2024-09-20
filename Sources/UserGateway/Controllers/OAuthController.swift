@@ -60,20 +60,22 @@ struct OAuthController: UserGatewayOAuthInterface {
                 )
             }
 
-        case .badRequest(_):
-            throw UserGateway.OauthError.invalidGrant
+        case .badRequest(let response):
+            try UserGatewayModule.throwResponse(response)
 
-        case .unauthorized(_):
-            throw UserGateway.Error.unknown
+        case .unauthorized(let response):
+            try UserGatewayModule.throwResponse(response)
 
-        case .forbidden(_):
-            throw UserGateway.OauthError.unauthorizedClient
+        case .forbidden(let response):
+            try UserGatewayModule.throwResponse(response)
 
-        case .undocumented(_, _):
-            throw UserGateway.Error.unknown
+        case .undocumented(let code, let response):
+            try UserGatewayModule.throwResponse(code, response)
 
-        case .conflict(_):
-            throw UserGateway.Error.unknown
+        case .conflict(let response):
+            try UserGatewayModule.throwResponse(response)
         }
+
+        throw UserGateway.Error.unknown
     }
 }

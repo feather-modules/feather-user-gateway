@@ -1,6 +1,7 @@
 import FeatherComponent
 import FeatherModuleKit
 import Foundation
+import HTTPTypes
 import Logging
 import OpenAPIRuntime
 import UserGatewayAccountsKit
@@ -136,6 +137,130 @@ public struct UserGatewayModule: UserGatewayInterface {
     let logger: Logger
     let accountProxy: UserGatewayAccountProxy
     let oauthProxy: UserGatewayOAuthProxy
+
+    static func throwResponse(
+        _ status: HTTPResponse.Status,
+        _ encodable: Encodable
+    ) throws {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [
+            .sortedKeys
+        ]
+        let data = try encoder.encode(encodable)
+
+        throw UserGateway.Error.httpResponse(
+            .init(
+                status: status,
+                headerFields: [
+                    .contentType: "application/json; charset=utf-8"
+                ]
+            ),
+            .init([UInt8](data))
+        )
+    }
+
+    static func throwResponse(
+        _ error: Components.Responses.FeatherCoreBadRequest
+    ) throws {
+        switch error.body {
+        case .json(let content):
+            try throwResponse(.badRequest, content)
+        }
+    }
+
+    static func throwResponse(
+        _ error: Components.Responses.FeatherCoreConflict
+    ) throws {
+        switch error.body {
+        case .json(let content):
+            try throwResponse(.conflict, content)
+        }
+    }
+
+    static func throwResponse(
+        _ error: Components.Responses.FeatherCoreForbidden
+    ) throws {
+        switch error.body {
+        case .json(let content):
+            try throwResponse(.forbidden, content)
+        }
+    }
+
+    static func throwResponse(
+        _ error: Components.Responses.FeatherCoreGone
+    ) throws {
+        switch error.body {
+        case .json(let content):
+            try throwResponse(.gone, content)
+        }
+    }
+
+    static func throwResponse(
+        _ error: Components.Responses.FeatherCoreMethodNotAllowed
+    ) throws {
+        switch error.body {
+        case .json(let content):
+            try throwResponse(.methodNotAllowed, content)
+        }
+    }
+
+    static func throwResponse(
+        _ error: Components.Responses.FeatherCoreNotAcceptable
+    ) throws {
+        switch error.body {
+        case .json(let content):
+            try throwResponse(.notAcceptable, content)
+        }
+    }
+
+    static func throwResponse(
+        _ error: Components.Responses.FeatherCoreNotFound
+    ) throws {
+        switch error.body {
+        case .json(let content):
+            try throwResponse(.notFound, content)
+        }
+    }
+
+    static func throwResponse(
+        _ error: Components.Responses.FeatherCoreUnauthorized
+    ) throws {
+        switch error.body {
+        case .json(let content):
+            try throwResponse(.unauthorized, content)
+        }
+    }
+
+    static func throwResponse(
+        _ error: Components.Responses.FeatherCoreUnprocessableContent
+    ) throws {
+        switch error.body {
+        case .json(let content):
+            try throwResponse(.unprocessableContent, content)
+        }
+    }
+
+    static func throwResponse(
+        _ error: Components.Responses.FeatherCoreUnsupportedMediaType
+    ) throws {
+        switch error.body {
+        case .json(let content):
+            try throwResponse(.unsupportedMediaType, content)
+        }
+    }
+
+    static func throwResponse(
+        _ statusCode: Int,
+        _ payload: OpenAPIRuntime.UndocumentedPayload
+    ) throws {
+        throw UserGateway.Error.httpResponse(
+            HTTPResponse(
+                status: .init(code: statusCode),
+                headerFields: payload.headerFields
+            ),
+            payload.body
+        )
+    }
 
     public init(
         components: ComponentRegistry,
